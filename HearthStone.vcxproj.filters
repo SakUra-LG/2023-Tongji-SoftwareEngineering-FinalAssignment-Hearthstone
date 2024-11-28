@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="win32">
+      <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Animation">
+      <UniqueIdentifier>{64f7d87c-4192-4be1-a518-51b980bf1c44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Battle">
+      <UniqueIdentifier>{e67617cc-7863-4798-995f-2385a20f91ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Card">
+      <UniqueIdentifier>{08946d4e-0653-4911-86a9-27c618d92388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Effect">
+      <UniqueIdentifier>{00f2a1dd-5246-4af1-a226-31e1047af6ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Game">
+      <UniqueIdentifier>{b65d0ad2-1f58-4be0-b41c-6ad853bf5ef6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Manager">
+      <UniqueIdentifier>{b37a5c2d-13bb-4661-86d3-d22c70a951a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Network">
+      <UniqueIdentifier>{8b670bbd-997a-4e1e-a69c-39f74f9c82e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Player">
+      <UniqueIdentifier>{afe0b543-46d4-4504-8123-ac2d70ca8255}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Scene">
+      <UniqueIdentifier>{7be20bf5-2fb8-4799-a2a0-a53b4cd39d8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Utils">
+      <UniqueIdentifier>{95ce3853-c5c7-4be7-bfde-c09a817bf763}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Audio">
+      <UniqueIdentifier>{13a7cf0e-0531-47c9-bfb9-e49823aabe92}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Animation\AnimationManager.cpp">
+      <Filter>src\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Battle\CombatManager.cpp">
+      <Filter>src\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Card\Card.cpp">
+      <Filter>src\Card</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Card\MinionCard.cpp">
+      <Filter>src\Card</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Card\SpellCard.cpp">
+      <Filter>src\Card</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Effect\DamageEffect.cpp">
+      <Filter>src\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Effect\EffectManager.cpp">
+      <Filter>src\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Effect\HealEffect.cpp">
+      <Filter>src\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Game\TurnSystem.cpp">
+      <Filter>src\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Manager\GameManager.cpp">
+      <Filter>src\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Network\NetworkManager.cpp">
+      <Filter>src\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Player\Player.cpp">
+      <Filter>src\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scene\GameScene.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scene\MenuScene.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Utils\ConfigManager.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Audio\AudioManager.cpp">
+      <Filter>src\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Utils\GameLogger.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Animation\AnimationManager.h">
+      <Filter>src\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Battle\CombatManager.h">
+      <Filter>src\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Card\Card.h">
+      <Filter>src\Card</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Card\MinionCard.h">
+      <Filter>src\Card</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Card\SpellCard.h">
+      <Filter>src\Card</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Effect\DamageEffect.h">
+      <Filter>src\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Effect\EffectManager.h">
+      <Filter>src\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Effect\HealEffect.h">
+      <Filter>src\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Effect\IEffect.h">
+      <Filter>src\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Game\TurnSystem.h">
+      <Filter>src\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Manager\GameManager.h">
+      <Filter>src\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Network\GameAction.h">
+      <Filter>src\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Network\NetworkManager.h">
+      <Filter>src\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Network\WebSocketClient.h">
+      <Filter>src\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player\Player.h">
+      <Filter>src\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\GameScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\MenuScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Utils\ConfigManager.h">
+      <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Utils\Constants.h">
+      <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Utils\GameLogger.h">
+      <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Utils\ResourceManager.h">
+      <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Utils\Utils.h">
+      <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Audio\AudioManager.h">
+      <Filter>src\Audio</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
