@@ -18,8 +18,11 @@ private:
     void initListeners();      // 这个函数需要实现
     // 菜单回调
     void onPlayGame(cocos2d::Ref* sender);
+    void onAdventureMode(cocos2d::Ref* sender);
+    void MenuScene::onBattleGronds(Ref* sender);
     void onDeckBuilder(cocos2d::Ref* sender);
     void onSettings(cocos2d::Ref* sender);
+    void MenuScene::onSelection(Ref* sender);
     void onQuit(cocos2d::Ref* sender);
     void onEndTurnClicked(cocos2d::Ref* sender);    // 这个函数需要实现
     void onSettingsClicked(cocos2d::Ref* sender);   // 这个函数需要实现

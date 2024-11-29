@@ -28,6 +28,7 @@ namespace GameConstants {
         const char* const BUTTON_NORMAL = "buttons/button_normal.png";
         const char* const BUTTON_PRESSED = "buttons/button_pressed.png";
         const char* const BACKGROUND = "backgrounds/game_bg.png";
+        const char* const BACKGROUND_SETTING = "backgrounds/Background_For_Setting.png";
         const char* const FONT_PATH = "fonts/arial.ttf";
     }
 
@@ -49,8 +50,11 @@ namespace GameConstants {
         const char* const VICTORY = "sounds/victory.mp3";
         const char* const DEFEAT = "sounds/defeat.mp3";
         // UI音效
-        const char* const BUTTON_CLICK = "sounds/button_click.mp3";    // 添加按钮点击音效
-        const char* const BUTTON_HOVER = "sounds/button_hover.mp3";    // 可选：添加按钮悬停音效
+        const char* const MAIN_MENU_THREEBUTTON_CLICK = "sounds/Main_Menu_ThreeButton_Click.ogg";    // 添加按钮点击音效
+        const char* const MAIN_MENU_BUTTON_HOVER = "sounds/Main_Menu_Botton_Over.ogg";    // 可选：添加按钮悬停音效
+        const char* const CHANGE_SCENE_FROM_MAIN = "sounds/Change_Scene_From_Main.ogg";    // 从主菜单切换画面音效
+        const char* const ENTER_MYCOLLECTION = "sounds/Enter_MyCollection.ogg";    // 进入我的收藏音效
+        const char* const CHANGE_HELP_SCENE = "sounds/Enter_Help.ogg";    // 进入右下角齿轮
         const char* const MENU_OPEN = "sounds/menu_open.mp3";         // 可选：添加菜单打开音效
         const char* const MENU_CLOSE = "sounds/menu_close.mp3";       // 可选：添加菜单关闭音效
 
