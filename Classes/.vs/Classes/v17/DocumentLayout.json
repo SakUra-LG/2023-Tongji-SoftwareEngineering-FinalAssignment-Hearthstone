@@ -1,0 +1,717 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Projects\\HearthStone\\Classes\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\AppDelegate.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:AppDelegate.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\AppDelegate.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:AppDelegate.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Utils\\Utils.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Utils\\Utils.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Utils\\ResourceManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Utils\\ResourceManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Utils\\Constants.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Utils\\Constants.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Utils\\GameLogger.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Utils\\GameLogger.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Utils\\ConfigManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Utils\\ConfigManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Utils\\ConfigManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Utils\\ConfigManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Scene\\MenuScene.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Scene\\MenuScene.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Scene\\MenuScene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Scene\\MenuScene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Scene\\GameScene.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Scene\\GameScene.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Network\\WebSocketClient.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Network\\WebSocketClient.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Manager\\GameManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Manager\\GameManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Effect\\Effects\\HealEffect.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Effect\\Effects\\HealEffect.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Effect\\Effects\\DamageEffect.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Effect\\Effects\\DamageEffect.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Card\\SpellCard.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Card\\SpellCard.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Scene\\GameScene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Scene\\GameScene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Player\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Player\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Player\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Player\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Network\\GameAction.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Network\\GameAction.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Network\\NetworkManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Network\\NetworkManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Network\\NetworkManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Network\\NetworkManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Manager\\GameManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Manager\\GameManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Game\\TurnSystem.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Game\\TurnSystem.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Game\\TurnSystem.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Game\\TurnSystem.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Game\\GameManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Game\\GameManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Game\\GameManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Game\\GameManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Effect\\EffectManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Effect\\EffectManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Effect\\EffectManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Effect\\EffectManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Effect\\IEffect.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Effect\\IEffect.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Effect\\Effects\\DamageEffect.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Effect\\Effects\\DamageEffect.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Card\\SpellCard.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Card\\SpellCard.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Card\\MinionCard.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Card\\MinionCard.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Card\\MinionCard.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Card\\MinionCard.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Card\\Card.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Card\\Card.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Card\\Card.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Card\\Card.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Battle\\CombatManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Battle\\CombatManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Battle\\CombatManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Battle\\CombatManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Animation\\AnimationManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Animation\\AnimationManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Effect\\Effects\\HealEffect.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Effect\\Effects\\HealEffect.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\HearthStone\\Classes\\Animation\\AnimationManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Animation\\AnimationManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 9,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Constants.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Utils\\Constants.h",
+              "RelativeDocumentMoniker": "Utils\\Constants.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Utils\\Constants.h",
+              "RelativeToolTip": "Utils\\Constants.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADUAAAAZAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:48:22.914Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AppDelegate.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\AppDelegate.h",
+              "RelativeDocumentMoniker": "AppDelegate.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\AppDelegate.h",
+              "RelativeToolTip": "AppDelegate.h",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:42:42.109Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Utils.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Utils\\Utils.h",
+              "RelativeDocumentMoniker": "Utils\\Utils.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Utils\\Utils.h",
+              "RelativeToolTip": "Utils\\Utils.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADIAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:42:37.345Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ResourceManager.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Utils\\ResourceManager.h",
+              "RelativeDocumentMoniker": "Utils\\ResourceManager.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Utils\\ResourceManager.h",
+              "RelativeToolTip": "Utils\\ResourceManager.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB4AAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:42:27.496Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GameLogger.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Utils\\GameLogger.h",
+              "RelativeDocumentMoniker": "Utils\\GameLogger.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Utils\\GameLogger.h",
+              "RelativeToolTip": "Utils\\GameLogger.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACMAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:42:19.073Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ConfigManager.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Utils\\ConfigManager.h",
+              "RelativeDocumentMoniker": "Utils\\ConfigManager.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Utils\\ConfigManager.h",
+              "RelativeToolTip": "Utils\\ConfigManager.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:42:09.376Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ConfigManager.cpp",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Utils\\ConfigManager.cpp",
+              "RelativeDocumentMoniker": "Utils\\ConfigManager.cpp",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Utils\\ConfigManager.cpp",
+              "RelativeToolTip": "Utils\\ConfigManager.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-25T06:42:04.248Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Player.cpp",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Player\\Player.cpp",
+              "RelativeDocumentMoniker": "Player\\Player.cpp",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Player\\Player.cpp",
+              "RelativeToolTip": "Player\\Player.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACMAAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-25T06:40:52.897Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Player.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Player\\Player.h",
+              "RelativeDocumentMoniker": "Player\\Player.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Player\\Player.h",
+              "RelativeToolTip": "Player\\Player.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACgAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:39:56.588Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AppDelegate.cpp",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\AppDelegate.cpp",
+              "RelativeDocumentMoniker": "AppDelegate.cpp",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\AppDelegate.cpp",
+              "RelativeToolTip": "AppDelegate.cpp",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAAACEAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-25T06:33:57.183Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MenuScene.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Scene\\MenuScene.h",
+              "RelativeDocumentMoniker": "Scene\\MenuScene.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Scene\\MenuScene.h",
+              "RelativeToolTip": "Scene\\MenuScene.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB0AAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:33:55.899Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "MenuScene.cpp",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Scene\\MenuScene.cpp",
+              "RelativeDocumentMoniker": "Scene\\MenuScene.cpp",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Scene\\MenuScene.cpp",
+              "RelativeToolTip": "Scene\\MenuScene.cpp",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAAAFMAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-25T06:33:55.278Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "GameScene.cpp",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Scene\\GameScene.cpp",
+              "RelativeDocumentMoniker": "Scene\\GameScene.cpp",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Scene\\GameScene.cpp",
+              "RelativeToolTip": "Scene\\GameScene.cpp",
+              "ViewState": "AQIAACoAAAAAAAAAAAAAAF8AAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-25T06:33:54.221Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "WebSocketClient.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Network\\WebSocketClient.h",
+              "RelativeDocumentMoniker": "Network\\WebSocketClient.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Network\\WebSocketClient.h",
+              "RelativeToolTip": "Network\\WebSocketClient.h",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAAADoAAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:33:52.959Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "GameAction.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Network\\GameAction.h",
+              "RelativeDocumentMoniker": "Network\\GameAction.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Network\\GameAction.h",
+              "RelativeToolTip": "Network\\GameAction.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:33:51.267Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "GameManager.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Manager\\GameManager.h",
+              "RelativeDocumentMoniker": "Manager\\GameManager.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Manager\\GameManager.h",
+              "RelativeToolTip": "Manager\\GameManager.h",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAAADwAAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:33:50.646Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "GameManager.cpp",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Manager\\GameManager.cpp",
+              "RelativeDocumentMoniker": "Manager\\GameManager.cpp",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Manager\\GameManager.cpp",
+              "RelativeToolTip": "Manager\\GameManager.cpp",
+              "ViewState": "AQIAAB0AAAAAAAAAAAAAAFIAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-25T06:33:50.125Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "EffectManager.cpp",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Effect\\EffectManager.cpp",
+              "RelativeDocumentMoniker": "Effect\\EffectManager.cpp",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Effect\\EffectManager.cpp",
+              "RelativeToolTip": "Effect\\EffectManager.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACsAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-25T06:32:10.297Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "GameManager.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Game\\GameManager.h",
+              "RelativeDocumentMoniker": "Game\\GameManager.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Game\\GameManager.h",
+              "RelativeToolTip": "Game\\GameManager.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADAAAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:29:42.234Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "GameManager.cpp",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Game\\GameManager.cpp",
+              "RelativeDocumentMoniker": "Game\\GameManager.cpp",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Game\\GameManager.cpp",
+              "RelativeToolTip": "Game\\GameManager.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAC8AAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-25T06:29:41.676Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "HealEffect.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Effect\\Effects\\HealEffect.h",
+              "RelativeDocumentMoniker": "Effect\\Effects\\HealEffect.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Effect\\Effects\\HealEffect.h",
+              "RelativeToolTip": "Effect\\Effects\\HealEffect.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:29:39.465Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "HealEffect.cpp",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Effect\\Effects\\HealEffect.cpp",
+              "RelativeDocumentMoniker": "Effect\\Effects\\HealEffect.cpp",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Effect\\Effects\\HealEffect.cpp",
+              "RelativeToolTip": "Effect\\Effects\\HealEffect.cpp",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAEAAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-25T06:29:38.809Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "DamageEffect.cpp",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Effect\\Effects\\DamageEffect.cpp",
+              "RelativeDocumentMoniker": "Effect\\Effects\\DamageEffect.cpp",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Effect\\Effects\\DamageEffect.cpp",
+              "RelativeToolTip": "Effect\\Effects\\DamageEffect.cpp",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAAAD8AAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-25T06:29:37.379Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "SpellCard.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Card\\SpellCard.h",
+              "RelativeDocumentMoniker": "Card\\SpellCard.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Card\\SpellCard.h",
+              "RelativeToolTip": "Card\\SpellCard.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACMAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:29:36.491Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "SpellCard.cpp",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Card\\SpellCard.cpp",
+              "RelativeDocumentMoniker": "Card\\SpellCard.cpp",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Card\\SpellCard.cpp",
+              "RelativeToolTip": "Card\\SpellCard.cpp",
+              "ViewState": "AQIAABwAAAAAAAAAAAAAAFEAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-25T06:29:35.844Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "MinionCard.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Card\\MinionCard.h",
+              "RelativeDocumentMoniker": "Card\\MinionCard.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Card\\MinionCard.h",
+              "RelativeToolTip": "Card\\MinionCard.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAC0AAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:29:34.838Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "MinionCard.cpp",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Card\\MinionCard.cpp",
+              "RelativeDocumentMoniker": "Card\\MinionCard.cpp",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Card\\MinionCard.cpp",
+              "RelativeToolTip": "Card\\MinionCard.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-25T06:29:08.898Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "NetworkManager.cpp",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Network\\NetworkManager.cpp",
+              "RelativeDocumentMoniker": "Network\\NetworkManager.cpp",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Network\\NetworkManager.cpp",
+              "RelativeToolTip": "Network\\NetworkManager.cpp",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAAAFMAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-25T06:28:58.972Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "AnimationManager.cpp",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Animation\\AnimationManager.cpp",
+              "RelativeDocumentMoniker": "Animation\\AnimationManager.cpp",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Animation\\AnimationManager.cpp",
+              "RelativeToolTip": "Animation\\AnimationManager.cpp",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAAEoAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-25T06:28:47.418Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "CombatManager.cpp",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Battle\\CombatManager.cpp",
+              "RelativeDocumentMoniker": "Battle\\CombatManager.cpp",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Battle\\CombatManager.cpp",
+              "RelativeToolTip": "Battle\\CombatManager.cpp",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAwEQAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-25T06:28:35.511Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "TurnSystem.cpp",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Game\\TurnSystem.cpp",
+              "RelativeDocumentMoniker": "Game\\TurnSystem.cpp",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Game\\TurnSystem.cpp",
+              "RelativeToolTip": "Game\\TurnSystem.cpp",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAD4AAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-25T06:28:20.107Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "DamageEffect.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Effect\\Effects\\DamageEffect.h",
+              "RelativeDocumentMoniker": "Effect\\Effects\\DamageEffect.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Effect\\Effects\\DamageEffect.h",
+              "RelativeToolTip": "Effect\\Effects\\DamageEffect.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:28:07.969Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "NetworkManager.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Network\\NetworkManager.h",
+              "RelativeDocumentMoniker": "Network\\NetworkManager.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Network\\NetworkManager.h",
+              "RelativeToolTip": "Network\\NetworkManager.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAD0AAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:27:35.001Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "AnimationManager.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Animation\\AnimationManager.h",
+              "RelativeDocumentMoniker": "Animation\\AnimationManager.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Animation\\AnimationManager.h",
+              "RelativeToolTip": "Animation\\AnimationManager.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACQAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:27:24.644Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "CombatManager.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Battle\\CombatManager.h",
+              "RelativeDocumentMoniker": "Battle\\CombatManager.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Battle\\CombatManager.h",
+              "RelativeToolTip": "Battle\\CombatManager.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACAAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:27:13.9Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "TurnSystem.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Game\\TurnSystem.h",
+              "RelativeDocumentMoniker": "Game\\TurnSystem.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Game\\TurnSystem.h",
+              "RelativeToolTip": "Game\\TurnSystem.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACMAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:27:01.243Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "EffectManager.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Effect\\EffectManager.h",
+              "RelativeDocumentMoniker": "Effect\\EffectManager.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Effect\\EffectManager.h",
+              "RelativeToolTip": "Effect\\EffectManager.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACMAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:26:47.306Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "IEffect.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Effect\\IEffect.h",
+              "RelativeDocumentMoniker": "Effect\\IEffect.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Effect\\IEffect.h",
+              "RelativeToolTip": "Effect\\IEffect.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB4AAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:26:38.118Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "Card.cpp",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Card\\Card.cpp",
+              "RelativeDocumentMoniker": "Card\\Card.cpp",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Card\\Card.cpp",
+              "RelativeToolTip": "Card\\Card.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFkAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-25T06:17:39.861Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "GameScene.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Scene\\GameScene.h",
+              "RelativeDocumentMoniker": "Scene\\GameScene.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Scene\\GameScene.h",
+              "RelativeToolTip": "Scene\\GameScene.h",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAADsAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:17:31.644Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "Card.h",
+              "DocumentMoniker": "D:\\Projects\\HearthStone\\Classes\\Card\\Card.h",
+              "RelativeDocumentMoniker": "Card\\Card.h",
+              "ToolTip": "D:\\Projects\\HearthStone\\Classes\\Card\\Card.h",
+              "RelativeToolTip": "Card\\Card.h",
+              "ViewState": "AQIAABYAAAAAAAAAAAAAAEsAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-25T06:17:12.085Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

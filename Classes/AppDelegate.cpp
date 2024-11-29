@@ -42,7 +42,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 
     // 设置显示FPS
-    director->setDisplayStats(false);  // 改为 false，不显示FPS
+    director->setDisplayStats(true);  // 改为 false，不显示FPS
 
     // 设置FPS
     director->setAnimationInterval(1.0f / 60);

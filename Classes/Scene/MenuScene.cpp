@@ -38,17 +38,17 @@ void MenuScene::initMenu() {
        // 添加点击回调函数
        // 创建动画效果
     auto playItem = MenuItemImage::create(
-        "menu/play_normal.png",
+        "menu/Button_First_Normal.png",
         "menu/play_selected.png",
         CC_CALLBACK_1(MenuScene::onPlayGame, this));
 
     auto deckItem = MenuItemImage::create(
-        "menu/deck_normal.png",
+        "menu/Button_Second_Normal.png",
         "menu/deck_selected.png",
         CC_CALLBACK_1(MenuScene::onDeckBuilder, this));
 
     auto settingsItem = MenuItemImage::create(
-        "menu/settings_normal.png",
+        "menu/Button_Third_Normal.png",
         "menu/settings_selected.png",
         CC_CALLBACK_1(MenuScene::onSettings, this));
 
@@ -59,17 +59,31 @@ void MenuScene::initMenu() {
 
     // 设置位置
     float spacing = 80.0f;
-    playItem->setPosition(Vec2(0, spacing * 1.5f));
-    deckItem->setPosition(Vec2(0, spacing * 0.5f));
-    settingsItem->setPosition(Vec2(0, -spacing * 0.5f));
-    quitItem->setPosition(Vec2(0, -spacing * 1.5f));
+    playItem->setPosition(Vec2(0, spacing * 1.2f));
+    deckItem->setPosition(Vec2(0, spacing * 0.45f));
+    settingsItem->setPosition(Vec2(0, -spacing * 0.35f));
+    quitItem->setPosition(Vec2(visibleSize.width/2- quitItem->getContentSize().width/2, -visibleSize.height/2+ quitItem->getContentSize().height / 2));
 
     // 创建菜单
     auto menu = Menu::create(playItem, deckItem, settingsItem, quitItem, nullptr);
     menu->setPosition(Vec2(visibleSize.width / 2 + origin.x,
         visibleSize.height / 2 + origin.y));
 
-    this->addChild(menu);
+    this->addChild(menu,2);
+
+    //下面开始做开场箱子
+    auto spriteTable = Sprite::create("menu/Table.png");
+    // position the sprite on the center of the screen
+    spriteTable->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    // add the sprite as a child to this layer
+    this->addChild(spriteTable, 0);
+
+    //下面开始做选项面板
+    auto spriteCircle = Sprite::create("menu/Button_Circle.png");
+    // position the sprite on the center of the screen
+    spriteCircle->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    // add the sprite as a child to this layer
+    this->addChild(spriteCircle, 1);
 
     // 播放菜单动画
     playMenuAnimation();
@@ -90,8 +104,8 @@ void MenuScene::initUI() {
     // 添加版本号
     auto versionLabel = Label::createWithTTF("Version 1.0", "fonts/arial.ttf", 24);
     if (versionLabel) {
-        versionLabel->setPosition(Vec2(origin.x + visibleSize.width - 100,
-            origin.y + 30));
+        versionLabel->setPosition(Vec2(versionLabel->getContentSize().width/2,
+           visibleSize.height- versionLabel->getContentSize().height / 2));
         this->addChild(versionLabel, 1);
     }
     // 菜单项回调函数

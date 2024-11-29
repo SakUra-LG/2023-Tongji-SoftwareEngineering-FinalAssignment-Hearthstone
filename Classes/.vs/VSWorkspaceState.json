@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Animation",
+    "\\Battle",
+    "\\Effect",
+    "\\Effect\\Effects",
+    "\\Game",
+    "\\Manager",
+    "\\Network",
+    "\\Player",
+    "\\Utils"
+  ],
+  "SelectedNode": "\\AppDelegate.cpp",
+  "PreviewInSolutionExplorer": false
+}
