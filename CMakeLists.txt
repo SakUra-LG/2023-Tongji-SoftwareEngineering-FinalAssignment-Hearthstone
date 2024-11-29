@@ -83,6 +83,10 @@ set(GAME_SOURCE
     Classes/Scene/GameScene.h
     Classes/Scene/MenuScene.cpp
     Classes/Scene/MenuScene.h
+    Classes/Scene/Settingscene1.cpp
+    Classes/Scene/Settingscene1.h
+    Classes/Scene/Settingscene2.cpp
+    Classes/Scene/Settingscene2.h
     
     # Utils
     Classes/Utils/Constants.h
