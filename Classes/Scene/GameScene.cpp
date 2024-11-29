@@ -1,109 +1,328 @@
-// °üº¬ËùĞèµÄÍ·ÎÄ¼ş
-#include "GameScene.h"          // ÓÎÏ·³¡¾°ÀàµÄÉùÃ÷
-#include "Manager/GameManager.h"   // ÓÎÏ·¹ÜÀíÆ÷
-#include "Card/Card.h"          // ¿¨ÅÆÀà
-#include "Player/Player.h"      // Íæ¼ÒÀà
-#include "Utils/Constants.h"    // ÓÎÏ·³£Á¿
-#include "Animation/AnimationManager.h"  // ¶¯»­¹ÜÀíÆ÷
+// åŒ…å«æ‰€éœ€çš„å¤´æ–‡ä»¶
+#include "GameScene.h"          // æ¸¸æˆåœºæ™¯ç±»çš„å£°æ˜
+#include "Manager/GameManager.h"   // æ¸¸æˆç®¡ç†å™¨
+#include "Card/Card.h"          // å¡ç‰Œç±»
+#include "Player/Player.h"      // ç©å®¶ç±»
+#include "Utils/Constants.h"    // æ¸¸æˆå¸¸é‡
+#include "Animation/AnimationManager.h"  // åŠ¨ç”»ç®¡ç†å™¨
 
-// Ê¹ÓÃ cocos2d ÃüÃû¿Õ¼ä
+// ä½¿ç”¨ cocos2d å‘½åç©ºé—´
 USING_NS_CC;
 
-// ´´½¨³¡¾°µÄ¾²Ì¬·½·¨
+// åˆ›å»ºåœºæ™¯çš„é™æ€æ–¹æ³•
 Scene* GameScene::createScene() {
-    return GameScene::create();  // ´´½¨²¢·µ»Ø³¡¾°ÊµÀı
+    return GameScene::create();  // åˆ›å»ºå¹¶è¿”å›åœºæ™¯å®ä¾‹
 }
 
-// ³¡¾°³õÊ¼»¯·½·¨
+// åœºæ™¯åˆå§‹åŒ–æ–¹æ³•
 bool GameScene::init() {
-    // µ÷ÓÃ¸¸ÀàµÄ³õÊ¼»¯·½·¨
+    // è°ƒç”¨çˆ¶ç±»çš„åˆå§‹åŒ–æ–¹æ³•
     if (!Scene::init()) {
-        return false;  // Èç¹û¸¸Àà³õÊ¼»¯Ê§°Ü£¬·µ»Øfalse
+        return false;  // å¦‚æœçˆ¶ç±»åˆå§‹åŒ–å¤±è´¥ï¼Œè¿”å›false
     }
 
-    // ³õÊ¼»¯³¡¾°µÄ¸÷¸ö×é¼ş
-    initLayers();     // ³õÊ¼»¯ÓÎÏ·²ã¼¶
-    initUI();         // ³õÊ¼»¯ÓÃ»§½çÃæ
-    initListeners();  // ³õÊ¼»¯ÊÂ¼ş¼àÌıÆ÷
+    // åˆå§‹åŒ–åœºæ™¯çš„å„ä¸ªç»„ä»¶
+    initLayers();     // åˆå§‹åŒ–æ¸¸æˆå±‚çº§
+    initUI();         // åˆå§‹åŒ–ç”¨æˆ·ç•Œé¢
+    initListeners();  // åˆå§‹åŒ–äº‹ä»¶ç›‘å¬å™¨
 
-    // Æô¶¯UI¸üĞÂ¶¨Ê±Æ÷£¬Ã¿Ãëµ÷ÓÃÒ»´ÎupdateUI·½·¨
+    // å¯åŠ¨UIæ›´æ–°å®šæ—¶å™¨ï¼Œæ¯ç§’è°ƒç”¨ä¸€æ¬¡updateUIæ–¹æ³•
     this->schedule(CC_SCHEDULE_SELECTOR(GameScene::updateUI), 1.0f);
 
-    return true;  // ³õÊ¼»¯³É¹¦
+    return true;  // åˆå§‹åŒ–æˆåŠŸ
 }
 
-// ³õÊ¼»¯ÓÎÏ·²ã¼¶
+// åˆå§‹åŒ–æ¸¸æˆå±‚çº§
 void GameScene::initLayers() {
-    // »ñÈ¡ÆÁÄ»¿É¼ûÇøÓò´óĞ¡
-    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Size visibleSize = Director::getInstance()->getVisibleSize();  // 2048x1024
 
-    // ´´½¨ÓÎÏ·Ö÷²ã
-    _gameLayer = Node::create();  // ´´½¨ÓÎÏ·²ã½Úµã
-    _gameLayer->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));  // ÉèÖÃÎ»ÖÃÎªÆÁÄ»ÖĞĞÄ
-    this->addChild(_gameLayer);   // ½«ÓÎÏ·²ãÌí¼Óµ½³¡¾°
+    // 1. åˆ›å»ºæ¸¸æˆä¸»å±‚å’ŒèƒŒæ™¯ï¼ˆå±…ä¸­æ˜¾ç¤ºï¼‰
+    _gameLayer = Node::create();
+    _gameLayer->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));  // (1024, 512)
 
-    // ´´½¨UI²ã
-    _uiLayer = Node::create();    // ´´½¨UI²ã½Úµã
-    this->addChild(_uiLayer);     // ½«UI²ãÌí¼Óµ½³¡¾°
+    // æ·»åŠ æ¸¸æˆå±‚èƒŒæ™¯å›¾ç‰‡ï¼ˆå…¨å±å¤§å°ï¼‰
+    auto gameLayerBg = Sprite::create("backgrounds/game_board.png");
+    if (gameLayerBg) {
+        gameLayerBg->setContentSize(Size(visibleSize.width, visibleSize.height));  // 2048x1024
+        gameLayerBg->setPosition(Vec2::ZERO);  // ç›¸å¯¹äº_gameLayerä¸­å¿ƒç‚¹
+        _gameLayer->addChild(gameLayerBg, -1);
+    }
+    this->addChild(_gameLayer);
 
-    // ´´½¨Íæ¼ÒÊÖÅÆÇø
-    _playerHand = Node::create();  // ´´½¨Íæ¼ÒÊÖÅÆ½Úµã
-    _playerHand->setPosition(Vec2(visibleSize.width / 2, 100));  // ÉèÖÃÎ»ÖÃÔÚµ×²¿
-    _gameLayer->addChild(_playerHand);  // Ìí¼Óµ½ÓÎÏ·²ã
+    // 2. åˆ›å»ºUIå±‚ï¼ˆå…¨å±è¦†ç›–ï¼‰
+    _uiLayer = Node::create();
+    auto uiArea = DrawNode::create();
+    uiArea->drawRect(
+        Vec2::ZERO,
+        Vec2(2048, 1024),  // å…¨å±å¤§å°
+        Color4F(1, 1, 1, 0.1f)  // åŠé€æ˜ç™½è‰²è¾¹æ¡†
+    );
+    _uiLayer->addChild(uiArea);
+    this->addChild(_uiLayer);
 
-    // ´´½¨Íæ¼Ò³¡µØ
-    _playerField = Node::create();  // ´´½¨Íæ¼Ò³¡µØ½Úµã
-    _playerField->setPosition(Vec2(visibleSize.width / 2, 300));  // ÉèÖÃÎ»ÖÃ
-    _gameLayer->addChild(_playerField);  // Ìí¼Óµ½ÓÎÏ·²ã
+    // 3. åˆ›å»ºç©å®¶æ‰‹ç‰ŒåŒºï¼ˆåº•éƒ¨åŒºåŸŸï¼‰
+    _playerHand = Node::create();
+    _playerHand->setPosition(Vec2(0, -320));  // ç›¸å¯¹äºæ¸¸æˆå±‚ä¸­å¿ƒå‘ä¸‹320åƒç´ 
+    auto playerHandArea = DrawNode::create();
+    playerHandArea->drawRect(
+        Vec2(-600, -160),  // å·¦ä¸‹è§’åæ ‡
+        Vec2(600, 100),    // å³ä¸Šè§’åæ ‡ï¼Œæ€»å¤§å°1200x260
+        Color4F(0, 1, 0, 0.2f)  // åŠé€æ˜ç»¿è‰²
+    );
+    _playerHand->addChild(playerHandArea);
+    _gameLayer->addChild(_playerHand);
 
-    // ´´½¨¶ÔÊÖÊÖÅÆÇøºÍ³¡µØ
-    _opponentHand = Node::create();    // ´´½¨¶ÔÊÖÊÖÅÆ½Úµã
-    _opponentField = Node::create();   // ´´½¨¶ÔÊÖ³¡µØ½Úµã
-    // ÉèÖÃ¶ÔÊÖÇøÓòÎ»ÖÃ£¨ÔÚÆÁÄ»ÉÏ·½£©
-    _opponentHand->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 100));
-    _opponentField->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 300));
-    _gameLayer->addChild(_opponentHand);    // Ìí¼Ó¶ÔÊÖÊÖÅÆÇøµ½ÓÎÏ·²ã
-    _gameLayer->addChild(_opponentField);   // Ìí¼Ó¶ÔÊÖ³¡µØµ½ÓÎÏ·²ã
+    // 4. åˆ›å»ºç©å®¶åœºåœ°ï¼ˆæ‰‹ç‰ŒåŒºä¸Šæ–¹ï¼‰
+    _playerField = Node::create();
+    _playerField->setPosition(Vec2(0, -70));  // ç›¸å¯¹äºæ¸¸æˆå±‚ä¸­å¿ƒå‘ä¸‹70åƒç´ 
+    auto playerFieldArea = DrawNode::create();
+    playerFieldArea->drawRect(
+        Vec2(-450, -100),  // å·¦ä¸‹è§’åæ ‡
+        Vec2(450, 100),    // å³ä¸Šè§’åæ ‡ï¼Œæ€»å¤§å°900x200
+        Color4F(0, 0, 1, 0.2f)  // åŠé€æ˜è“è‰²
+    );
+    _playerField->addChild(playerFieldArea);
+    _gameLayer->addChild(_playerField);
+
+    // 5. åˆ›å»ºå¯¹æ‰‹åŒºåŸŸ
+    _opponentHand = Node::create();
+    _opponentField = Node::create();
+
+    // å¯¹æ‰‹æ‰‹ç‰ŒåŒºï¼ˆé¡¶éƒ¨åŒºåŸŸï¼‰
+    auto opponentHandArea = DrawNode::create();
+    opponentHandArea->drawRect(
+        Vec2(-600, -160),  // å·¦ä¸‹è§’åæ ‡
+        Vec2(600, 100),    // å³ä¸Šè§’åæ ‡ï¼Œæ€»å¤§å°1200x260
+        Color4F(1, 0, 0, 0.2f)  // åŠé€æ˜çº¢è‰²
+    );
+    _opponentHand->addChild(opponentHandArea);
+
+    // å¯¹æ‰‹åœºåœ°ï¼ˆæ‰‹ç‰ŒåŒºä¸‹æ–¹ï¼‰
+    auto opponentFieldArea = DrawNode::create();
+    opponentFieldArea->drawRect(
+        Vec2(-450, -100),  // å·¦ä¸‹è§’åæ ‡
+        Vec2(450, 100),    // å³ä¸Šè§’åæ ‡ï¼Œæ€»å¤§å°900x200
+        Color4F(1, 0.5f, 0, 0.2f)  // åŠé€æ˜æ©™è‰²
+    );
+    _opponentField->addChild(opponentFieldArea);
+
+    _opponentHand->setPosition(Vec2(0, 450));   // ç›¸å¯¹äºæ¸¸æˆå±‚ä¸­å¿ƒå‘ä¸Š450åƒç´ 
+    _opponentField->setPosition(Vec2(0, 140));  // ç›¸å¯¹äºæ¸¸æˆå±‚ä¸­å¿ƒå‘ä¸Š140åƒç´ 
+    _gameLayer->addChild(_opponentHand);
+    _gameLayer->addChild(_opponentField);
+    //å¯åˆ 
+    addDebugLabels();
+}
+// æ·»åŠ è°ƒè¯•æ ‡ç­¾ï¼ˆå¯é€‰ï¼‰
+// æ·»åŠ è°ƒè¯•æ ‡ç­¾ï¼ˆæ˜¾ç¤ºå„åŒºåŸŸä¿¡æ¯ï¼‰
+void GameScene::addDebugLabels() {
+    // åˆ›å»ºæ ‡å‡†ç™½è‰²24å·å­—ä½“æ ‡ç­¾çš„lambdaå‡½æ•°
+    auto createLabel = [](const std::string& text) {
+        auto label = Label::createWithTTF(text, "fonts/arial.ttf", 24);
+        label->setTextColor(Color4B::WHITE);
+        return label;
+        };
+
+    // æ›´æ–°å„åŒºåŸŸçš„å°ºå¯¸æ ‡ç­¾
+    auto playerHandLabel = createLabel("Player Hand\n1200x260");  // æ›´æ–°å°ºå¯¸ä¿¡æ¯
+    playerHandLabel->setPosition(Vec2::ZERO);
+    _playerHand->addChild(playerHandLabel);
+
+    auto playerFieldLabel = createLabel("Player Field\n900x200");  // æ›´æ–°å°ºå¯¸ä¿¡æ¯
+    playerFieldLabel->setPosition(Vec2::ZERO);
+    _playerField->addChild(playerFieldLabel);
+
+    auto opponentHandLabel = createLabel("Opponent Hand\n1200x260");  // æ›´æ–°å°ºå¯¸ä¿¡æ¯
+    opponentHandLabel->setPosition(Vec2::ZERO);
+    _opponentHand->addChild(opponentHandLabel);
+
+    auto opponentFieldLabel = createLabel("Opponent Field\n900x200");  // æ›´æ–°å°ºå¯¸ä¿¡æ¯
+    opponentFieldLabel->setPosition(Vec2::ZERO);
+    _opponentField->addChild(opponentFieldLabel);
 }
 
-// ³õÊ¼»¯UIÔªËØ
+// åˆå§‹åŒ–UIå…ƒç´ ï¼ˆæŒ‰é’®å’Œæ ‡ç­¾ï¼‰
 void GameScene::initUI() {
-    // »ñÈ¡ÆÁÄ»¿É¼ûÇøÓò´óĞ¡
-    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Size visibleSize = Director::getInstance()->getVisibleSize();  // 2048x1024
 
-    // ´´½¨»ØºÏ½áÊø°´Å¥
+    // å›åˆç»“æŸæŒ‰é’®ï¼ˆå³ä¾§ä¸­é—´ï¼‰
     _endTurnButton = MenuItemImage::create(
-        "buttons/end_turn_normal.png",      // °´Å¥Õı³£×´Ì¬µÄÍ¼Æ¬
-        "buttons/end_turn_pressed.png",     // °´Å¥°´ÏÂ×´Ì¬µÄÍ¼Æ¬
-        CC_CALLBACK_1(GameScene::onEndTurnClicked, this)  // µã»÷»Øµ÷º¯Êı
+        "buttons/end_turn_normal.png",
+        "buttons/end_turn_pressed.png",
+        CC_CALLBACK_1(GameScene::onEndTurnClicked, this)
     );
-    // ÉèÖÃ»ØºÏ½áÊø°´Å¥Î»ÖÃ
-    _endTurnButton->setPosition(Vec2(visibleSize.width - 100, visibleSize.height / 2));
+    _endTurnButton->setPosition(Vec2(visibleSize.width - 450, visibleSize.height / 2+30));  // (1948, 512)
 
-    // ´´½¨ÉèÖÃ°´Å¥
+    // è®¾ç½®æŒ‰é’®ï¼ˆå·¦ä¸Šè§’ï¼‰
     _settingsButton = MenuItemImage::create(
-        "buttons/settings_normal.png",      // °´Å¥Õı³£×´Ì¬µÄÍ¼Æ¬
-        "buttons/settings_pressed.png",     // °´Å¥°´ÏÂ×´Ì¬µÄÍ¼Æ¬
-        CC_CALLBACK_1(GameScene::onSettingsClicked, this)  // µã»÷»Øµ÷º¯Êı
+        "buttons/settings_normal.png",
+        "buttons/settings_pressed.png",
+        CC_CALLBACK_1(GameScene::onSettingsClicked, this)
     );
-    // ÉèÖÃÉèÖÃ°´Å¥Î»ÖÃ
-    _settingsButton->setPosition(Vec2(50, visibleSize.height - 50));
+    _settingsButton->setPosition(Vec2(50, visibleSize.height - 50));  // (50, 974)
 
-    // ´´½¨°üº¬ËùÓĞ°´Å¥µÄ²Ëµ¥
-    auto menu = Menu::create(_endTurnButton, _settingsButton, nullptr);
-    menu->setPosition(Vec2::ZERO);  // ÉèÖÃ²Ëµ¥Î»ÖÃÎªÔ­µã
-    _uiLayer->addChild(menu);       // ½«²Ëµ¥Ìí¼Óµ½UI²ã
+    // æ·»åŠ ç©å®¶è‹±é›„æŠ€èƒ½ï¼ˆå¤´åƒå³ä¾§ï¼‰
+    _playerHeroPower = MenuItemImage::create(
+        "heroes/hero_power_normal.png",
+        "heroes/hero_power_pressed.png",
+        CC_CALLBACK_1(GameScene::onHeroPowerClicked, this)
+    );
+    _playerHeroPower->setPosition(Vec2(visibleSize.width / 2 + 170, 250));  // å¤´åƒå³ä¾§100åƒç´ 
+    _playerHeroPower->setScale(0.7f);
 
-    // ´´½¨»ØºÏ¼ÆÊ±Æ÷±êÇ©
-    _turnTimerLabel = Label::createWithTTF("90", "fonts/arial.ttf", 32);  // ´´½¨¼ÆÊ±Æ÷ÎÄ±¾
-    _turnTimerLabel->setPosition(Vec2(visibleSize.width - 100, visibleSize.height / 2 + 50));  // ÉèÖÃÎ»ÖÃ
-    _uiLayer->addChild(_turnTimerLabel);  // Ìí¼Óµ½UI²ã
+    // æ›´æ–°èœå•ï¼ŒåŒ…å«è‹±é›„æŠ€èƒ½æŒ‰é’®
+    cocos2d::Menu* menu = Menu::create(_endTurnButton, _settingsButton, _playerHeroPower, nullptr);
+    if (menu) {
+        menu->setPosition(Vec2::ZERO);
+        _uiLayer->addChild(menu);
+    }
 
-    // ´´½¨Íæ¼ÒĞÅÏ¢±êÇ©
-    _playerManaLabel = Label::createWithTTF("0/0", "fonts/arial.ttf", 24);     // ´´½¨·¨Á¦Öµ±êÇ©
-    _playerHealthLabel = Label::createWithTTF("30", "fonts/arial.ttf", 24);    // ´´½¨ÉúÃüÖµ±êÇ©
-    _playerManaLabel->setPosition(Vec2(100, 100));     // ÉèÖÃ·¨Á¦Öµ±êÇ©Î»ÖÃ
-    _playerHealthLabel->setPosition(Vec2(100, 150));   // ÉèÖÃÉúÃüÖµ±êÇ©Î»ÖÃ
-    _uiLayer->addChild(_playerManaLabel);     // Ìí¼Ó·¨Á¦Öµ±êÇ©µ½UI²ã
-    _uiLayer->addChild(_playerHealthLabel);   // Ìí¼ÓÉúÃüÖµ±êÇ©µ½UI²ã
+    // å›åˆè®¡æ—¶å™¨æ ‡ç­¾ï¼ˆå›åˆç»“æŸæŒ‰é’®ä¸Šæ–¹ï¼‰
+    _turnTimerLabel = Label::createWithTTF("90", "fonts/arial.ttf", 32);
+    _turnTimerLabel->setPosition(Vec2(visibleSize.width - 450, visibleSize.height / 2 + 80));  // (1948, 562)
+    _uiLayer->addChild(_turnTimerLabel);
+
+    // ç©å®¶ä¿¡æ¯æ ‡ç­¾ï¼ˆå·¦ä¸‹è§’ï¼‰
+    _playerManaLabel = Label::createWithTTF("0/0", "fonts/arial.ttf", 24);     // æ³•åŠ›å€¼
+    _playerHealthLabel = Label::createWithTTF("30", "fonts/arial.ttf", 24);    // ç”Ÿå‘½å€¼
+    _playerManaLabel->setPosition(Vec2(100, 100));      // (100, 100)
+    _playerHealthLabel->setPosition(Vec2(100, 150));    // (100, 150)
+    _uiLayer->addChild(_playerManaLabel);
+    _uiLayer->addChild(_playerHealthLabel);
+
+    // æ·»åŠ ç©å®¶å¤´åƒï¼ˆæ­£ä¸‹æ–¹ï¼‰
+    auto playerHeroPortrait = Sprite::create("heroes/player_portrait.png");
+    if (playerHeroPortrait) {
+        playerHeroPortrait->setPosition(Vec2(visibleSize.width / 2-8, 265));  // x=1024, y=120
+        playerHeroPortrait->setScale(0.8f);
+        _uiLayer->addChild(playerHeroPortrait);
+
+        // ç©å®¶ç”Ÿå‘½å€¼æ˜¾ç¤ºï¼ˆå¤´åƒä¸‹æ–¹ï¼‰
+        _playerHealthLabel = Label::createWithTTF("30", "fonts/arial.ttf", 24);
+        _playerHealthLabel->setPosition(Vec2(visibleSize.width / 2, 80));
+        _uiLayer->addChild(_playerHealthLabel);
+    }
+
+
+
+
+    // æ·»åŠ å¯¹æ‰‹å¤´åƒï¼ˆæ­£ä¸Šæ–¹ï¼‰
+    auto opponentHeroPortrait = Sprite::create("heroes/opponent_portrait.png");
+    if (opponentHeroPortrait) {
+        opponentHeroPortrait->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 120));  // x=1024, y=904
+        opponentHeroPortrait->setScale(0.8f);
+        _uiLayer->addChild(opponentHeroPortrait);
+
+        // å¯¹æ‰‹ç”Ÿå‘½å€¼æ˜¾ç¤ºï¼ˆå¤´åƒä¸Šæ–¹ï¼‰
+        auto opponentHealth = Label::createWithTTF("30", "fonts/arial.ttf", 24);
+        opponentHealth->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 80));
+        _uiLayer->addChild(opponentHealth);
+    }
+
+    // æ·»åŠ å¯¹æ‰‹è‹±é›„æŠ€èƒ½ï¼ˆå¤´åƒå³ä¾§ï¼‰
+    auto opponentHeroPower = Sprite::create("heroes/hero_power_disabled.png");
+    if (opponentHeroPower) {
+        opponentHeroPower->setPosition(Vec2(visibleSize.width / 2 + 100, visibleSize.height - 120));
+        opponentHeroPower->setScale(0.8f);
+        _uiLayer->addChild(opponentHeroPower);
+    }
+
+    // ç©å®¶æ³•åŠ›æ°´æ™¶æ˜¾ç¤ºï¼ˆå¤´åƒå·¦ä¾§ï¼‰
+    _playerManaLabel = Label::createWithTTF("0/0", "fonts/arial.ttf", 24);
+    _playerManaLabel->setPosition(Vec2(visibleSize.width / 2 - 100, 120));
+    _uiLayer->addChild(_playerManaLabel);
+
+    // å¯¹æ‰‹æ³•åŠ›æ°´æ™¶æ˜¾ç¤ºï¼ˆå¤´åƒå·¦ä¾§ï¼‰
+    auto opponentMana = Label::createWithTTF("0/0", "fonts/arial.ttf", 24);
+    opponentMana->setPosition(Vec2(visibleSize.width / 2 - 100, visibleSize.height - 120));
+    _uiLayer->addChild(opponentMana);
+
+    // åˆå§‹åŒ–å›åˆç›¸å…³å˜é‡
+    _isPlayerTurn = true;  // æ¸¸æˆå¼€å§‹æ—¶æ˜¯ç©å®¶å›åˆ
+    _turnTimeRemaining = TURN_TIME;
+
+    // å¯åŠ¨å›åˆè®¡æ—¶å™¨
+    this->schedule(CC_SCHEDULE_SELECTOR(GameScene::updateTurnTimer), 1.0f);
+}
+// å¼€å§‹æ–°å›åˆ
+void GameScene::startTurn() {
+    _turnTimeRemaining = TURN_TIME;  // é‡ç½®è®¡æ—¶å™¨
+    _isPlayerTurn = !_isPlayerTurn;  // åˆ‡æ¢å›åˆ
+
+    // æ›´æ–°UIæ˜¾ç¤º
+    _endTurnButton->setEnabled(_isPlayerTurn);  // åªæœ‰ç©å®¶å›åˆæ‰èƒ½ç‚¹å‡»ç»“æŸæŒ‰é’®
+
+    if (_isPlayerTurn) {
+        // ç©å®¶å›åˆå¼€å§‹æ—¶çš„æ“ä½œ
+        _endTurnButton->setColor(Color3B::WHITE);  // æŒ‰é’®é«˜äº®
+
+        // TODO: å¢åŠ ç©å®¶çš„æ³•åŠ›æ°´æ™¶
+        // TODO: æŠ½ä¸€å¼ ç‰Œ
+        // TODO: æ’­æ”¾å›åˆå¼€å§‹åŠ¨ç”»
+
+    }
+    else {
+        // å¯¹æ‰‹å›åˆå¼€å§‹æ—¶çš„æ“ä½œ
+        _endTurnButton->setColor(Color3B::GRAY);   // æŒ‰é’®å˜ç°
+
+        // TODO: å¯åŠ¨AIå†³ç­–
+        // TODO: æ’­æ”¾å¯¹æ‰‹å›åˆå¼€å§‹åŠ¨ç”»
+    }
+}
+
+// ç»“æŸå½“å‰å›åˆ
+void GameScene::endTurn() {
+    // æ’­æ”¾ç»“æŸå›åˆåŠ¨ç”»
+    auto endTurnEffect = Sprite::create("effects/end_turn.png");
+    if (endTurnEffect) {
+        endTurnEffect->setPosition(Director::getInstance()->getVisibleSize() / 2);
+        this->addChild(endTurnEffect);
+
+        // åŠ¨ç”»å®Œæˆååˆ é™¤ç‰¹æ•ˆå¹¶å¼€å§‹æ–°å›åˆ
+        auto sequence = Sequence::create(
+            FadeIn::create(0.2f),
+            DelayTime::create(0.5f),
+            FadeOut::create(0.2f),
+            CallFunc::create([this, endTurnEffect]() {
+                endTurnEffect->removeFromParent();
+                this->startTurn();
+                }),
+            nullptr
+        );
+        endTurnEffect->runAction(sequence);
+    }
+    else {
+        // å¦‚æœæ²¡æœ‰ç‰¹æ•ˆå›¾ç‰‡ï¼Œç›´æ¥å¼€å§‹æ–°å›åˆ
+        startTurn();
+    }
+}
+
+// æ›´æ–°å›åˆè®¡æ—¶å™¨
+void GameScene::updateTurnTimer(float dt) {
+    if (_turnTimeRemaining > 0) {
+        _turnTimeRemaining--;
+        _turnTimerLabel->setString(std::to_string(_turnTimeRemaining));
+
+        // æ—¶é—´ä¸å¤šæ—¶æ”¹å˜é¢œè‰²æé†’
+        if (_turnTimeRemaining <= 10) {
+            _turnTimerLabel->setTextColor(Color4B::RED);
+        }
+        else {
+            _turnTimerLabel->setTextColor(Color4B::WHITE);
+        }
+
+        // æ—¶é—´è€—å°½æ—¶è‡ªåŠ¨ç»“æŸå›åˆ
+        if (_turnTimeRemaining == 0 && _isPlayerTurn) {
+            endTurn();
+        }
+    }
+}
+void GameScene::onHeroPowerClicked(Ref* sender) {
+    if (_isPlayerTurn) {  // åªåœ¨ç©å®¶å›åˆå¯ç”¨
+        // TODO: æ£€æŸ¥æ³•åŠ›å€¼æ˜¯å¦è¶³å¤Ÿ
+        // TODO: å®ç°è‹±é›„æŠ€èƒ½æ•ˆæœ
+        // TODO: æ‰£é™¤æ³•åŠ›å€¼
+        // TODO: æ’­æ”¾æŠ€èƒ½åŠ¨ç”»
+        CCLOG("Hero power clicked!");
+    }
 }
