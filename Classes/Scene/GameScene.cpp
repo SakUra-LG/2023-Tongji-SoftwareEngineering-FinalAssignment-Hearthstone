@@ -31,6 +31,7 @@ bool GameScene::init() {
     this->schedule(CC_SCHEDULE_SELECTOR(GameScene::updateUI), 1.0f);
     return true;  // 初始化成功
 }
+
 void GameScene::initGame() {
     // 发初始手牌
     for (int i = 0; i < 3; i++) {  // 初始3张手牌
@@ -38,9 +39,10 @@ void GameScene::initGame() {
         createCardSprite("card_" + std::to_string(i + 1), false);  // 对手手牌
     }
 }
+
 // 初始化游戏层级
 void GameScene::initLayers() {
-    Size visibleSize = Director::getInstance()->getVisibleSize();  // 2048x1024
+    Size visibleSize = Director::getInstance()->getVisibleSize();  // 1920x1080
 
     // 1. 创建游戏主层和背景（居中显示）
     _gameLayer = Node::create();
@@ -49,7 +51,7 @@ void GameScene::initLayers() {
     // 添加游戏层背景图片（全屏大小）
     auto gameLayerBg = Sprite::create("backgrounds/game_board.png");
     if (gameLayerBg) {
-        gameLayerBg->setContentSize(Size(visibleSize.width, visibleSize.height));  // 2048x1024
+        gameLayerBg->setContentSize(Size(visibleSize.width, visibleSize.height));  // 1920x1080
         gameLayerBg->setPosition(Vec2::ZERO);  // 相对于_gameLayer中心点
         _gameLayer->addChild(gameLayerBg, -1);
     }
@@ -83,8 +85,8 @@ void GameScene::initLayers() {
     _playerField->setPosition(Vec2(0, -70));  // 相对于游戏层中心向下70像素
     auto playerFieldArea = DrawNode::create();
     playerFieldArea->drawRect(
-        Vec2(-450, -100),  // 左下角坐标
-        Vec2(450, 100),    // 右上角坐标，总大小900x200
+        Vec2(-550, -100),  // 左下角坐标
+        Vec2(550, 100),    // 右上角坐标，总大小900x200
         Color4F(0, 0, 1, 0.2f)  // 半透明蓝色
     );
     _playerField->addChild(playerFieldArea);
@@ -106,8 +108,8 @@ void GameScene::initLayers() {
     // 对手场地（手牌区下方）
     auto opponentFieldArea = DrawNode::create();
     opponentFieldArea->drawRect(
-        Vec2(-450, -100),  // 左下角坐标
-        Vec2(450, 100),    // 右上角坐标，总大小900x200
+        Vec2(-550, -100),  // 左下角坐标
+        Vec2(550, 100),    // 右上角坐标，总大小1100x200
         Color4F(1, 0.5f, 0, 0.2f)  // 半透明橙色
     );
     _opponentField->addChild(opponentFieldArea);
@@ -134,7 +136,7 @@ void GameScene::addDebugLabels() {
     playerHandLabel->setPosition(Vec2::ZERO);
     _playerHand->addChild(playerHandLabel);
 
-    auto playerFieldLabel = createLabel("Player Field\n900x200");  // 更新尺寸信息
+    auto playerFieldLabel = createLabel("Player Field\n1100x200");  // 更新尺寸信息
     playerFieldLabel->setPosition(Vec2::ZERO);
     _playerField->addChild(playerFieldLabel);
 
@@ -142,7 +144,7 @@ void GameScene::addDebugLabels() {
     opponentHandLabel->setPosition(Vec2::ZERO);
     _opponentHand->addChild(opponentHandLabel);
 
-    auto opponentFieldLabel = createLabel("Opponent Field\n900x200");  // 更新尺寸信息
+    auto opponentFieldLabel = createLabel("Opponent Field\n1100x200");  // 更新尺寸信息
     opponentFieldLabel->setPosition(Vec2::ZERO);
     _opponentField->addChild(opponentFieldLabel);
 }
@@ -153,19 +155,19 @@ void GameScene::initUI() {
 
     // 回合结束按钮（右侧中间）
     _endTurnButton = MenuItemImage::create(
-        "buttons/end_turn_normal.png",
-        "buttons/end_turn_pressed.png",
+        "buttons/Button_For_EndTheTurn_Normal.png",
+        "buttons/Button_For_EndTheTurn_Selected.png",
         CC_CALLBACK_1(GameScene::onEndTurnClicked, this)
     );
-    _endTurnButton->setPosition(Vec2(visibleSize.width - 450, visibleSize.height / 2+30));  // (1948, 512)
+    _endTurnButton->setPosition(Vec2(visibleSize.width - 275, visibleSize.height / 2+30));  // (1948, 512)
 
     // 设置按钮（左上角）
     _settingsButton = MenuItemImage::create(
-        "buttons/settings_normal.png",
-        "buttons/settings_pressed.png",
+        "buttons/Setting_Button_Normal.png",
+        "buttons/Setting_Button_Selected.png",
         CC_CALLBACK_1(GameScene::onSettingsClicked, this)
     );
-    _settingsButton->setPosition(Vec2(50, visibleSize.height - 50));  // (50, 974)
+    _settingsButton->setPosition(Vec2(visibleSize.width- _settingsButton->getContentSize().width/2, _settingsButton->getContentSize().height / 2));  
 
     // 添加玩家英雄技能（头像右侧）
     _playerHeroPower = MenuItemImage::create(
@@ -173,7 +175,7 @@ void GameScene::initUI() {
         "heroes/hero_power_pressed.png",
         CC_CALLBACK_1(GameScene::onHeroPowerClicked, this)
     );
-    _playerHeroPower->setPosition(Vec2(visibleSize.width / 2 + 170, 250));  // 头像右侧100像素
+    _playerHeroPower->setPosition(Vec2(visibleSize.width / 2 + 185, 250));  // 头像右侧100像素
     _playerHeroPower->setScale(0.7f);
 
     // 更新菜单，包含英雄技能按钮
@@ -185,23 +187,25 @@ void GameScene::initUI() {
 
     // 回合计时器标签（回合结束按钮上方）
     _turnTimerLabel = Label::createWithTTF("90", "fonts/arial.ttf", 32);
-    _turnTimerLabel->setPosition(Vec2(visibleSize.width - 450, visibleSize.height / 2 + 80));  // (1948, 562)
+    _turnTimerLabel->setPosition(Vec2(visibleSize.width - 275, visibleSize.height / 2 + 80));  // (1948, 562)
     _uiLayer->addChild(_turnTimerLabel);
 
     // 玩家信息标签（左下角）
     _playerManaLabel = Label::createWithTTF("0/0", "fonts/arial.ttf", 24);     // 法力值
-    _playerHealthLabel = Label::createWithTTF("30", "fonts/arial.ttf", 24);    // 生命值
-    _playerManaLabel->setPosition(Vec2(100, 100));      // (100, 100)
-    _playerHealthLabel->setPosition(Vec2(100, 150));    // (100, 150)
-    _uiLayer->addChild(_playerManaLabel);
-    _uiLayer->addChild(_playerHealthLabel);
+    _playerHealthLabel = Label::createWithTTF("30", "fonts/arial.ttf", 35);    // 生命值
+    _playerManaLabel->setPosition(Vec2(1320, 95));      // (100, 100)
+    _playerHealthLabel->setPosition(Vec2(visibleSize.width / 2 + 60, 200));  
+    //_playerManaLabel->setTextColor(Color4B(0, 0, 0, 255));
+    //_playerHealthLabel->setTextColor(Color4B(0, 0, 0, 255));
+    _uiLayer->addChild(_playerManaLabel,2);
+    _uiLayer->addChild(_playerHealthLabel,2);
 
     // 添加玩家头像（正下方）
     auto playerHeroPortrait = Sprite::create("heroes/player_portrait.png");
     if (playerHeroPortrait) {
-        playerHeroPortrait->setPosition(Vec2(visibleSize.width / 2-8, 265));  // x=1024, y=120
+        playerHeroPortrait->setPosition(Vec2(visibleSize.width / 2+20, 265));  // x=1024, y=120
         playerHeroPortrait->setScale(0.8f);
-        _uiLayer->addChild(playerHeroPortrait);
+        _uiLayer->addChild(playerHeroPortrait,0);
 
         // 玩家生命值显示（头像下方）
         _playerHealthLabel = Label::createWithTTF("30", "fonts/arial.ttf", 24);
@@ -217,7 +221,7 @@ void GameScene::initUI() {
 
         // 对手生命值显示（头像上方）
         auto opponentHealth = Label::createWithTTF("30", "fonts/arial.ttf", 24);
-        opponentHealth->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 80));
+        opponentHealth->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 95));
         _uiLayer->addChild(opponentHealth);
     }
 
@@ -236,7 +240,7 @@ void GameScene::initUI() {
 
     // 对手法力水晶显示（头像左侧）
     auto opponentMana = Label::createWithTTF("0/0", "fonts/arial.ttf", 24);
-    opponentMana->setPosition(Vec2(visibleSize.width / 2 - 100, visibleSize.height - 120));
+    opponentMana->setPosition(Vec2(1280, visibleSize.height - 95));
     _uiLayer->addChild(opponentMana);
 
     // 初始化回合相关变量
@@ -245,6 +249,17 @@ void GameScene::initUI() {
 
     // 启动回合计时器
     this->schedule(CC_SCHEDULE_SELECTOR(GameScene::updateTurnTimer), 1.0f);
+
+    //添加卡牌库里的卡牌图片（结束按键上下两侧，双方都有）
+    float offset = 135.0f;                                          //卡牌库相对于结束回合按钮的偏移量y方向
+    auto playerCardsLibrary = Sprite::create("Cards/Cards_Library.png");
+    playerCardsLibrary->setPosition(Vec2(visibleSize.width - 185, visibleSize.height / 2 + 30- offset));
+    _uiLayer->addChild(playerCardsLibrary, 1);
+
+    auto opponentCardsLibrary = Sprite::create("Cards/Cards_Library.png");
+    opponentCardsLibrary->setPosition(Vec2(visibleSize.width - 185, visibleSize.height / 2 + 30 + offset));
+    _uiLayer->addChild(opponentCardsLibrary, 1);
+
 }
 // 4. 卡牌相关方法
 // 创建卡牌精灵

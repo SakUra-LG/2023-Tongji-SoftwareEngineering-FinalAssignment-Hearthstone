@@ -3,6 +3,7 @@
 #include "Utils/Constants.h"
 #include "Audio/AudioManager.h"
 #include "Settingscene1.h"
+#include "DeckBuilderScene.h"
 
 USING_NS_CC;
 // 创建场景的静态方法
@@ -167,6 +168,8 @@ void MenuScene::onDeckBuilder(Ref* sender) {
     AudioManager::getInstance()->playEffect(GameConstants::Sound::ENTER_MYCOLLECTION);
     // TODO: 实现卡组构建场景切换
 
+    auto scene = DeckBuilderScene::createScene();
+    Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene));
 
 }
 
