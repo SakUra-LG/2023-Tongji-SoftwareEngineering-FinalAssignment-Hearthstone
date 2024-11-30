@@ -1,52 +1,52 @@
 // Card.cpp
-// ¿¨ÅÆ»ùÀàµÄÊµÏÖÎÄ¼þ£¬°üº¬¿¨ÅÆµÄ»ù´¡¹¦ÄÜÊµÏÖ
+// å¡ç‰ŒåŸºç±»çš„å®žçŽ°æ–‡ä»¶ï¼ŒåŒ…å«å¡ç‰Œçš„åŸºç¡€åŠŸèƒ½å®žçŽ°
 
 #include "Card.h"
 #include "Manager/GameManager.h"
 #include "Animation/AnimationManager.h"
 #include "Utils/ResourceManager.h"
 #include "Player/Player.h"
-#include "Effect/IEffect.h"  // ÔÚÊµÏÖÎÄ¼þÖÐ°üº¬ÍêÕû¶¨Òå
-// ¾²Ì¬¹¤³§·½·¨£º´´½¨¿¨ÅÆÊµÀý
-// @param id: ¿¨ÅÆÎ¨Ò»±êÊ¶·û
-// @param name: ¿¨ÅÆÃû³Æ
-// @return: ·µ»Ø´´½¨µÄ¿¨ÅÆÖ¸Õë£¬Ê§°Ü·µ»Ønullptr
+#include "Effect/IEffect.h"  // åœ¨å®žçŽ°æ–‡ä»¶ä¸­åŒ…å«å®Œæ•´å®šä¹‰
+// é™æ€å·¥åŽ‚æ–¹æ³•ï¼šåˆ›å»ºå¡ç‰Œå®žä¾‹
+// @param id: å¡ç‰Œå”¯ä¸€æ ‡è¯†ç¬¦
+// @param name: å¡ç‰Œåç§°
+// @return: è¿”å›žåˆ›å»ºçš„å¡ç‰ŒæŒ‡é’ˆï¼Œå¤±è´¥è¿”å›žnullptr
 Card* Card::create(int id, const std::string& name) {
-    Card* card = new (std::nothrow) Card();  // Ê¹ÓÃnothrow±ÜÃâÒì³£
+    Card* card = new (std::nothrow) Card();  // ä½¿ç”¨nothrowé¿å…å¼‚å¸¸
     if (card && card->init(id, name)) {
-        card->autorelease();  // ¼ÓÈë×Ô¶¯ÊÍ·Å³Ø
+        card->autorelease();  // åŠ å…¥è‡ªåŠ¨é‡Šæ”¾æ± 
         return card;
     }
-    CC_SAFE_DELETE(card);    // ³õÊ¼»¯Ê§°ÜÊ±°²È«É¾³ý
+    CC_SAFE_DELETE(card);    // åˆå§‹åŒ–å¤±è´¥æ—¶å®‰å…¨åˆ é™¤
     return nullptr;
 }
 
-// ³õÊ¼»¯¿¨ÅÆ
-// @param id: ¿¨ÅÆID
-// @param name: ¿¨ÅÆÃû³Æ
-// @return: ³õÊ¼»¯³É¹¦·µ»Øtrue£¬Ê§°Ü·µ»Øfalse
+// åˆå§‹åŒ–å¡ç‰Œ
+// @param id: å¡ç‰ŒID
+// @param name: å¡ç‰Œåç§°
+// @return: åˆå§‹åŒ–æˆåŠŸè¿”å›žtrueï¼Œå¤±è´¥è¿”å›žfalse
 bool Card::init(int id, const std::string& name) {
-    // µ÷ÓÃ¾«ÁéÀàµÄ³õÊ¼»¯
+    // è°ƒç”¨ç²¾çµç±»çš„åˆå§‹åŒ–
     if (!Sprite::init()) {
         return false;
     }
 
-    // ³õÊ¼»¯»ù±¾ÊôÐÔ
+    // åˆå§‹åŒ–åŸºæœ¬å±žæ€§
     _id = id;
     _cardName = name;
-    _isPlayable = false;     // Ä¬ÈÏ²»¿É´ò³ö
-    _isSelected = false;     // Ä¬ÈÏÎ´Ñ¡ÖÐ
-    _hasEffect = false;      // Ä¬ÈÏÎÞÌØÐ§
-    _owner = nullptr;        // ³õÊ¼»¯ËùÓÐÕßÎª¿Õ
+    _isPlayable = false;     // é»˜è®¤ä¸å¯æ‰“å‡º
+    _isSelected = false;     // é»˜è®¤æœªé€‰ä¸­
+    _hasEffect = false;      // é»˜è®¤æ— ç‰¹æ•ˆ
+    _owner = nullptr;        // åˆå§‹åŒ–æ‰€æœ‰è€…ä¸ºç©º
 
-    // ³õÊ¼»¯ÉúÃüÖµÏà¹ØÊôÐÔ
-    _health = 0;             // »ù´¡¿¨ÅÆÄ¬ÈÏÉúÃüÖµÎª0
-    _maxHealth = 0;          // »ù´¡¿¨ÅÆÄ¬ÈÏ×î´óÉúÃüÖµÎª0
+    // åˆå§‹åŒ–ç”Ÿå‘½å€¼ç›¸å…³å±žæ€§
+    _health = 0;             // åŸºç¡€å¡ç‰Œé»˜è®¤ç”Ÿå‘½å€¼ä¸º0
+    _maxHealth = 0;          // åŸºç¡€å¡ç‰Œé»˜è®¤æœ€å¤§ç”Ÿå‘½å€¼ä¸º0
 
-    // ³õÊ¼»¯UI×é¼þ
+    // åˆå§‹åŒ–UIç»„ä»¶
     initUI();
 
-    // ÉèÖÃ´¥ÃþÊÂ¼þ¼àÌýÆ÷
+    // è®¾ç½®è§¦æ‘¸äº‹ä»¶ç›‘å¬å™¨
     auto listener = EventListenerTouchOneByOne::create();
     listener->onTouchBegan = CC_CALLBACK_2(Card::onTouchBegan, this);
     listener->onTouchMoved = CC_CALLBACK_2(Card::onTouchMoved, this);
@@ -56,61 +56,61 @@ bool Card::init(int id, const std::string& name) {
     return true;
 }
 
-// ³õÊ¼»¯¿¨ÅÆUIÔªËØ
+// åˆå§‹åŒ–å¡ç‰ŒUIå…ƒç´ 
 void Card::initUI() {
-    // ´´½¨²¢ÉèÖÃ¿¨ÅÆ¿ò¼Ü¾«Áé
+    // åˆ›å»ºå¹¶è®¾ç½®å¡ç‰Œæ¡†æž¶ç²¾çµ
     _cardFrame = Sprite::create("cards/frame.png");
     this->addChild(_cardFrame);
 
-    // ´´½¨²¢ÉèÖÃ¿¨ÅÆÃû³Æ±êÇ©
-    _nameLabel = Label::createWithTTF(_cardName, "fonts/arial.ttf", 24);  // Ê¹ÓÃ _cardName
+    // åˆ›å»ºå¹¶è®¾ç½®å¡ç‰Œåç§°æ ‡ç­¾
+    _nameLabel = Label::createWithTTF(_cardName, "fonts/arial.ttf", 24);  // ä½¿ç”¨ _cardName
     _nameLabel->setPosition(Vec2(0, 50));
     this->addChild(_nameLabel);
 
-    // ´´½¨²¢ÉèÖÃ·¨Á¦ÖµÏûºÄ±êÇ©
+    // åˆ›å»ºå¹¶è®¾ç½®æ³•åŠ›å€¼æ¶ˆè€—æ ‡ç­¾
     _costLabel = Label::createWithTTF(std::to_string(_cost), "fonts/arial.ttf", 32);
     _costLabel->setPosition(Vec2(-80, 80));
     this->addChild(_costLabel);
 
-    // ´´½¨²¢ÉèÖÃ¿¨ÅÆÃèÊö±êÇ©
+    // åˆ›å»ºå¹¶è®¾ç½®å¡ç‰Œæè¿°æ ‡ç­¾
     _descriptionLabel = Label::createWithTTF(_description, "fonts/arial.ttf", 18);
     _descriptionLabel->setPosition(Vec2(0, -50));
     this->addChild(_descriptionLabel);
 }
 
-// ¼ì²é¿¨ÅÆÊÇ·ñ¿ÉÒÔ´ò³ö
-// @return: ¿ÉÒÔ´ò³ö·µ»Øtrue£¬·ñÔò·µ»Øfalse
+// æ£€æŸ¥å¡ç‰Œæ˜¯å¦å¯ä»¥æ‰“å‡º
+// @return: å¯ä»¥æ‰“å‡ºè¿”å›žtrueï¼Œå¦åˆ™è¿”å›žfalse
 bool Card::canPlay() const {
-    // »ñÈ¡ÓÎÏ·¹ÜÀíÆ÷ÊµÀý
+    // èŽ·å–æ¸¸æˆç®¡ç†å™¨å®žä¾‹
     auto gameManager = GameManager::getInstance();
 
-    // »ñÈ¡µ±Ç°Íæ¼Ò
+    // èŽ·å–å½“å‰çŽ©å®¶
     Player* currentPlayer = gameManager->getCurrentPlayer();
     if (!currentPlayer) {
-        return false;  // °²È«¼ì²é£ºÈç¹ûÃ»ÓÐµ±Ç°Íæ¼Ò£¬·µ»Øfalse
+        return false;  // å®‰å…¨æ£€æŸ¥ï¼šå¦‚æžœæ²¡æœ‰å½“å‰çŽ©å®¶ï¼Œè¿”å›žfalse
     }
 
-    // ¼ì²é¶à¸öÌõ¼þ
-    bool isCardPlayable = _isPlayable;                  // ¿¨ÅÆÊÇ·ñ¿ÉÓÃ
-    bool hasSufficientMana = currentPlayer->getMana() >= _cost;  // ·¨Á¦ÖµÊÇ·ñ×ã¹»
-    bool isPlayersTurn = (_owner == currentPlayer);     // ÊÇ·ñÊÇÍæ¼ÒµÄ»ØºÏ
+    // æ£€æŸ¥å¤šä¸ªæ¡ä»¶
+    bool isCardPlayable = _isPlayable;                  // å¡ç‰Œæ˜¯å¦å¯ç”¨
+    bool hasSufficientMana = currentPlayer->getMana() >= _cost;  // æ³•åŠ›å€¼æ˜¯å¦è¶³å¤Ÿ
+    bool isPlayersTurn = (_owner == currentPlayer);     // æ˜¯å¦æ˜¯çŽ©å®¶çš„å›žåˆ
 
-    // ËùÓÐÌõ¼þ¶¼Âú×ã²ÅÄÜ´ò³ö¿¨ÅÆ
+    // æ‰€æœ‰æ¡ä»¶éƒ½æ»¡è¶³æ‰èƒ½æ‰“å‡ºå¡ç‰Œ
     return isCardPlayable && hasSufficientMana && isPlayersTurn;
 }
 
-// ¿¨ÅÆ´ò³öÊ±µÄ´¦Àí
+// å¡ç‰Œæ‰“å‡ºæ—¶çš„å¤„ç†
 void Card::onPlay() {
-    // ²¥·Å¿¨ÅÆÊ¹ÓÃ¶¯»­
+    // æ’­æ”¾å¡ç‰Œä½¿ç”¨åŠ¨ç”»
     AnimationManager::getInstance()->playCardAnimation(this);
 
-    // ´¥·¢¿¨ÅÆÉÏµÄËùÓÐÐ§¹û
+    // è§¦å‘å¡ç‰Œä¸Šçš„æ‰€æœ‰æ•ˆæžœ
     triggerEffects();
 }
 
-// ´¥·¢¿¨ÅÆÉÏµÄËùÓÐÐ§¹û
+// è§¦å‘å¡ç‰Œä¸Šçš„æ‰€æœ‰æ•ˆæžœ
 void Card::triggerEffects() {
-    // ±éÀúËùÓÐÐ§¹û²¢³¢ÊÔ´¥·¢
+    // éåŽ†æ‰€æœ‰æ•ˆæžœå¹¶å°è¯•è§¦å‘
     for (auto& effect : _effects) {
         if (effect->canActivate()) {
             effect->onActivate();
@@ -118,30 +118,30 @@ void Card::triggerEffects() {
     }
 }
 
-// ´¥Ãþ¿ªÊ¼ÊÂ¼þ´¦Àí
-// @param touch: ´¥ÃþÐÅÏ¢
-// @param event: ÊÂ¼þÐÅÏ¢
-// @return: ÊÇ·ñ´¦ÀíÁË´¥ÃþÊÂ¼þ
+// è§¦æ‘¸å¼€å§‹äº‹ä»¶å¤„ç†
+// @param touch: è§¦æ‘¸ä¿¡æ¯
+// @param event: äº‹ä»¶ä¿¡æ¯
+// @return: æ˜¯å¦å¤„ç†äº†è§¦æ‘¸äº‹ä»¶
 bool Card::onTouchBegan(Touch* touch, Event* event) {
-    // ½«´¥Ãþµã×ª»»Îª½Úµã×ø±êÏµ
+    // å°†è§¦æ‘¸ç‚¹è½¬æ¢ä¸ºèŠ‚ç‚¹åæ ‡ç³»
     Vec2 locationInNode = convertToNodeSpace(touch->getLocation());
     Size s = getContentSize();
     Rect rect = Rect(0, 0, s.width, s.height);
 
-    // ¼ì²é´¥ÃþµãÊÇ·ñÔÚ¿¨ÅÆ·¶Î§ÄÚ
+    // æ£€æŸ¥è§¦æ‘¸ç‚¹æ˜¯å¦åœ¨å¡ç‰ŒèŒƒå›´å†…
     if (rect.containsPoint(locationInNode)) {
-        _isSelected = true;           // ÉèÖÃÑ¡ÖÐ×´Ì¬
-        this->setScale(1.2f);         // ·Å´óÏÔÊ¾Ñ¡ÖÐµÄ¿¨ÅÆ
+        _isSelected = true;           // è®¾ç½®é€‰ä¸­çŠ¶æ€
+        this->setScale(1.2f);         // æ”¾å¤§æ˜¾ç¤ºé€‰ä¸­çš„å¡ç‰Œ
         return true;
     }
     return false;
 }
 void Card::onDiscard() {
-    // ¿¨ÅÆ±»¶ªÆúÊ±µÄ´¦Àí
+    // å¡ç‰Œè¢«ä¸¢å¼ƒæ—¶çš„å¤„ç†
     if (_owner) {
         _owner->removeCardFromHand(this);
     }
-    // ²¥·Å¶ªÆú¶¯»­
+    // æ’­æ”¾ä¸¢å¼ƒåŠ¨ç”»
     AnimationManager::getInstance()->playCardAnimation(this);
 }
 
@@ -151,31 +151,31 @@ void Card::heal(int amount) {
 }
 
 void Card::onDraw() {
-    // ¿¨ÅÆ±»³éµ½Ê±µÄ´¦Àí
+    // å¡ç‰Œè¢«æŠ½åˆ°æ—¶çš„å¤„ç†
     if (_owner) {
-        // ¿ÉÒÔÌí¼Ó³éÅÆ¶¯»­»òÐ§¹û
+        // å¯ä»¥æ·»åŠ æŠ½ç‰ŒåŠ¨ç”»æˆ–æ•ˆæžœ
         AnimationManager::getInstance()->playCardDrawAnimation(this);
 
-        // ´¥·¢³éÅÆÏà¹ØÐ§¹û
+        // è§¦å‘æŠ½ç‰Œç›¸å…³æ•ˆæžœ
         triggerEffects();
     }
 }
 
 bool Card::isActive() const {
-    // ¼ì²é¿¨ÅÆÊÇ·ñ´¦ÓÚ¿ÉÓÃ×´Ì¬
+    // æ£€æŸ¥å¡ç‰Œæ˜¯å¦å¤„äºŽå¯ç”¨çŠ¶æ€
     return getIsActive() &&
         !getIsFrozen() &&
         !getIsSilenced();
 }
 void Card::onTouchMoved(Touch* touch, Event* event) {
     if (_isSelected) {
-        // ¸üÐÂ¿¨ÅÆÎ»ÖÃ
+        // æ›´æ–°å¡ç‰Œä½ç½®
         Vec2 delta = touch->getDelta();
         this->setPosition(this->getPosition() + delta);
 
-        // ¼ì²éÊÇ·ñ¿ÉÒÔ´ò³ö
+        // æ£€æŸ¥æ˜¯å¦å¯ä»¥æ‰“å‡º
         if (canPlay()) {
-            // ÏÔÊ¾¿É´ò³öµÄÌáÊ¾Ð§¹û
+            // æ˜¾ç¤ºå¯æ‰“å‡ºçš„æç¤ºæ•ˆæžœ
             showPlayableHighlight();
         }
     }
@@ -184,22 +184,22 @@ void Card::onTouchMoved(Touch* touch, Event* event) {
 void Card::onTouchEnded(Touch* touch, Event* event) {
     if (_isSelected) {
         _isSelected = false;
-        this->setScale(1.0);  // »Ö¸´Ô­Ê¼´óÐ¡
+        this->setScale(1.0);  // æ¢å¤åŽŸå§‹å¤§å°
 
-        // ¼ì²éÊÇ·ñÔÚ¿É´ò³öµÄÎ»ÖÃ
+        // æ£€æŸ¥æ˜¯å¦åœ¨å¯æ‰“å‡ºçš„ä½ç½®
         if (canPlay() && isInPlayableArea(touch->getLocation())) {
             onPlay();
         }
         else {
-            // ·µ»ØÔ­Ê¼Î»ÖÃ
+            // è¿”å›žåŽŸå§‹ä½ç½®
             returnToOriginalPosition();
         }
     }
 }
 
-// ¸¨Öúº¯Êý
+// è¾…åŠ©å‡½æ•°
 void Card::showPlayableHighlight() {
-    // Ìí¼Ó¸ßÁÁÐ§¹û
+    // æ·»åŠ é«˜äº®æ•ˆæžœ
     if (!_highlightSprite) {
         _highlightSprite = Sprite::create("effects/card_highlight.png");
         this->addChild(_highlightSprite, -1);
@@ -208,13 +208,13 @@ void Card::showPlayableHighlight() {
 }
 
 void Card::returnToOriginalPosition() {
-    // Ê¹ÓÃ¶¯×÷·µ»ØÔ­Ê¼Î»ÖÃ
+    // ä½¿ç”¨åŠ¨ä½œè¿”å›žåŽŸå§‹ä½ç½®
     auto moveTo = MoveTo::create(0.2f, _originalPosition);
     this->runAction(moveTo);
 }
 
 bool Card::isInPlayableArea(const Vec2& position) {
-    // ¼ì²éÎ»ÖÃÊÇ·ñÔÚ¿É´ò³öÇøÓò
+    // æ£€æŸ¥ä½ç½®æ˜¯å¦åœ¨å¯æ‰“å‡ºåŒºåŸŸ
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Rect playableArea(visibleSize.width * 0.2f, visibleSize.height * 0.3f,
         visibleSize.width * 0.6f, visibleSize.height * 0.4f);
