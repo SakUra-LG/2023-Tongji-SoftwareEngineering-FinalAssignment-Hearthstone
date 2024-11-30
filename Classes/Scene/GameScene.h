@@ -6,6 +6,7 @@
 
 class Card;
 class Player;
+// 添加游戏状态枚举
 
 class GameScene : public cocos2d::Scene {
 public:
@@ -15,6 +16,19 @@ public:
     CREATE_FUNC(GameScene);
 
 private:
+    // 卡牌相关
+    void dealCard(const std::string& cardName, bool isPlayerCard, int handPosition);
+    void createCardSprite(const std::string& cardName, bool isPlayerCard);
+    void arrangeHandCards(bool isPlayerHand);
+
+    // 卡牌常量
+    const float CARD_SPACING = 80.0f;        // 卡牌间距
+    const float CARD_SCALE = 0.8f;           // 卡牌缩放
+    const float CARD_MOVE_DURATION = 0.5f;   // 卡牌移动动画时间
+
+    // 卡牌容器
+    std::vector<cocos2d::Sprite*> _playerHandCards;    // 玩家手牌精灵
+    std::vector<cocos2d::Sprite*> _opponentHandCards;  // 对手手牌精灵
     // UI组件
     cocos2d::Node* _gameLayer;
     cocos2d::Node* _uiLayer;
@@ -38,7 +52,7 @@ private:
     bool _isPlayerTurn;         // 是否是玩家回合
     int _turnTimeRemaining;     // 回合剩余时间
     const int TURN_TIME = 90;   // 回合总时间（秒）
-
+    void addCardInteraction(cocos2d::Sprite*);
     // 回合控制方法
     void startTurn();          // 开始新回合
     void endTurn();           // 结束当前回合
@@ -47,12 +61,13 @@ private:
     void initLayers();
     void initUI();
     void initListeners();
-
+    void initGame();
     // 更新方法
     void updateUI(float dt);
     void updateHandPositions();
     void updateFieldPositions();
     void addDebugLabels();
+    void showGameOverUI();
     // 事件处理
     void onEndTurnClicked(cocos2d::Ref* sender);
     void onSettingsClicked(cocos2d::Ref* sender);
