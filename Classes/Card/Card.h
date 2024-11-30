@@ -8,76 +8,82 @@
 
 USING_NS_CC;
 
-class Player;  // Ç°ÏòÉùÃ÷
-class IEffect; // Ç°ÏòÉùÃ÷
+class Player;  // å‰å‘å£°æ˜
+class IEffect; // å‰å‘å£°æ˜
 
-// ¿¨ÅÆÀàĞÍÃ¶¾Ù
+// å¡ç‰Œç±»å‹æšä¸¾
 enum class CardType {
-    MINION,     // Ëæ´Ó
-    SPELL,      // ·¨Êõ
-    WEAPON,     // ÎäÆ÷
-    HERO        // Ó¢ĞÛ
+    MINION,     // éšä»
+    SPELL,      // æ³•æœ¯
+    WEAPON,     // æ­¦å™¨
+    HERO        // è‹±é›„
 };
 
-// ¿¨ÅÆÏ¡ÓĞ¶È
+// å¡ç‰Œç¨€æœ‰åº¦
 enum class CardRarity {
-    NORMAL,     // ÆÕÍ¨
-    RARE,       // Ï¡ÓĞ
-    EPIC,       // Ê·Ê«
-    LEGENDARY   // ´«Ëµ
+    NORMAL,     // æ™®é€š
+    RARE,       // ç¨€æœ‰
+    EPIC,       // å²è¯—
+    LEGENDARY   // ä¼ è¯´
 };
 
 class Card : public cocos2d::Sprite {
 public:
-    // ´´½¨ºÍ³õÊ¼»¯
+    // åˆ›å»ºå’Œåˆå§‹åŒ–
     static Card* create(int id, const std::string& name);
     virtual bool init(int id, const std::string& name);
 
-    // »ù´¡ÊôĞÔ (Ê¹ÓÃ CC_SYNTHESIZE ºê)
-    CC_SYNTHESIZE(int, _id, Id);                       // ¿¨ÅÆID
-    CC_SYNTHESIZE(std::string, _cardName, CardName);   // ¿¨ÅÆÃû³Æ
-    CC_SYNTHESIZE(int, _cost, Cost);                   // ·¨Á¦ÖµÏûºÄ
-    CC_SYNTHESIZE(std::string, _description, Description); // ¿¨ÅÆÃèÊö
-    CC_SYNTHESIZE(CardType, _cardType, CardType);      // ¿¨ÅÆÀàĞÍ
-    CC_SYNTHESIZE(CardRarity, _rarity, Rarity);        // ¿¨ÅÆÏ¡ÓĞ¶È
-    CC_SYNTHESIZE(int, _health, Health);               // µ±Ç°ÉúÃüÖµ
-    CC_SYNTHESIZE(int, _maxHealth, MaxHealth);         // ×î´óÉúÃüÖµ
-    CC_SYNTHESIZE(int, _attack, Attack);               // ¹¥»÷Á¦
+    // åŸºç¡€å±æ€§ (ä½¿ç”¨ CC_SYNTHESIZE å®)
+    CC_SYNTHESIZE(int, _id, Id);                       // å¡ç‰ŒID
+    CC_SYNTHESIZE(std::string, _cardName, CardName);   // å¡ç‰Œåç§°
+    CC_SYNTHESIZE(int, _cost, Cost);                   // æ³•åŠ›å€¼æ¶ˆè€—
+    CC_SYNTHESIZE(std::string, _description, Description); // å¡ç‰Œæè¿°
+    CC_SYNTHESIZE(CardType, _cardType, CardType);      // å¡ç‰Œç±»å‹
+    CC_SYNTHESIZE(CardRarity, _rarity, Rarity);        // å¡ç‰Œç¨€æœ‰åº¦
+    CC_SYNTHESIZE(int, _health, Health);               // å½“å‰ç”Ÿå‘½å€¼
+    CC_SYNTHESIZE(int, _maxHealth, MaxHealth);         // æœ€å¤§ç”Ÿå‘½å€¼
+    CC_SYNTHESIZE(int, _attack, Attack);               // æ”»å‡»åŠ›
 
-    // ×´Ì¬ÊôĞÔ
-    CC_SYNTHESIZE(bool, _isPlayable, IsPlayable);      // ÊÇ·ñ¿ÉÒÔ´ò³ö
-    CC_SYNTHESIZE(bool, _isSelected, IsSelected);      // ÊÇ·ñ±»Ñ¡ÖĞ
-    CC_SYNTHESIZE(bool, _hasEffect, HasEffect);        // ÊÇ·ñÓĞÌØĞ§
-    CC_SYNTHESIZE(bool, _isActive, IsActive);          // ÊÇ·ñ´¦ÓÚ»îÔ¾×´Ì¬
-    CC_SYNTHESIZE(bool, _isSilenced, IsSilenced);      // ÊÇ·ñ±»³ÁÄ¬
-    CC_SYNTHESIZE(bool, _isFrozen, IsFrozen);         // ÊÇ·ñ±»¶³½á
-    CC_SYNTHESIZE(bool, _hasProvoke, HasProvoke);      // ÊÇ·ñ¾ßÓĞ³°·í
-    CC_SYNTHESIZE(bool, _hasDivineShield, HasDivineShield); // ÊÇ·ñ¾ßÓĞÊ¥¶Ü
-    CC_SYNTHESIZE(bool, _hasAttacked, HasAttacked);    // ÊÇ·ñÒÑ¾­¹¥»÷
-    CC_SYNTHESIZE(Player*, _owner, Owner);             // ¿¨ÅÆËùÊôÍæ¼Ò
+    // çŠ¶æ€å±æ€§
+    CC_SYNTHESIZE(bool, _isPlayable, IsPlayable);      // æ˜¯å¦å¯ä»¥æ‰“å‡º
+    CC_SYNTHESIZE(bool, _isSelected, IsSelected);      // æ˜¯å¦è¢«é€‰ä¸­
+    CC_SYNTHESIZE(bool, _hasEffect, HasEffect);        // æ˜¯å¦æœ‰ç‰¹æ•ˆ
+    CC_SYNTHESIZE(bool, _isActive, IsActive);          // æ˜¯å¦å¤„äºæ´»è·ƒçŠ¶æ€
+    CC_SYNTHESIZE(bool, _isSilenced, IsSilenced);      // æ˜¯å¦è¢«æ²‰é»˜
+    CC_SYNTHESIZE(bool, _isFrozen, IsFrozen);         // æ˜¯å¦è¢«å†»ç»“
+    CC_SYNTHESIZE(bool, _hasProvoke, HasProvoke);      // æ˜¯å¦å…·æœ‰å˜²è®½
+    CC_SYNTHESIZE(bool, _hasDivineShield, HasDivineShield); // æ˜¯å¦å…·æœ‰åœ£ç›¾
+    CC_SYNTHESIZE(bool, _hasAttacked, HasAttacked);    // æ˜¯å¦å·²ç»æ”»å‡»
+    CC_SYNTHESIZE(Player*, _owner, Owner);             // å¡ç‰Œæ‰€å±ç©å®¶
 
-    // ÓÎÏ·ĞĞÎª
-    virtual bool canPlay() const;                      // ¼ì²éÊÇ·ñ¿ÉÒÔ´ò³ö
-    virtual void onPlay();                             // ´ò³öÊ±´¥·¢
-    virtual void onDraw();                             // ³éµ½Ê±´¥·¢
-    virtual void onDiscard();                          // ÆúÅÆÊ±´¥·¢
+    // æ¸¸æˆè¡Œä¸º
+    virtual bool canPlay() const;                      // æ£€æŸ¥æ˜¯å¦å¯ä»¥æ‰“å‡º
+    virtual void onPlay();                             // æ‰“å‡ºæ—¶è§¦å‘
+    virtual void onDraw();                             // æŠ½åˆ°æ—¶è§¦å‘
+    virtual void onDiscard();                          // å¼ƒç‰Œæ—¶è§¦å‘
 
-    // Õ½¶·Ïà¹Ø
-    virtual void heal(int amount);                     // ÖÎÁÆ
-    virtual bool isActive() const;                     // ¼ì²é»îÔ¾×´Ì¬
+    // æˆ˜æ–—ç›¸å…³
+    virtual void heal(int amount);                     // æ²»ç–—
+    virtual bool isActive() const;                     // æ£€æŸ¥æ´»è·ƒçŠ¶æ€
 
-    // Ğ§¹ûÏµÍ³
+    // æ•ˆæœç³»ç»Ÿ
     void addEffect(std::shared_ptr<IEffect> effect);
     void removeEffect(std::shared_ptr<IEffect> effect);
     void triggerEffects();
 
-    // UIÏà¹Ø
+    // UIç›¸å…³
     void showPlayableHighlight();
     void returnToOriginalPosition();
     bool isInPlayableArea(const cocos2d::Vec2& position);
-
+    // æ·»åŠ ä¼¤å®³ç›¸å…³æ–¹æ³•
+    virtual void takeDamage(int amount) {
+        _health -= amount;
+        if (_health < 0) _health = 0;
+    }
+    cocos2d::Sprite* getSprite() const { return _sprite; }
+    void setSprite(cocos2d::Sprite* sprite) { _sprite = sprite; }
 protected:
-    // UI×é¼ş
+    // UIç»„ä»¶
     Label* _nameLabel;
     Label* _costLabel;
     Label* _descriptionLabel;
@@ -85,16 +91,16 @@ protected:
     Sprite* _cardImage;
     Sprite* _highlightSprite;
 
-    // Î»ÖÃÏà¹Ø
+    // ä½ç½®ç›¸å…³
     cocos2d::Vec2 _originalPosition;
 
-    // Ğ§¹ûÁĞ±í
+    // æ•ˆæœåˆ—è¡¨
     std::vector<std::shared_ptr<IEffect>> _effects;
-
-    // ³õÊ¼»¯UI
+    cocos2d::Sprite* _sprite;
+    // åˆå§‹åŒ–UI
     virtual void initUI();
 
-    // ´¥ÃşÊÂ¼ş
+    // è§¦æ‘¸äº‹ä»¶
     virtual bool onTouchBegan(Touch* touch, Event* event);
     virtual void onTouchMoved(Touch* touch, Event* event);
     virtual void onTouchEnded(Touch* touch, Event* event);
