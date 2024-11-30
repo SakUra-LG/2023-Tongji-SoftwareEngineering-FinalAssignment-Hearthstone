@@ -11,7 +11,7 @@ class Player;
 
 class GameManager {
 public:
-    // ÓÎÏ·×´Ì¬Ã¶¾Ù
+    // æ¸¸æˆçŠ¶æ€æšä¸¾
     enum class GameState {
         MENU,
         PLAYING,
@@ -19,10 +19,10 @@ public:
         GAME_OVER
     };
 
-    // µ¥Àı·ÃÎÊ
+    // å•ä¾‹è®¿é—®
     static GameManager* getInstance();
 
-    // ====== ÓÎÏ·Á÷³Ì¿ØÖÆ ======
+    // ====== æ¸¸æˆæµç¨‹æ§åˆ¶ ======
     void initGame();
     void startGame();
     void pauseGame();
@@ -30,23 +30,26 @@ public:
     void endGame();
     void cleanupGame();
 
-    // ====== Íæ¼Ò¹ÜÀí ======
+    // ====== ç©å®¶ç®¡ç† ======
     void setCurrentPlayer(Player* player);
     Player* getCurrentPlayer() const { return _currentPlayer; }
     Player* getOpponentPlayer() const { return _opponentPlayer; }
 
-    // ====== ¿¨ÅÆ²Ù×÷ ======
+    // ====== å¡ç‰Œæ“ä½œ ======
     void playCard(Card* card, const cocos2d::Vec2& position);
     void drawCard(Player* player);
     void discardCard(Card* card);
     void addCardToDeck(Player* player, Card* card);
 
-    // ====== Ä¿±êÑ¡Ôñ ======
+    // ====== ç›®æ ‡é€‰æ‹© ======
     Card* getSelectedTarget() const;
     void selectTarget(Card* target);
     void clearSelectedTarget() { _selectedTarget = nullptr; }
-
-    // ====== ÓÎÏ·×´Ì¬ ======
+    // è‹±é›„æŠ€èƒ½ç›¸å…³
+    bool useHeroPower(Player* player);
+    bool canUseHeroPower(Player* player) const;
+    static const int HERO_POWER_COST = 2;  // è‹±é›„æŠ€èƒ½è´¹ç”¨
+    // ====== æ¸¸æˆçŠ¶æ€ ======
     void processGameAction(const GameAction& action);
     void checkGameState();
     bool isGameOver() const { return _gameState == GameState::GAME_OVER; }
@@ -55,20 +58,20 @@ private:
     GameManager();
     ~GameManager();
 
-    // ½ûÓÃ¿½±´
+    // ç¦ç”¨æ‹·è´
     GameManager(const GameManager&) = delete;
     GameManager& operator=(const GameManager&) = delete;
 
     static GameManager* _instance;
 
-    // ³ÉÔ±±äÁ¿
+    // æˆå‘˜å˜é‡
     GameState _gameState;
     Player* _currentPlayer;
     Player* _opponentPlayer;
     Card* _selectedTarget;
     std::queue<GameAction> _actionQueue;
 
-    // Ë½ÓĞ·½·¨
+    // ç§æœ‰æ–¹æ³•
     void processActionQueue();
 };
 
