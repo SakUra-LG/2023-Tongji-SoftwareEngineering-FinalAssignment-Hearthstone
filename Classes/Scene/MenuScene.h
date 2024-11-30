@@ -15,8 +15,8 @@ private:
     void initBackground();
     void initMenu();
     void initUI();
-    void initListeners();      // Õâ¸öº¯ÊıĞèÒªÊµÏÖ
-    // ²Ëµ¥»Øµ÷
+    void initListeners();      // è¿™ä¸ªå‡½æ•°éœ€è¦å®ç°
+    // èœå•å›è°ƒ
     void onPlayGame(cocos2d::Ref* sender);
     void onAdventureMode(cocos2d::Ref* sender);
     void MenuScene::onBattleGronds(Ref* sender);
@@ -24,10 +24,9 @@ private:
     void onSettings(cocos2d::Ref* sender);
     void MenuScene::onSelection(Ref* sender);
     void onQuit(cocos2d::Ref* sender);
-    void onEndTurnClicked(cocos2d::Ref* sender);    // Õâ¸öº¯ÊıĞèÒªÊµÏÖ
-    void onSettingsClicked(cocos2d::Ref* sender);   // Õâ¸öº¯ÊıĞèÒªÊµÏÖ
-    void updateUI(float dt);   // Õâ¸öº¯ÊıĞèÒªÊµÏÖ
-    // ¶¯»­
+    void onEndTurnClicked(cocos2d::Ref* sender);    // è¿™ä¸ªå‡½æ•°éœ€è¦å®ç°
+    void onSettingsClicked(cocos2d::Ref* sender);   // è¿™ä¸ªå‡½æ•°éœ€è¦å®ç°
+    // åŠ¨ç”»
     void playMenuAnimation();
     void playButtonAnimation(cocos2d::Node* button);
 };
