@@ -8,6 +8,7 @@
 #include <vector>
 #include <queue>
 #include "cocos2d.h"
+#include"Card/MinionCard.h"
 GameManager* GameManager::_instance = nullptr;
 
 GameManager* GameManager::getInstance() {
@@ -31,20 +32,20 @@ GameManager::~GameManager() {
 void GameManager::startGame() {
     _gameState = GameState::PLAYING;
 
-    // ³õÊ¼»¯Íæ¼Ò
+    // åˆå§‹åŒ–ç©å®¶
     _currentPlayer = new Player();
     _opponentPlayer = new Player();
 
-    // ³õÊ¼»¯ÓÎÏ·
+    // åˆå§‹åŒ–æ¸¸æˆ
     initGame();
 
-    // ·¢³õÊ¼ÊÖÅÆ
+    // å‘åˆå§‹æ‰‹ç‰Œ
     for (int i = 0; i < GameConstants::STARTING_HAND_SIZE; ++i) {
         drawCard(_currentPlayer);
         drawCard(_opponentPlayer);
     }
 
-    // Í¨ÖªÍøÂç¹ÜÀíÆ÷
+    // é€šçŸ¥ç½‘ç»œç®¡ç†å™¨
     GameAction startAction;
     startAction.type = ActionType::GAME_START;
     startAction.sourceId = 0;
@@ -66,13 +67,13 @@ void GameManager::processActionQueue() {
 
         switch (action.type) {
         case ActionType::PLAY_CARD:
-            // ´¦Àí´ò³ö¿¨ÅÆ
+            // å¤„ç†æ‰“å‡ºå¡ç‰Œ
             break;
         case ActionType::ATTACK:
-            // ´¦Àí¹¥»÷
+            // å¤„ç†æ”»å‡»
             break;
         case ActionType::END_TURN:
-            // ´¦Àí»ØºÏ½áÊø
+            // å¤„ç†å›åˆç»“æŸ
             break;
         default:
             GameLogger::getInstance()->log(LogLevel::WARNING,
@@ -85,18 +86,18 @@ void GameManager::processActionQueue() {
 }
 
 void GameManager::checkGameState() {
-    // ¼ì²éÓÎÏ·ÊÇ·ñ½áÊø
+    // æ£€æŸ¥æ¸¸æˆæ˜¯å¦ç»“æŸ
     if (_currentPlayer->getHealth() <= 0 || _opponentPlayer->getHealth() <= 0) {
         _gameState = GameState::GAME_OVER;
         endGame();
     }
 }
 void GameManager::initGame() {
-    // ³õÊ¼»¯ÓÎÏ·×´Ì¬
+    // åˆå§‹åŒ–æ¸¸æˆçŠ¶æ€
     _gameState = GameState::PLAYING;
     _selectedTarget = nullptr;
 
-    // ³õÊ¼»¯Íæ¼Ò
+    // åˆå§‹åŒ–ç©å®¶
     if (_currentPlayer) {
         _currentPlayer->setHealth(30);
         _currentPlayer->setMana(0);
@@ -109,16 +110,16 @@ void GameManager::initGame() {
         _opponentPlayer->setMaxMana(0);
     }
 
-    // ¼ÇÂ¼ÓÎÏ·¿ªÊ¼
+    // è®°å½•æ¸¸æˆå¼€å§‹
     GameLogger::getInstance()->log(LogLevel::INFO, "Game initialized");
 }
 
 void GameManager::drawCard(Player* player) {
     if (!player) return;
 
-    // ¼ì²éÊÇ·ñ»¹ÓĞÅÆ¿É³é
+    // æ£€æŸ¥æ˜¯å¦è¿˜æœ‰ç‰Œå¯æŠ½
     if (!player->canDrawCard()) {
-        // Æ£ÀÍÉËº¦
+        // ç–²åŠ³ä¼¤å®³
         player->takeDamage(player->getFatigueDamage());
         player->increaseFatigueDamage();
         GameLogger::getInstance()->log(LogLevel::INFO,
@@ -126,16 +127,16 @@ void GameManager::drawCard(Player* player) {
         return;
     }
 
-    // ´ÓÅÆ¿â³éÒ»ÕÅÅÆ
+    // ä»ç‰Œåº“æŠ½ä¸€å¼ ç‰Œ
     auto& deck = player->getDeck();
     if (!deck.empty()) {
         Card* card = deck.back();
         deck.pop_back();
 
-        // Ìí¼Óµ½ÊÖÅÆ
+        // æ·»åŠ åˆ°æ‰‹ç‰Œ
         player->getHand().push_back(card);
 
-        // ´¥·¢³éÅÆĞ§¹û
+        // è§¦å‘æŠ½ç‰Œæ•ˆæœ
         card->setOwner(player);
         card->onDraw();
 
@@ -143,10 +144,50 @@ void GameManager::drawCard(Player* player) {
             "Player drew a card: " + card->getCardName());
     }
 }
+bool GameManager::useHeroPower(Player* player) {
+    if (!player || !canUseHeroPower(player)) {
+        return false;
+    }
 
+    // æ‰£é™¤æ³•åŠ›å€¼
+    player->setMana(player->getMana() - HERO_POWER_COST);
+
+    // å¯¹ç›®æ ‡é€ æˆä¼¤å®³
+    if (_selectedTarget) {
+        // å¦‚æœæ˜¯éšä»å¡ç‰Œï¼Œç¡®ä¿å®ƒæœ‰ç”Ÿå‘½å€¼å±æ€§
+        if (auto minionCard = dynamic_cast<MinionCard*>(_selectedTarget)) {
+            minionCard->takeDamage(2);
+            GameLogger::getInstance()->log(LogLevel::INFO,
+                "Hero power used on minion: " + _selectedTarget->getCardName());
+        }
+    }
+    else {
+        // ç›´æ¥å¯¹æ•Œæ–¹è‹±é›„é€ æˆä¼¤å®³
+        _opponentPlayer->takeDamage(2);
+        GameLogger::getInstance()->log(LogLevel::INFO,
+            "Hero power used on opponent hero");
+    }
+
+    return true;
+}
+
+bool GameManager::canUseHeroPower(Player* player) const {
+    if (!player) return false;
+
+    // æ£€æŸ¥æ˜¯å¦æ˜¯ç©å®¶çš„å›åˆ
+    if (player != _currentPlayer) return false;
+
+    // æ£€æŸ¥æ³•åŠ›å€¼æ˜¯å¦è¶³å¤Ÿ
+    if (player->getMana() < HERO_POWER_COST) return false;
+
+    // æ£€æŸ¥æœ¬å›åˆæ˜¯å¦å·²ç»ä½¿ç”¨è¿‡è‹±é›„æŠ€èƒ½
+    // TODO: æ·»åŠ ä½¿ç”¨æ¬¡æ•°æ£€æŸ¥
+
+    return true;
+}
 void GameManager::endGame() {
     _gameState = GameState::GAME_OVER;
-    // È·¶¨»ñÊ¤Õß
+    // ç¡®å®šè·èƒœè€…
     std::string winner;
     if (_currentPlayer->isDead()) {
         winner = "Opponent";
@@ -158,12 +199,12 @@ void GameManager::endGame() {
         winner = "Draw";
     }
 
-    // ¼ÇÂ¼ÓÎÏ·½áÊø
+    // è®°å½•æ¸¸æˆç»“æŸ
     GameLogger::getInstance()->log(LogLevel::INFO,
         "Game ended. Winner: " + winner);
 
-    // ¿ÉÒÔÔÚÕâÀïÌí¼ÓÓÎÏ·½áÊøµÄUIÏÔÊ¾
-    // TODO: ÏÔÊ¾ÓÎÏ·½áÊø½çÃæ
+    // å¯ä»¥åœ¨è¿™é‡Œæ·»åŠ æ¸¸æˆç»“æŸçš„UIæ˜¾ç¤º
+    // TODO: æ˜¾ç¤ºæ¸¸æˆç»“æŸç•Œé¢
 }
 Card* GameManager::getSelectedTarget() const {
     return _selectedTarget;
@@ -171,7 +212,7 @@ Card* GameManager::getSelectedTarget() const {
 void GameManager::selectTarget(Card* target) {
     _selectedTarget = target;
     
-    // ¿ÉÒÔÌí¼ÓÈÕÖ¾
+    // å¯ä»¥æ·»åŠ æ—¥å¿—
     if (target) {
         GameLogger::getInstance()->log(LogLevel::INFO,
             "Selected target: " + target->getCardName());
@@ -200,7 +241,7 @@ void GameManager::discardCard(Card* card) {
 
     owner->getDiscardPile().push_back(card);
 
-    // Ê¹ÓÃ GameLogger
+    // ä½¿ç”¨ GameLogger
     GameLogger::getInstance()->log(LogLevel::INFO,
         "Card discarded: " + card->getCardName());
 }
