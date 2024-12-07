@@ -33,11 +33,15 @@ bool GameScene::init() {
 }
 
 void GameScene::initGame() {
+    CCLOG("Initializing game...");
     // 发初始手牌
-    for (int i = 0; i < 3; i++) {  // 初始3张手牌
+    for (int i = 0; i < 3; i++) {
+        CCLOG("Creating card %d", i + 1);
         createCardSprite("card_" + std::to_string(i + 1), true);   // 玩家手牌
         createCardSprite("card_" + std::to_string(i + 1), false);  // 对手手牌
     }
+    CCLOG("Initial cards created. Player cards: %d, Opponent cards: %d",
+        _playerHandCards.size(), _opponentHandCards.size());
 }
 
 // 初始化游戏层级
@@ -83,14 +87,18 @@ void GameScene::initLayers() {
     // 4. 创建玩家场地（手牌区上方）
     _playerField = Node::create();
     _playerField->setPosition(Vec2(0, -70));  // 相对于游戏层中心向下70像素
+
+    // 添加可视化区域（调试用）
     auto playerFieldArea = DrawNode::create();
     playerFieldArea->drawRect(
         Vec2(-550, -100),  // 左下角坐标
-        Vec2(550, 100),    // 右上角坐标，总大小900x200
+        Vec2(550, 100),    // 右上角坐标，总大小1100x200
         Color4F(0, 0, 1, 0.2f)  // 半透明蓝色
     );
     _playerField->addChild(playerFieldArea);
     _gameLayer->addChild(_playerField);
+
+    CCLOG("Player field initialized at y = %f", _playerField->getPositionY());
 
     // 5. 创建对手区域
     _opponentHand = Node::create();
@@ -122,7 +130,7 @@ void GameScene::initLayers() {
     addDebugLabels();
 }
 // 添加调试标签（可选）
-// 添加调试标签（显示各区域信息）
+// 添加调试标签（示各区域信息）
 void GameScene::addDebugLabels() {
     // 创建标准白色24号字体标签的lambda函数
     auto createLabel = [](const std::string& text) {
@@ -149,7 +157,7 @@ void GameScene::addDebugLabels() {
     _opponentField->addChild(opponentFieldLabel);
 }
 
-// 初始化UI元素（按钮和标签）
+// 初始化UI元素（按钮标签）
 void GameScene::initUI() {
     Size visibleSize = Director::getInstance()->getVisibleSize();  // 2048x1024
 
@@ -159,7 +167,7 @@ void GameScene::initUI() {
         "buttons/Button_For_EndTheTurn_Selected.png",
         CC_CALLBACK_1(GameScene::onEndTurnClicked, this)
     );
-    _endTurnButton->setPosition(Vec2(visibleSize.width - 275, visibleSize.height / 2+30));  // (1948, 512)
+    _endTurnButton->setPosition(Vec2(visibleSize.width - 275, visibleSize.height / 2 + 30));  // (1948, 512)
 
     // 设置按钮（左上角）
     _settingsButton = MenuItemImage::create(
@@ -167,7 +175,7 @@ void GameScene::initUI() {
         "buttons/Setting_Button_Selected.png",
         CC_CALLBACK_1(GameScene::onSettingsClicked, this)
     );
-    _settingsButton->setPosition(Vec2(visibleSize.width- _settingsButton->getContentSize().width/2, _settingsButton->getContentSize().height / 2));  
+    _settingsButton->setPosition(Vec2(visibleSize.width - _settingsButton->getContentSize().width / 2, _settingsButton->getContentSize().height / 2));
 
     // 添加玩家英雄技能（头像右侧）
     _playerHeroPower = MenuItemImage::create(
@@ -186,7 +194,7 @@ void GameScene::initUI() {
     }
 
     // 回合计时器标签（回合结束按钮上方）
-    _turnTimerLabel = Label::createWithTTF("90", "fonts/arial.ttf", 32);
+    _turnTimerLabel = Label::createWithTTF("30", "fonts/arial.ttf", 32);
     _turnTimerLabel->setPosition(Vec2(visibleSize.width - 275, visibleSize.height / 2 + 80));  // (1948, 562)
     _uiLayer->addChild(_turnTimerLabel);
 
@@ -194,18 +202,18 @@ void GameScene::initUI() {
     _playerManaLabel = Label::createWithTTF("0/0", "fonts/arial.ttf", 24);     // 法力值
     _playerHealthLabel = Label::createWithTTF("30", "fonts/arial.ttf", 35);    // 生命值
     _playerManaLabel->setPosition(Vec2(1320, 95));      // (100, 100)
-    _playerHealthLabel->setPosition(Vec2(visibleSize.width / 2 + 60, 200));  
+    _playerHealthLabel->setPosition(Vec2(visibleSize.width / 2 + 60, 200));
     //_playerManaLabel->setTextColor(Color4B(0, 0, 0, 255));
     //_playerHealthLabel->setTextColor(Color4B(0, 0, 0, 255));
-    _uiLayer->addChild(_playerManaLabel,2);
-    _uiLayer->addChild(_playerHealthLabel,2);
+    _uiLayer->addChild(_playerManaLabel, 2);
+    _uiLayer->addChild(_playerHealthLabel, 2);
 
     // 添加玩家头像（正下方）
     auto playerHeroPortrait = Sprite::create("heroes/player_portrait.png");
     if (playerHeroPortrait) {
-        playerHeroPortrait->setPosition(Vec2(visibleSize.width / 2+20, 265));  // x=1024, y=120
+        playerHeroPortrait->setPosition(Vec2(visibleSize.width / 2 + 20, 265));  // x=1024, y=120
         playerHeroPortrait->setScale(0.8f);
-        _uiLayer->addChild(playerHeroPortrait,0);
+        _uiLayer->addChild(playerHeroPortrait, 0);
 
         // 玩家生命值显示（头像下方）
         _playerHealthLabel = Label::createWithTTF("30", "fonts/arial.ttf", 24);
@@ -250,46 +258,50 @@ void GameScene::initUI() {
     // 启动回合计时器
     this->schedule(CC_SCHEDULE_SELECTOR(GameScene::updateTurnTimer), 1.0f);
 
-    //添加卡牌库里的卡牌图片（结束按键上下两侧，双方都有）
-    float offset = 135.0f;                                          //卡牌库相对于结束回合按钮的偏移量y方向
+    //添加卡牌库里的卡牌图片（结束键上下两侧，双方都有）
+    float offset = 135.0f;                                          //卡牌库相对于结束回合按钮的偏移量y向
     auto playerCardsLibrary = Sprite::create("Cards/Cards_Library.png");
-    playerCardsLibrary->setPosition(Vec2(visibleSize.width - 185, visibleSize.height / 2 + 30- offset));
+    playerCardsLibrary->setPosition(Vec2(visibleSize.width - 185, visibleSize.height / 2 + 30 - offset));
     _uiLayer->addChild(playerCardsLibrary, 1);
 
     auto opponentCardsLibrary = Sprite::create("Cards/Cards_Library.png");
     opponentCardsLibrary->setPosition(Vec2(visibleSize.width - 185, visibleSize.height / 2 + 30 + offset));
     _uiLayer->addChild(opponentCardsLibrary, 1);
 
+    // 添加回合指示器
+    _turnIndicatorLabel = Label::createWithTTF("Your Turn", "fonts/arial.ttf", 36);
+    _turnIndicatorLabel->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
+    _turnIndicatorLabel->setTextColor(Color4B::GREEN);
+    _uiLayer->addChild(_turnIndicatorLabel);
 }
 // 4. 卡牌相关方法
 // 创建卡牌精灵
 void GameScene::createCardSprite(const std::string& cardName, bool isPlayerCard) {
-    Size visibleSize = Director::getInstance()->getVisibleSize();
+    CCLOG("=== Creating Card ===");
+    auto cardSprite = Sprite::create(
+        isPlayerCard ?
+        "cards/" + cardName + ".png" :  // 玩家卡牌显示正面
+        "cards/card_back.png"           // 对手卡牌显示背面
+    );
 
-    // 创建卡牌精灵
-    auto cardSprite = Sprite::create(isPlayerCard ?
-        "cards/" + cardName + ".png" : "cards/card_back.png");
     if (!cardSprite) {
-        CCLOG("Failed to create card sprite: %s", cardName.c_str());
+        CCLOG("ERROR: Failed to create card sprite!");
         return;
     }
 
-    // 设置卡牌基本属性
-    cardSprite->setScale(0.7f);  // 与英雄技能大小一致
+    cardSprite->setScale(CARD_SCALE);  // 使用统一的卡牌缩放
 
-    // 设置初始位置（从牌库位置开始）
-    Vec2 startPos;
+    // 添加到对应的容器
     if (isPlayerCard) {
-        startPos = Vec2(visibleSize.width - 100, -320);  // 从玩家牌库位置开始
         _playerHandCards.push_back(cardSprite);
         _playerHand->addChild(cardSprite);
+        CCLOG("Added player card: %s", cardName.c_str());
     }
     else {
-        startPos = Vec2(-100, 450);  // 从对手牌库位置开始
         _opponentHandCards.push_back(cardSprite);
         _opponentHand->addChild(cardSprite);
+        CCLOG("Added opponent card (back)");
     }
-    cardSprite->setPosition(startPos);
 
     // 重新排列手牌
     arrangeHandCards(isPlayerCard);
@@ -328,95 +340,244 @@ void GameScene::arrangeHandCards(bool isPlayerHand) {
         }
     }
 }
-
-// 添加卡牌交互
+// 修改卡牌交互逻辑
 void GameScene::addCardInteraction(cocos2d::Sprite* cardSprite) {
     auto listener = EventListenerTouchOneByOne::create();
+    listener->setSwallowTouches(true);  // 防止触摸事件穿透
 
-    // 触摸开始
     listener->onTouchBegan = [this, cardSprite](Touch* touch, Event* event) {
-        Vec2 touchPos = cardSprite->getParent()->convertToNodeSpace(touch->getLocation());
-        Rect bounds = cardSprite->getBoundingBox();
+        CCLOG("Touch began on card");
+        if (!_isPlayerTurn) {
+            CCLOG("Not player's turn");
+            return false;
+        }
 
-        if (bounds.containsPoint(touchPos)) {
-            // 卡牌被点击时上浮并放大
-            cardSprite->runAction(Spawn::create(
-                MoveBy::create(0.1f, Vec2(0, 30)),
-                ScaleTo::create(0.1f, 0.8f),
-                nullptr
-            ));
+        Vec2 touchPos = cardSprite->getParent()->convertToNodeSpace(touch->getLocation());
+        if (cardSprite->getBoundingBox().containsPoint(touchPos)) {
+            CCLOG("Card touched successfully");
+            // 检查战场是否已满
+            if (_playerFieldCards.size() >= 7) {
+                CCLOG("Field is full!");
+                return false;
+            }
+            // 直接打出卡牌
+            playCardToField(cardSprite);
             return true;
         }
         return false;
         };
 
-    // 触摸结束
-    listener->onTouchEnded = [this, cardSprite](Touch* touch, Event* event) {
-        // 卡牌回到原位
-        cardSprite->runAction(Spawn::create(
-            MoveBy::create(0.1f, Vec2(0, -30)),
-            ScaleTo::create(0.1f, 0.7f),
-            nullptr
-        ));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, cardSprite);
+    CCLOG("Card interaction added");
+}
 
-        // TODO: 处理卡牌打出逻辑
-        CCLOG("Card played!");
+void GameScene::playCardToField(cocos2d::Sprite* cardSprite) {
+    CCLOG("=== Playing Card to Field ===");
+
+    // 从手牌中移除
+    auto it = std::find(_playerHandCards.begin(), _playerHandCards.end(), cardSprite);
+    if (it != _playerHandCards.end()) {
+        _playerHandCards.erase(it);
+        CCLOG("Card removed from hand. Hand size: %d", _playerHandCards.size());
+    }
+
+    // 添加到战场
+    cardSprite->retain();  // 防止节点被自动释放
+    cardSprite->removeFromParent();
+    _playerField->addChild(cardSprite);
+    _playerFieldCards.push_back(cardSprite);
+
+    // 设置本回合已行动（召唤病）
+    _hasAttacked[cardSprite] = true;
+    // 添加视觉提示（可选）
+    cardSprite->setColor(Color3B::GRAY);
+
+    cardSprite->release();
+
+    CCLOG("Card added to field. Field size: %d", _playerFieldCards.size());
+
+    // 重新排列战场上的卡牌
+    float startX = -((_playerFieldCards.size() - 1) * CARD_SPACING) / 2;
+    for (size_t i = 0; i < _playerFieldCards.size(); ++i) {
+        Vec2 newPos = Vec2(startX + i * CARD_SPACING, 0);
+        _playerFieldCards[i]->setPosition(newPos);
+        CCLOG("Field card %d position: (%f, 0)", i, newPos.x);
+    }
+
+    // 重新排列手牌
+    arrangeHandCards(true);
+
+    CCLOG("=== Card Play Complete ===");
+}
+
+// 添加战场卡牌的交互
+void GameScene::addBattleCardInteraction(cocos2d::Sprite* cardSprite) {
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->setSwallowTouches(true);
+
+    listener->onTouchBegan = [this, cardSprite](Touch* touch, Event* event) {
+        if (!_isPlayerTurn || _hasAttacked[cardSprite]) {
+            CCLOG("Card cannot attack: not player turn or already attacked");
+            return false;
+        }
+
+        Vec2 touchPos = cardSprite->getParent()->convertToNodeSpace(touch->getLocation());
+        if (cardSprite->getBoundingBox().containsPoint(touchPos)) {
+            // 选中攻击卡牌
+            _selectedCard = cardSprite;
+            cardSprite->setColor(Color3B::YELLOW);  // 高亮显示选中的卡牌
+            CCLOG("Selected card for attack");
+            return true;
+        }
+        return false;
         };
 
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, cardSprite);
 }
-// 5. 回合控制相关方法
-// 开始新回合
-void GameScene::startTurn() {
-    _turnTimeRemaining = TURN_TIME;  // 重置计时器
-    _isPlayerTurn = !_isPlayerTurn;  // 切换回合
 
-    // 更新UI显示
-    _endTurnButton->setEnabled(_isPlayerTurn);  // 只有玩家回合才能点击结束按钮
+// 添加对手战场卡牌的交互
+void GameScene::initListeners() {
+    // ... 其他初始化代码 ...
+
+    // 为对手战场添加触摸监听
+    auto opponentFieldListener = EventListenerTouchOneByOne::create();
+    opponentFieldListener->setSwallowTouches(true);
+
+    opponentFieldListener->onTouchBegan = [this](Touch* touch, Event* event) {
+        if (!_selectedCard) {
+            return false;
+        }
+
+        // 将触摸位置转换到对手战场坐标系
+        Vec2 touchPos = _opponentField->convertToNodeSpace(touch->getLocation());
+
+        // 检查是否击到对手的卡牌
+        for (auto targetCard : _opponentFieldCards) {
+            if (targetCard->getBoundingBox().containsPoint(touchPos)) {
+                // 执行攻击
+                attackCard(_selectedCard, targetCard);
+
+                // 重置选中状态
+                _selectedCard->setColor(Color3B::GRAY);  // 攻击后变灰
+                _hasAttacked[_selectedCard] = true;      // 标记为已攻击
+                _selectedCard = nullptr;
+
+                CCLOG("Attack completed");
+                return true;
+            }
+        }
+
+        // 如果没有点击到目标，取消攻击选择
+        if (_selectedCard) {
+            _selectedCard->setColor(Color3B::WHITE);
+            _selectedCard = nullptr;
+            CCLOG("Attack cancelled");
+        }
+        return false;
+        };
+
+    _opponentField->getEventDispatcher()->addEventListenerWithSceneGraphPriority(
+        opponentFieldListener,
+        _opponentField
+    );
+}
+
+// 添加攻击处理函数
+void GameScene::attackCard(cocos2d::Sprite* attacker, cocos2d::Sprite* target) {
+    CCLOG("Attacking card");
+
+    // 从对手战场移除被攻击的卡牌
+    auto it = std::find(_opponentFieldCards.begin(), _opponentFieldCards.end(), target);
+    if (it != _opponentFieldCards.end()) {
+        _opponentFieldCards.erase(it);
+        target->removeFromParent();
+        CCLOG("Target card removed from field");
+    }
+
+    // 重新排列对手战场
+    float startX = -((_opponentFieldCards.size() - 1) * CARD_SPACING) / 2;
+    for (size_t i = 0; i < _opponentFieldCards.size(); ++i) {
+        _opponentFieldCards[i]->setPosition(Vec2(startX + i * CARD_SPACING, 0));
+    }
+}
+
+// 在回合开始时重置攻击状态
+void GameScene::startTurn() {
+    _turnTimeRemaining = TURN_TIME;
+    _isPlayerTurn = !_isPlayerTurn;
+    _endTurnButton->setEnabled(_isPlayerTurn);
 
     if (_isPlayerTurn) {
-        // 玩家回合开始时的操作
-        _endTurnButton->setColor(Color3B::WHITE);  // 按钮高亮
-
-        // TODO: 增加玩家的法力水晶
-        // TODO: 抽一张牌
-        // TODO: 播放回合开始动画
-
+        // 重置所有卡牌的攻击状态
+        for (auto card : _playerFieldCards) {
+            _hasAttacked[card] = false;
+            card->setColor(Color3B::WHITE);  // 恢复正常颜色
+        }
+        _endTurnButton->setColor(Color3B::WHITE);
     }
     else {
-        // 对手回合开始时的操作
-        _endTurnButton->setColor(Color3B::GRAY);   // 按钮变灰
-
-        // TODO: 启动AI决策
-        // TODO: 播放对手回合开始动画
+        _endTurnButton->setColor(Color3B::GRAY);
     }
 }
 
 // 结束当前回合
 void GameScene::endTurn() {
-    // 播放结束回合动画
-    auto endTurnEffect = Sprite::create("effects/end_turn.png");
-    if (endTurnEffect) {
-        endTurnEffect->setPosition(Director::getInstance()->getVisibleSize() / 2);
-        this->addChild(endTurnEffect);
+    _isPlayerTurn = !_isPlayerTurn;  // 切换回合
+    _turnTimeRemaining = TURN_TIME;   // 重置回合时间
 
-        // 动画完成后删除特效并开始新回合
-        auto sequence = Sequence::create(
-            FadeIn::create(0.2f),
-            DelayTime::create(0.5f),
-            FadeOut::create(0.2f),
-            CallFunc::create([this, endTurnEffect]() {
-                endTurnEffect->removeFromParent();
-                this->startTurn();
-                }),
-            nullptr
-        );
-        endTurnEffect->runAction(sequence);
+    // 更新英雄技能状态
+    if (_playerHeroPower) {
+        if (_isPlayerTurn) {
+            _playerHeroPower->setEnabled(true);  // 我方回合启用英雄技能
+            _playerHeroPower->setNormalImage(Sprite::create("heroes/hero_power_normal.png"));
+            _playerHeroPower->setSelectedImage(Sprite::create("heroes/hero_power_selected.png"));
+        }
+        else {
+            _playerHeroPower->setEnabled(false);  // 对方回合禁用英雄技能
+            _playerHeroPower->setNormalImage(Sprite::create("heroes/hero_power_disabled.png"));
+            _playerHeroPower->setSelectedImage(Sprite::create("heroes/hero_power_disabled.png"));
+        }
+    }
+
+    // 重置所有卡牌的攻击状态
+    _hasAttacked.clear();
+
+    // 更新UI显示
+    if (_isPlayerTurn) {
+        // 我方回合开始
+        _endTurnButton->setEnabled(true);  // 启用结束回合按钮
     }
     else {
-        // 如果没有特效图片，直接开始新回合
-        startTurn();
+        // 对方回合开始
+        _endTurnButton->setEnabled(false);  // 禁用结束回合按钮
+
+        // 模拟AI行动（这里可以添加AI逻辑）
+        //this->scheduleOnce([this](float dt) {
+            //endTurn();  // AI回合结束后自动切换到玩家回合
+           // }, 3.0f);  // 3秒后结束AI回合
     }
+
+    // 更新回合指示器
+    updateTurnIndicator();
+}
+
+// 添加回合指示器更新方法
+void GameScene::updateTurnIndicator() {
+    if (_turnIndicatorLabel) {
+        _turnIndicatorLabel->setString(_isPlayerTurn ? "Your Turn" : "Opponent's Turn");
+        _turnIndicatorLabel->setTextColor(_isPlayerTurn ? Color4B::GREEN : Color4B::RED);
+    }
+}
+
+// 修改英雄技能点击回调
+void GameScene::onHeroPowerClicked(Ref* sender) {
+    if (!_isPlayerTurn) {
+        // 如果不是玩家回合，直接返回
+        return;
+    }
+
+    auto gameManager = GameManager::getInstance();
+    auto currentPlayer = gameManager->getCurrentPlayer();
 }
 
 // 更新回合计时器
@@ -425,8 +586,8 @@ void GameScene::updateTurnTimer(float dt) {
         _turnTimeRemaining--;
         _turnTimerLabel->setString(std::to_string(_turnTimeRemaining));
 
-        // 时间不多时改变颜色提醒
-        if (_turnTimeRemaining <= 10) {
+        // 时间不多时改变颜色提示（调整为5秒）
+        if (_turnTimeRemaining <= 5) {  // 由于总时间更短，建议将警告时间也调短
             _turnTimerLabel->setTextColor(Color4B::RED);
         }
         else {
@@ -440,37 +601,6 @@ void GameScene::updateTurnTimer(float dt) {
     }
 }
 // 6. UI更新和事件处理方法
-void GameScene::onHeroPowerClicked(Ref* sender) {
-    auto gameManager = GameManager::getInstance();
-    if (gameManager->canUseHeroPower(gameManager->getCurrentPlayer())) {
-        if (gameManager->useHeroPower(gameManager->getCurrentPlayer())) {
-            // 播放技能动画
-            auto heroPowerEffect = Sprite::create("effects/hero_power.png");
-            if (heroPowerEffect) {
-                heroPowerEffect->setPosition(_playerHeroPower->getPosition());
-                _uiLayer->addChild(heroPowerEffect);
-
-                auto sequence = Sequence::create(
-                    FadeIn::create(0.2f),
-                    DelayTime::create(0.5f),
-                    FadeOut::create(0.2f),
-                    CallFunc::create([heroPowerEffect]() {
-                        heroPowerEffect->removeFromParent();
-                        }),
-                    nullptr
-                );
-                heroPowerEffect->runAction(sequence);
-            }
-
-            // 更新UI（添加dt参数）
-            updateUI(0.0f);
-        }
-    }
-    else {
-        // 可以添加提示音效或视觉效果表示无法使用
-        CCLOG("Cannot use hero power now!");
-    }
-}
 void GameScene::updateUI(float dt) {
     // 获取游戏管理器和当前玩家
     auto gameManager = GameManager::getInstance();
@@ -553,7 +683,7 @@ void GameScene::updateFieldPositions() {
     auto currentPlayer = gameManager->getCurrentPlayer();
     auto opponentPlayer = gameManager->getOpponentPlayer();
 
-    // 更新玩家场上随从
+    // 更新玩家场上从
     const auto& playerField = currentPlayer->getField();
     float startX = -((playerField.size() - 1) * CARD_SPACING) / 2;
     for (size_t i = 0; i < playerField.size(); ++i) {
@@ -617,4 +747,10 @@ void GameScene::showGameOverUI() {
         Director::getInstance()->getVisibleSize().height / 2 - 100
     ));
     dimLayer->addChild(menu);
+}
+
+void GameScene::onEndTurnClicked(cocos2d::Ref* sender) {
+    if (_isPlayerTurn) {
+        endTurn();
+    }
 }
