@@ -1,4 +1,4 @@
- 
+
 #ifndef __MENU_SCENE_H__
 #define __MENU_SCENE_H__
 
@@ -15,7 +15,6 @@ private:
     void initBackground();
     void initMenu();
     void initUI();
-    void initListeners();      // 这个函数需要实现
     // 菜单回调
     void onPlayGame(cocos2d::Ref* sender);
     void onAdventureMode(cocos2d::Ref* sender);
