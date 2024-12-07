@@ -220,3 +220,10 @@ bool Card::isInPlayableArea(const Vec2& position) {
         visibleSize.width * 0.6f, visibleSize.height * 0.4f);
     return playableArea.containsPoint(position);
 }
+
+void Card::addEffect(std::shared_ptr<IEffect> effect) {
+    if (effect) {
+        effect->setOwner(this);
+        _effects.push_back(effect);
+    }
+}

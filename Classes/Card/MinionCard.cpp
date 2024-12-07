@@ -1,54 +1,194 @@
 // MinionCard.cpp
+// éšä»å¡ç‰Œç±»çš„å®ç°æ–‡ä»¶
 
-// °üº¬±ØÒªµÄÍ·ÎÄ¼ş
-#include "Card.h"              // »ù´¡¿¨ÅÆÀà
-#include "MinionCard.h"        // Ëæ´Ó¿¨ÅÆÀà
-#include "Game/TurnSystem.h"   // »ØºÏÏµÍ³
-#include "Effect/EffectManager.h"    // Ğ§¹û¹ÜÀíÆ÷
-#include "Network/NetworkManager.h"   // ÍøÂç¹ÜÀíÆ÷
-#include "Animation/AnimationManager.h" // ¶¯»­¹ÜÀíÆ÷
+// åŒ…å«æ‰€éœ€çš„å¤´æ–‡ä»¶
+#include "Card.h"                      // å¡ç‰ŒåŸºç±»
+#include "MinionCard.h"                // éšä»å¡ç‰Œç±»
+#include "Game/TurnSystem.h"           // å›åˆç³»ç»Ÿ
+#include "Effect/EffectManager.h"      // æ•ˆæœç®¡ç†å™¨
+#include "Network/NetworkManager.h"     // ç½‘ç»œç®¡ç†å™¨
+#include "Animation/AnimationManager.h" // åŠ¨ç”»ç®¡ç†å™¨
 
-// ³õÊ¼»¯Ëæ´Ó¿¨ÅÆ
+// åˆ›å»ºéšä»å¡ç‰Œçš„é™æ€å·¥å‚æ–¹æ³•
+// @param id: å¡ç‰ŒID
+// @param name: å¡ç‰Œåç§°
+// @return: è¿”å›åˆ›å»ºçš„éšä»å¡ç‰ŒæŒ‡é’ˆï¼Œå¤±è´¥åˆ™è¿”å›nullptr
+MinionCard* MinionCard::create(int id, const std::string& name) {
+    MinionCard* minion = new (std::nothrow) MinionCard();
+    if (minion && minion->init(id, name)) {
+        minion->autorelease();
+        return minion;
+    }
+    CC_SAFE_DELETE(minion);
+    return nullptr;
+}
+
+// åˆå§‹åŒ–éšä»å¡ç‰Œ
+// @param id: å¡ç‰ŒID
+// @param name: å¡ç‰Œåç§°
+// @return: åˆå§‹åŒ–æˆåŠŸè¿”å›trueï¼Œå¤±è´¥è¿”å›false
 bool MinionCard::init(int id, const std::string& name) {
-    // µ÷ÓÃ¸¸ÀàµÄ³õÊ¼»¯·½·¨£¬Èç¹ûÊ§°ÜÔò·µ»Øfalse
+    // è°ƒç”¨çˆ¶ç±»çš„åˆå§‹åŒ–ï¼Œå¦‚æœå¤±è´¥åˆ™è¿”å›false
     if (!Card::init(id, name)) {
         return false;
     }
 
-    // ÉèÖÃËæ´ÓµÄÄ¬ÈÏÊôĞÔ
-    _attack = 1;              // ÉèÖÃ³õÊ¼¹¥»÷Á¦Îª1
-    _health = 1;              // ÉèÖÃ³õÊ¼ÉúÃüÖµÎª1
-    _maxHealth = 1;           // ÉèÖÃ×î´óÉúÃüÖµÎª1
-    _canAttack = false;       // ÉèÖÃ³õÊ¼×´Ì¬²»ÄÜ¹¥»÷£¨Í¨³£ĞèÒªµÈ´ıÒ»»ØºÏ£©
-    _hasTaunt = false;        // ÉèÖÃ³õÊ¼×´Ì¬ÎŞ³°·íĞ§¹û
-    _hasDivineShield = false; // ÉèÖÃ³õÊ¼×´Ì¬ÎŞÊ¥¶ÜĞ§¹û
+    // è®¾ç½®éšä»çš„é»˜è®¤å±æ€§
+    _attack = 1;              // è®¾ç½®åˆå§‹æ”»å‡»åŠ›ä¸º1
+    _health = 1;              // è®¾ç½®åˆå§‹ç”Ÿå‘½å€¼ä¸º1
+    _maxHealth = 1;           // è®¾ç½®æœ€å¤§ç”Ÿå‘½å€¼ä¸º1
+    _canAttack = false;       // è®¾ç½®åˆå§‹çŠ¶æ€ä¸èƒ½æ”»å‡»ï¼ˆé€šå¸¸éœ€è¦ç­‰å¾…ä¸€å›åˆï¼‰
+    _hasTaunt = false;        // è®¾ç½®åˆå§‹çŠ¶æ€æ— å˜²è®½æ•ˆæœ
+    _hasDivineShield = false; // è®¾ç½®åˆå§‹çŠ¶æ€æ— åœ£ç›¾æ•ˆæœ
 
-    // TODO: ÕâĞ©Ä¬ÈÏÖµÓ¦¸Ã´ÓÅäÖÃÎÄ¼ş»òÊı¾İ¿âÖĞ¶ÁÈ¡
-    // ºóĞøĞèÒªÊµÏÖÅäÖÃÏµÍ³À´¼ÓÔØ¾ßÌåµÄ¿¨ÅÆÊıÖµ
+    // åˆå§‹åŒ–UIç»„ä»¶
+    initUI();
 
-    return true;  // ³õÊ¼»¯³É¹¦
+    return true;  // åˆå§‹åŒ–æˆåŠŸ
 }
 
-// ´ò³öËæ´Ó¿¨ÅÆµÄ·½·¨
+// åˆå§‹åŒ–éšä»å¡ç‰Œçš„UIç»„ä»¶
+void MinionCard::initUI() {
+    Card::initUI();  // è°ƒç”¨çˆ¶ç±»çš„UIåˆå§‹åŒ–
+
+    // æ·»åŠ æ”»å‡»åŠ›å’Œç”Ÿå‘½å€¼æ ‡ç­¾
+    _attackLabel = Label::createWithTTF("", "fonts/arial.ttf", 32);
+    _attackLabel->setPosition(Vec2(-80, -80));
+    this->addChild(_attackLabel);
+
+    _healthLabel = Label::createWithTTF("", "fonts/arial.ttf", 32);
+    _healthLabel->setPosition(Vec2(80, -80));
+    this->addChild(_healthLabel);
+
+    updateUI();
+}
+
+// æ›´æ–°éšä»å¡ç‰Œçš„UIæ˜¾ç¤º
+void MinionCard::updateUI() {
+    _attackLabel->setString(std::to_string(_attack));
+    _healthLabel->setString(std::to_string(_health));
+}
+
+// æ‰“å‡ºéšä»å¡ç‰Œæ—¶çš„å¤„ç†
 void MinionCard::playCard() {
-    // ¼ì²éÍæ¼ÒÊÇ·ñÓĞ×ã¹»µÄ·¨Á¦ÖµÀ´´ò³öÕâÕÅ¿¨
+    // æ£€æŸ¥æ˜¯å¦æœ‰è¶³å¤Ÿçš„æ³•åŠ›å€¼æ¥æ‰“å‡ºå¡ç‰Œ
     if (!TurnSystem::getInstance()->useMana(_cost)) {
-        return;  // Èç¹û·¨Á¦Öµ²»×ã£¬Ö±½Ó·µ»Ø
+        return;  // æ³•åŠ›å€¼ä¸è¶³ï¼Œç›´æ¥è¿”å›
     }
 
-    // ²¥·Å´ò³ö¿¨ÅÆÊ±µÄ¶¯»­Ğ§¹û
+    // æ’­æ”¾æ‰“å‡ºå¡ç‰Œæ—¶çš„åŠ¨ç”»æ•ˆæœ
     AnimationManager::getInstance()->playCardAnimation(this);
 
-    // ´¥·¢¿¨ÅÆµÄÕ½ºğĞ§¹û£¨Èç¹ûÓĞµÄ»°£©
+    // è§¦å‘éšä»å¡ç‰Œçš„æˆ˜å¼æ•ˆæœå’Œå…¶ä»–è§¦å‘æ•ˆæœ
     EffectManager::getInstance()->triggerEffects(TriggerType::BATTLECRY);
 
-    // ´´½¨Ò»¸öÓÎÏ·¶¯×÷²¢·¢ËÍµ½ÍøÂç
-    GameAction playAction;     // ´´½¨Ò»¸öĞÂµÄÓÎÏ·¶¯×÷¶ÔÏó
-    playAction.type = ActionType::PLAY_CARD;  // ÉèÖÃ¶¯×÷ÀàĞÍÎª´ò³ö¿¨ÅÆ
-    playAction.sourceId = getId();  // ÉèÖÃ±»´ò³ö¿¨ÅÆµÄID
-    playAction.targetId = 0;      // ÉèÖÃÄ¿±êIDÎª0£¨±íÊ¾ÎŞÌØ¶¨Ä¿±ê£©
-    // playAction.extraData ±£³ÖÎª¿Õ£¨ÎŞ¶îÍâÊı¾İĞèÒª´«µİ£©
+    // åˆ›å»ºä¸€ä¸ªæ¸¸æˆåŠ¨ä½œå¹¶å‘é€åˆ°ç½‘ç»œ
+    GameAction playAction;     // åˆ›å»ºä¸€ä¸ªæ–°çš„æ¸¸æˆåŠ¨ä½œå¯¹è±¡
+    playAction.type = ActionType::PLAY_CARD;  // è®¾ç½®åŠ¨ä½œç±»å‹ä¸ºæ‰“å‡ºå¡ç‰Œ
+    playAction.sourceId = getId();  // è®¾ç½®æ¥æºå¡ç‰Œçš„ID
+    playAction.targetId = 0;      // è®¾ç½®ç›®æ ‡IDä¸º0ï¼ˆè¡¨ç¤ºæ— ç‰¹å®šç›®æ ‡ï¼‰
+    // playAction.extraData ä¿æŒä¸ºç©ºï¼Œæ— é¢å¤–æ•°æ®éœ€è¦ä¼ é€’
 
-    // Í¨¹ıÍøÂç¹ÜÀíÆ÷·¢ËÍÕâ¸ö¶¯×÷µ½ÆäËûÍæ¼Ò
+    // é€šè¿‡ç½‘ç»œç®¡ç†å™¨å‘é€æ¸¸æˆåŠ¨ä½œ
     NetworkManager::getInstance()->sendGameAction(playAction);
+}
+
+// å¤„ç†éšä»å—åˆ°ä¼¤å®³
+void MinionCard::takeDamage(int amount) {
+    if (_hasDivineShield) {
+        _hasDivineShield = false;  // åœ£ç›¾æŠµæ¶ˆä¼¤å®³
+        return;
+    }
+    
+    _health -= amount;
+    if (_health < 0) _health = 0;
+    
+    updateUI();
+    checkDeath();
+}
+
+// å¤„ç†éšä»å—åˆ°æ²»ç–—
+void MinionCard::heal(int amount) {
+    _health = std::min(_health + amount, _maxHealth);
+    updateUI();
+}
+
+// ä¸ºéšä»æ·»åŠ å¢ç›Šæ•ˆæœ
+void MinionCard::addBuff(int attack, int health) {
+    _attack += attack;
+    _maxHealth += health;
+    _health += health;
+    updateUI();
+}
+
+// æ²‰é»˜éšä»ï¼Œç§»é™¤æ‰€æœ‰æ•ˆæœ
+void MinionCard::silence() {
+    // ç§»é™¤æ‰€æœ‰æ•ˆæœ
+    _effects.clear();
+    
+    // é‡ç½®æ‰€æœ‰çŠ¶æ€
+    _hasTaunt = false;
+    _hasDivineShield = false;
+    
+    // æ›´æ–°UI
+    updateUI();
+}
+
+// æ£€æŸ¥æ˜¯å¦å¯ä»¥æ”»å‡»æŒ‡å®šç›®æ ‡
+bool MinionCard::canAttackTarget(Card* target) const {
+    if (!target || !_canAttack) return false;
+    
+    // æ£€æŸ¥æ˜¯å¦è¢«å†»ç»“æˆ–å…¶ä»–çŠ¶æ€å½±å“
+    if (_isFrozen) return false;
+    
+    // å¦‚æœç›®æ ‡æœ‰å˜²è®½ï¼Œåªèƒ½æ”»å‡»å˜²è®½ç›®æ ‡
+    if (target->getHasProvoke()) return true;
+    
+    return true;
+}
+
+// æ‰§è¡Œæ”»å‡»ç›®æ ‡çš„åŠ¨ä½œ
+void MinionCard::attackTarget(Card* target) {
+    if (!canAttackTarget(target)) return;
+    
+    // æ‰§è¡Œæ”»å‡»
+    target->takeDamage(_attack);
+    if (target->getCardType() == CardType::MINION) {
+        this->takeDamage(target->getAttack());
+    }
+    
+    _canAttack = false;  // æ”»å‡»åä¸èƒ½å†æ¬¡æ”»å‡»
+}
+
+// æ£€æŸ¥éšä»æ˜¯å¦æ­»äº¡
+void MinionCard::checkDeath() {
+    if (_health <= 0) {
+        onDeathrattle();
+        // TODO: å¤„ç†éšä»æ­»äº¡çš„é€»è¾‘
+    }
+}
+
+// è§¦å‘æˆ˜å¼æ•ˆæœ
+void MinionCard::onBattlecry() {
+    // è§¦å‘æˆ˜å¼æ•ˆæœ
+    for (auto& effect : _effects) {
+        if (effect->getTriggerType() == TriggerType::BATTLECRY) {
+            effect->onActivate();
+        }
+    }
+}
+
+// è§¦å‘äº¡è¯­æ•ˆæœ
+void MinionCard::onDeathrattle() {
+    // è§¦å‘äº¡è¯­æ•ˆæœ
+    for (auto& effect : _effects) {
+        if (effect->getTriggerType() == TriggerType::DEATHRATTLE) {
+            effect->onActivate();
+        }
+    }
+}
+
+// æ›´æ–°éšä»çš„çŠ¶æ€
+void MinionCard::updateStats() {
+    updateUI();
 }

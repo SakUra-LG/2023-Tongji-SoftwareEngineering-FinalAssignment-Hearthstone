@@ -82,6 +82,13 @@ public:
     }
     cocos2d::Sprite* getSprite() const { return _sprite; }
     void setSprite(cocos2d::Sprite* sprite) { _sprite = sprite; }
+
+    // 效果检查
+    bool hasDivineShield() const;
+    bool hasTaunt() const;
+    bool hasRush() const;
+    bool hasCharge() const;
+    bool hasPoisonous() const;
 protected:
     // UI组件
     Label* _nameLabel;

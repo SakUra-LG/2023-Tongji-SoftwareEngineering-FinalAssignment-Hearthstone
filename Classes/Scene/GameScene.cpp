@@ -169,7 +169,7 @@ void GameScene::initUI() {
     );
     _endTurnButton->setPosition(Vec2(visibleSize.width - 275, visibleSize.height / 2 + 30));  // (1948, 512)
 
-    // 设置按钮（左上角）
+    // 设置按钮（左上角）->现因事件原因，效果改为退出游戏
     _settingsButton = MenuItemImage::create(
         "buttons/Setting_Button_Normal.png",
         "buttons/Setting_Button_Selected.png",
