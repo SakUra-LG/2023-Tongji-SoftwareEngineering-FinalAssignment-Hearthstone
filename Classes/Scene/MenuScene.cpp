@@ -39,7 +39,7 @@ void MenuScene::initMenu() {
        // 设置它们的垂直间距和位置
        // 添加点击回调函数
        // 创建动画效果
-    
+
     //设置偏移量
     float upOffset = 70.0f;                                 //整体性上偏移量
 
@@ -57,7 +57,7 @@ void MenuScene::initMenu() {
     // add the sprite as a child to this layer
     this->addChild(spriteCircle, 1);
 
-     //下面开始做卡牌收藏处的选项卡
+    //下面开始做卡牌收藏处的选项卡
     auto bottomSelectionBackground = Sprite::create("menu/BottomSelection_Background.png");
     // position the sprite on the center of the screen
     bottomSelectionBackground->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y - spriteTable->getContentSize().height / 2 + upOffset / 2));
@@ -99,17 +99,17 @@ void MenuScene::initMenu() {
     playItem->setPosition(Vec2(0, spacing * 1.2f + upOffset));
     battleItem->setPosition(Vec2(0, spacing * 0.45f + upOffset));
     adventureItem->setPosition(Vec2(0, -spacing * 0.35f + upOffset));
-    settingsItem->setPosition(Vec2(visibleSize.width/2- settingsItem->getContentSize().width/2, -visibleSize.height/2+ settingsItem->getContentSize().height / 2 ));
+    settingsItem->setPosition(Vec2(visibleSize.width / 2 - settingsItem->getContentSize().width / 2, -visibleSize.height / 2 + settingsItem->getContentSize().height / 2));
     Rect boundingBox = bottomSelectionBackground->getBoundingBox();              // 获取 bottomSelectionBackground 的边界矩形
-    Vec2 deckItemPos = Vec2(boundingBox.getMaxX()-50-visibleSize.width/2-deckItem->getContentSize().width / 2, boundingBox.getMinY()+30-visibleSize.height/2+ deckItem->getContentSize().height/2);   // 计算 bottomSelectionBackground 右下角的位置,并合理计算其位置
+    Vec2 deckItemPos = Vec2(boundingBox.getMaxX() - 50 - visibleSize.width / 2 - deckItem->getContentSize().width / 2, boundingBox.getMinY() + 30 - visibleSize.height / 2 + deckItem->getContentSize().height / 2);   // 计算 bottomSelectionBackground 右下角的位置,并合理计算其位置
     deckItem->setPosition(deckItemPos);
 
     // 创建菜单
     auto menu = Menu::create(playItem, battleItem, adventureItem, settingsItem, deckItem, nullptr);
     menu->setPosition(Vec2(visibleSize.width / 2 + origin.x,
-        visibleSize.height / 2 + origin.y ));
+        visibleSize.height / 2 + origin.y));
 
-    this->addChild(menu,2);
+    this->addChild(menu, 2);
 
     // 播放菜单动画
     playMenuAnimation();
@@ -130,8 +130,8 @@ void MenuScene::initUI() {
     // 添加版本号
     auto versionLabel = Label::createWithTTF("Version 1.0", "fonts/arial.ttf", 24);
     if (versionLabel) {
-        versionLabel->setPosition(Vec2(versionLabel->getContentSize().width/2,
-           visibleSize.height- versionLabel->getContentSize().height / 2));
+        versionLabel->setPosition(Vec2(versionLabel->getContentSize().width / 2,
+            visibleSize.height - versionLabel->getContentSize().height / 2));
         this->addChild(versionLabel, 1);
     }
 
@@ -148,7 +148,7 @@ void MenuScene::initUI() {
 
     auto battleGroundsLable = Label::createWithTTF("Battlegrounds", "fonts/Marker Felt.ttf", 24);
     if (battleGroundsLable) {
-        battleGroundsLable->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 +spacing * 0.45f + upOffset));
+        battleGroundsLable->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 + spacing * 0.45f + upOffset));
         battleGroundsLable->setTextColor(Color4B(0, 0, 0, 255));
         this->addChild(battleGroundsLable, 3);
     }
@@ -203,18 +203,9 @@ void MenuScene::onPlayGame(Ref* sender) {
     auto scene = GameScene::createScene();
     Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene));
 }
-void GameScene::initListeners() {
-    // 初始化事件监听器
-    auto listener = EventListenerTouchOneByOne::create();
-    listener->onTouchBegan = [](Touch* touch, Event* event) {
-        return true;
-        };
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-}
 
-
-
-void GameScene::onEndTurnClicked(Ref* sender) {
+// 直接跳到其他MenuScene的方法
+void MenuScene::onEndTurnClicked(Ref* sender) {
     // 处理结束回合按钮点击
     AudioManager::getInstance()->playEffect(GameConstants::Sound::MAIN_MENU_THREEBUTTON_CLICK);
     // TODO: 添加结束回合逻辑
