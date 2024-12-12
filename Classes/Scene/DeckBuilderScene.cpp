@@ -4,26 +4,26 @@
 #include"MenuScene.h"
 
 USING_NS_CC;
-// ´´½¨³¡¾°µÄ¾²Ì¬·½·¨
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¾ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½
 Scene* DeckBuilderScene::createScene() {
     return DeckBuilderScene::create();
 }
-// ³¡¾°³õÊ¼»¯·½·¨
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 bool DeckBuilderScene::init() {
     if (!Scene::init()) {
         return false;
     }
-    // ³õÊ¼»¯³¡¾°µÄÈý¸öÖ÷Òª×é¼þ
-    DeckBuilderScene::initBackground1();// ³õÊ¼»¯±³¾°
-    DeckBuilderScene::initMenu1(); // ³õÊ¼»¯²Ëµ¥°´Å¥
-    DeckBuilderScene::initUI1();// ³õÊ¼»¯UIÔªËØ
+    // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½
+    DeckBuilderScene::initBackground1();// ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    DeckBuilderScene::initMenu1(); // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½Å¥
+    DeckBuilderScene::initUI1();// ï¿½ï¿½Ê¼ï¿½ï¿½UIÔªï¿½ï¿½
     return true;
 }
 
-void DeckBuilderScene::initBackground1() { // »ñÈ¡ÆÁÄ»³ß´çºÍÔ­µãÎ»ÖÃ
+void DeckBuilderScene::initBackground1() { // ï¿½ï¿½È¡ï¿½ï¿½Ä»ï¿½ß´ï¿½ï¿½Ô­ï¿½ï¿½Î»ï¿½ï¿½
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    // ´´½¨²¢ÉèÖÃ±³¾°¾«Áé
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     auto background = Sprite::create(GameConstants::Resources::BACKGROUND_DECKBUILDER);
     background->setPosition(Vec2(visibleSize.width / 2 + origin.x,
         visibleSize.height / 2 + origin.y));
@@ -35,19 +35,19 @@ void DeckBuilderScene::initMenu1()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    //·­Ò³°´Å¥£¬ÏÂÒ»Ò³
+    //ï¿½ï¿½Ò³ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½Ò»Ò³
     auto pageRight = MenuItemImage::create(
         "buttons/Button_For_DeckBuidler_Right.png",
         "buttons/Button_For_DeckBuidler_Right.png",
         CC_CALLBACK_1(DeckBuilderScene::onPageRight, this));
 
-    //·­Ò³°´Å¥£¬ÉÏÒ»Ò³
+    //ï¿½ï¿½Ò³ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½Ò»Ò³
     auto pageLeft = MenuItemImage::create(
         "buttons/Button_For_DeckBuilder_Left.png",
         "buttons/Button_For_DeckBuilder_Left.png",
         CC_CALLBACK_1(DeckBuilderScene::onPageLeft, this));
 
-    //·µ»Ø°´Å¥£¬·µ»ØÖ÷²Ëµ¥
+    //ï¿½ï¿½ï¿½Ø°ï¿½Å¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½
     auto returnMenu = MenuItemImage::create(
         "buttons/Button_Back_Normal.png",
         "buttons/Button_Back_Selected.png",
@@ -69,7 +69,7 @@ void DeckBuilderScene::initUI1()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    // Ìí¼Ó±êÌâ
+    // ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½
     auto titleLabel = Label::createWithTTF("My Collections", "fonts/Marker Felt.ttf", 43);
     if (titleLabel) {
         titleLabel->setPosition(Vec2(origin.x + visibleSize.width / 2+75,
@@ -80,19 +80,19 @@ void DeckBuilderScene::initUI1()
 
 }
 
-//·­Ò³-ÏÂÒ»Ò³º¯Êý
+//ï¿½ï¿½Ò³-ï¿½ï¿½Ò»Ò³ï¿½ï¿½ï¿½ï¿½
 void DeckBuilderScene::onPageRight(cocos2d::Ref* sender)
 {
 
 }
 
-//·­Ò³-ÉÏÒ»Ò³º¯Êý
+//ï¿½ï¿½Ò³-ï¿½ï¿½Ò»Ò³ï¿½ï¿½ï¿½ï¿½
 void DeckBuilderScene::onPageLeft(cocos2d::Ref* sender)
 {
 
 }
 
-//·µ»ØÖ÷²Ëµ¥º¯Êý
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½
 void DeckBuilderScene::onReturnMenu(cocos2d::Ref* sender)
 {
     auto scene = MenuScene::createScene();

@@ -23,6 +23,16 @@ struct CardData {
     std::string description;    // 卡牌描述
     std::string framePath;      // 卡牌框架图片路径
     std::string portraitPath;   // 卡牌立绘图片路径
+
+    // 添加效果标记
+    bool hasBattlecry = false;      // 是否有战吼效果
+    bool hasDeathrattle = false;    // 是否有亡语效果
+    bool hasDivineShield = false;   // 是否有圣盾
+    bool hasTaunt = false;          // 是否有嘲讽
+    bool hasPoison = false;         // 是否有剧毒
+    bool hasOutcast = false;        // 是否有流放效果
+    bool hasRush = false;           // 是否有突袭
+    bool hasCharge = false;         // 是否有冲锋
 };
 
 /**
