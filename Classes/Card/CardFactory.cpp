@@ -8,12 +8,14 @@
 CardFactory* CardFactory::_instance = nullptr;
 
 CardFactory::CardFactory() {
-    initCardTemplates();
+    // 构造函数不再调用initCardTemplates
+    // 因为我们在getInstance中调用它
 }
 
 CardFactory* CardFactory::getInstance() {
     if (!_instance) {
         _instance = new CardFactory();
+        _instance->initCardTemplates();
     }
     return _instance;
 }
@@ -49,7 +51,7 @@ void CardFactory::initCardTemplates() {
         card.description = "发现一张流放牌，你的下一张流放牌法力值减小（1）点";
         card.hasBattlecry = true;                       //释放法术牌简化成战吼效果
         card.framePath = "cards/frame_normal_fashu.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_YiLiDaLeiYanXi.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -66,7 +68,7 @@ void CardFactory::initCardTemplates() {
         card.hasRush = true;                       
         card.hasOutcast = true;
         card.framePath = "cards/frame_normal_suicong.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_XiongMengDeWaiLaiZhe.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -82,7 +84,7 @@ void CardFactory::initCardTemplates() {
         card.description = "在下个回合开始时，抽一张牌，并使其法力消耗减小（1）点";
         card.hasBattlecry = true;                       //释放法术牌简化成战吼效果
         card.framePath = "cards/frame_normal_fashu.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_MinJieZhouFu.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -98,14 +100,14 @@ void CardFactory::initCardTemplates() {
         card.description = "下个回合，你的对手减少两个法力值";
         card.hasBattlecry = true;                       //释放法术牌简化成战吼效果
         card.framePath = "cards/frame_normal_fashu.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_FaLiRanShao.png";
         _cardTemplates[card.id] = card;
     }
 
     {
         CardData card;
         card.id = 1006;
-        card.name = "火色魔印奔行者";
+        card.name = "��色魔印奔行者";
         card.type = CardType::MINION;
         card.rarity = CardRarity::NORMAL;
         card.cost = 1;
@@ -114,7 +116,7 @@ void CardFactory::initCardTemplates() {
         card.description = "流放：抽一张牌";
         card.hasOutcast = true;
         card.framePath = "cards/frame_normal_suicong.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_HuoSeMoYinBenXingZhe.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -131,7 +133,7 @@ void CardFactory::initCardTemplates() {
         card.hasBattlecry = true;                       //释放法术牌简化成战吼效果
         card.hasOutcast = true;
         card.framePath = "cards/frame_normal_fashu.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_XieNengXueShuo.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -147,7 +149,7 @@ void CardFactory::initCardTemplates() {
         card.description = "战吼：将六张降落伞洗入你的牌库。降落伞的法力消耗为（0）点，可召唤一个1/1有冲锋的海盗";
         card.hasBattlecry = true;
         card.framePath = "cards/frame_normal_suicong.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_FeiXingYuanPaQiSi.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -164,7 +166,7 @@ void CardFactory::initCardTemplates() {
         card.hasBattlecry = true;                       //释放法术牌简化成战吼效果
         card.hasOutcast = true;
         card.framePath = "cards/frame_normal_fashu.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_YouLingShiJue.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -180,7 +182,7 @@ void CardFactory::initCardTemplates() {
         card.description = "在下个回合开始时，额外抽三张牌";
         card.hasBattlecry = true;                       //释放法术牌简化成战吼效果
         card.framePath = "cards/frame_normal_fashu.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_ShiJianZhouFu.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -196,13 +198,13 @@ void CardFactory::initCardTemplates() {
         card.description = "在下个回合，对手抽牌后，对手会受到2点伤害";
         card.hasBattlecry = true;
         card.framePath = "cards/frame_normal_suicong.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_HuiJinYuanSu.png";
         _cardTemplates[card.id] = card;
     }
 
     {
         CardData card;
-        card.id = 1011;
+        card.id = 1012;
         card.name = "飞翼滑翔";
         card.type = CardType::SPELL;
         card.rarity = CardRarity::RARE;
@@ -213,13 +215,13 @@ void CardFactory::initCardTemplates() {
         card.hasBattlecry = true;                       //释放法术牌简化成战吼效果
         card.hasOutcast = true;
         card.framePath = "cards/frame_normal_fashu.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_FeiYiHuaXiang.png";
         _cardTemplates[card.id] = card;
     }
 
     {
         CardData card;
-        card.id = 1012;
+        card.id = 1013;
         card.name = "战刃吉他";
         card.type = CardType::WEAPON;
         card.rarity = CardRarity::RARE;
@@ -229,13 +231,13 @@ void CardFactory::initCardTemplates() {
         card.description = "亡语：抽一张牌（在你装备期间，每使用过一张流放牌，提升此效果）";
         card.hasDeathrattle = true;
         card.framePath = "cards/frame_RARE_wuqi.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_RenWuXiaDao.png";
         _cardTemplates[card.id] = card;
     }
 
     {
         CardData card;
-        card.id = 1013;
+        card.id = 1014;
         card.name = "滑翔";
         card.type = CardType::SPELL;
         card.rarity = CardRarity::RARE;
@@ -246,13 +248,13 @@ void CardFactory::initCardTemplates() {
         card.hasBattlecry = true;                       //释放法术牌简化成战吼效果
         card.hasOutcast = true;
         card.framePath = "cards/frame_normal_fashu.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_HuaXiang.png";
         _cardTemplates[card.id] = card;
     }
 
     {
         CardData card;
-        card.id = 1014;
+        card.id = 1015;
         card.name = "极限追逐者阿兰娜";
         card.type = CardType::MINION;
         card.rarity = CardRarity::LEGENDARY;
@@ -262,13 +264,13 @@ void CardFactory::initCardTemplates() {
         card.description = "战吼：本局对战剩余时间内你的英雄在你的回合中受到的伤害会转移给敌方英雄";
         card.hasBattlecry = true;
         card.framePath = "cards/frame_normal_suicong.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_JiXiangZhuiZhuZheALanNa.png";
         _cardTemplates[card.id] = card;
     }
 
     {
         CardData card;
-        card.id = 1015;
+        card.id = 1016;
         card.name = "复仇重击者";
         card.type = CardType::MINION;
         card.rarity = CardRarity::RARE;
@@ -278,27 +280,28 @@ void CardFactory::initCardTemplates() {
         card.description = "突袭，在本局对战中你每使用一张流放牌，本随从法力消耗减少（1）点";
         card.hasRush = true;
         card.framePath = "cards/frame_normal_suicong.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_FuChouZhongJiZhe.png";
         _cardTemplates[card.id] = card;
     }
 
     {
         CardData card;
-        card.id = 1016;
+        card.id = 1017;
         card.name = "怒缚蛮兵";
         card.type = CardType::MINION;
         card.rarity = CardRarity::NORMAL;
         card.cost = 7;
         card.attack = 6;
         card.health = 7;
-        card.description = "嘲讽。在本回合中你每抽一张牌，本牌法力消耗减少（1）点";
+        card.description = "讽。在本回合中你每抽一张牌，本牌法力消耗减少（1）点";
         card.hasTaunt = true;
         card.framePath = "cards/frame_normal_suicong.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_NuFuManBing.png";
         _cardTemplates[card.id] = card;
     }
 
     //从此，任务瞎的卡组组建完成
+    // 
     //以下是彩虹dk卡组涉及的卡牌
 
     {
@@ -312,7 +315,7 @@ void CardFactory::initCardTemplates() {
         card.health = 2;
         card.description = "奇迹推销员";
         card.framePath = "cards/frame_normal_suicong.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_QiJiTuiXiaoYuan.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -328,7 +331,7 @@ void CardFactory::initCardTemplates() {
         card.description = "发现一张武器牌";
         card.hasBattlecry = true;                       //释放法术牌简化成战吼效果
         card.framePath = "cards/frame_normal_fashu.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_HeiAnFuWen.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -344,7 +347,7 @@ void CardFactory::initCardTemplates() {
         card.description = "对一个随从造成3点伤害，如果其死亡，发现一张武器牌";
         card.hasBattlecry = true;                       //释放法术牌简化成战吼效果
         card.framePath = "cards/frame_normal_fashu.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_BingShuangDaJi.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -361,7 +364,7 @@ void CardFactory::initCardTemplates() {
         card.hasDeathrattle = true;
         card.hasRush = true;
         card.framePath = "cards/frame_normal_suicong.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_KongJuLieQuanXunLianShi.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -377,7 +380,7 @@ void CardFactory::initCardTemplates() {
         card.description = "造成3点伤害，消耗3份残骸，在回合结束移回你的手牌";
         card.hasBattlecry = true;                       //释放法术牌简化成战吼效果
         card.framePath = "cards/frame_normal_fashu.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_TianTongBingQiLin.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -393,7 +396,7 @@ void CardFactory::initCardTemplates() {
         card.description = "召唤两个2/2的白银之手新兵";
         card.hasBattlecry = true;                       //释放法术牌简化成战吼效果
         card.framePath = "cards/frame_normal_fashu.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_CaiKuangShiGu.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -409,7 +412,7 @@ void CardFactory::initCardTemplates() {
         card.description = "对所有敌方随从造成3点伤害";
         card.hasBattlecry = true;                       //释放法术牌简化成战吼效果
         card.framePath = "cards/frame_normal_fashu.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_MaiYaYanJiang.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -427,7 +430,7 @@ void CardFactory::initCardTemplates() {
         card.hasRush = true;
         card.hasDivineShield = true;
         card.framePath = "cards/frame_normal_suicong.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_CaiHongCaiFeng.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -443,7 +446,7 @@ void CardFactory::initCardTemplates() {
         card.description = "战吼：随机召唤你牌库里的3个随从";
         card.hasBattlecry = true;
         card.framePath = "cards/frame_normal_suicong.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_GeGongZuoMu.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -459,7 +462,7 @@ void CardFactory::initCardTemplates() {
         card.description = "亡语：在本局剩余时间内，你召唤的随从获得+1攻击力";
         card.hasDeathrattle = true;
         card.framePath = "cards/frame_normal_suicong.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_YiLiZhaCiRen.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -476,7 +479,7 @@ void CardFactory::initCardTemplates() {
         card.hasDeathrattle = true;
         card.hasBattlecry = true;
         card.framePath = "cards/frame_normal_suicong.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_DaDiZhiMoHao.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -492,7 +495,7 @@ void CardFactory::initCardTemplates() {
         card.description = "召唤5个1/1的食尸鬼并随即攻击敌人";
         card.hasBattlecry = true;                       //释放法术牌简化成战吼效果
         card.framePath = "cards/frame_normal_fashu.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_ShiShiGuiZhiYe.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -512,7 +515,7 @@ void CardFactory::initCardTemplates() {
         card.hasPoison = true;
         card.hasTaunt = true;
         card.framePath = "cards/frame_normal_suicong.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_QiLiYaSiHaoHuaBan3000Xing.png";
         _cardTemplates[card.id] = card;
     }
 
@@ -529,110 +532,174 @@ void CardFactory::initCardTemplates() {
         card.hasDeathrattle = true;
         card.hasRush = true;
         card.framePath = "cards/frame_normal_suicong.png";
-        card.portraitPath = "cards/portraits_erduantiao.png";//！！！！！！！！！！！！！！！
+        card.portraitPath = "cards/portraits_KuangKengLaoBanLeiSiKa.png";
         _cardTemplates[card.id] = card;
     }
-
 }
 
+
 Card* CardFactory::createCardById(int cardId) {
-    auto it = _cardTemplates.find(cardId);
-    if (it == _cardTemplates.end()) {
-        return nullptr;
-    }
+    CCLOG("Creating card with ID: %d", cardId);
     
-    const CardData& data = it->second;
-    
-    switch (data.type) {
-        case CardType::MINION:
-            return createMinionCard(data);
-        case CardType::SPELL:
-            return createSpellCard(data);
-        default:
+    try {
+        auto it = _cardTemplates.find(cardId);
+        if (it == _cardTemplates.end()) {
+            CCLOG("Card template not found for ID: %d", cardId);
             return nullptr;
+        }
+        
+        const CardData& data = it->second;
+        CCLOG("Found template for card: %s", data.name.c_str());
+        
+        // 检查资源文件是否存在
+        auto fileUtils = FileUtils::getInstance();
+        if (!fileUtils->isFileExist(data.framePath)) {
+            CCLOG("Frame image not found: %s", data.framePath.c_str());
+            return nullptr;
+        }
+        
+        if (!fileUtils->isFileExist(data.portraitPath)) {
+            CCLOG("Portrait image not found: %s", data.portraitPath.c_str());
+            return nullptr;
+        }
+        
+        Card* card = nullptr;
+        switch (data.type) {
+            case CardType::MINION:
+                CCLOG("Creating minion card");
+                card = createMinionCard(data);
+                break;
+            case CardType::SPELL:
+                CCLOG("Creating spell card");
+                card = createSpellCard(data);
+                break;
+            default:
+                CCLOG("Unknown card type");
+                return nullptr;
+        }
+        
+        if (card) {
+            CCLOG("Card created successfully");
+        } else {
+            CCLOG("Failed to create card");
+        }
+        
+        return card;
+        
+    } catch (const std::exception& e) {
+        CCLOG("Exception in createCardById: %s", e.what());
+        return nullptr;
+    } catch (...) {
+        CCLOG("Unknown exception in createCardById");
+        return nullptr;
     }
 }
 
 MinionCard* CardFactory::createMinionCard(const CardData& data) {
-    auto minion = MinionCard::create(data.id, data.name);
-    if (minion) {
-        // 设置基本属性
-        minion->setCardType(data.type);
-        minion->setRarity(data.rarity);
-        minion->setCost(data.cost);
-        minion->setAttack(data.attack);
-        minion->setHealth(data.health);
-        minion->setMaxHealth(data.health);
-        minion->setDescription(data.description);
-        
-        // 添加特殊效果
-        if (data.hasBattlecry) {
-            minion->addEffect(std::make_shared<BattlecryEffect>([=]() {
-                minion->setAttack(minion->getAttack() + 1);
-            }));
-        }
-        
-        if (data.hasDivineShield) {
-            minion->addEffect(std::make_shared<DivineShieldEffect>());
-        }
-        
-        if (data.hasTaunt) {
-            minion->addEffect(std::make_shared<TauntEffect>());
-        }
-        
-        if (data.hasPoison) {
-            minion->addEffect(std::make_shared<PoisonousEffect>());
-        }
-
-        if (data.hasOutcast) {
-            minion->addEffect(std::make_shared<OutcastEffect>([=]() {
-                // 定义流放效果
-            }));
-        }
-        
-        // 添加框架和立绘
-        auto frame = Sprite::create(data.framePath);
-        if (frame) {
-            minion->addChild(frame, 1);
-        }
-        
-        auto portrait = Sprite::create(data.portraitPath);
-        if (portrait) {
-            minion->addChild(portrait, 0);
-        }
+    CCLOG("Creating minion card with ID: %d", data.id);
+    
+    // 检查资源文件是否存在
+    if (!FileUtils::getInstance()->isFileExist(data.framePath)) {
+        CCLOG("Frame image not found: %s", data.framePath.c_str());
+        return nullptr;
     }
+    
+    if (!FileUtils::getInstance()->isFileExist(data.portraitPath)) {
+        CCLOG("Portrait image not found: %s", data.portraitPath.c_str());
+        return nullptr;
+    }
+    
+    auto minion = MinionCard::create(data.id, data.name);
+    if (!minion) {
+        CCLOG("Failed to create MinionCard base object");
+        return nullptr;
+    }
+
+    // 设置基本属性
+    minion->setCardType(data.type);
+    minion->setRarity(data.rarity);
+    minion->setCost(data.cost);
+    minion->setAttack(data.attack);
+    minion->setHealth(data.health);
+    minion->setMaxHealth(data.health);
+    minion->setDescription(data.description);
+    
+    // 创建并设置框架精灵
+    auto frame = Sprite::create(data.framePath);
+    if (!frame) {
+        CCLOG("Failed to create frame sprite");
+        return nullptr;
+    }
+    frame->setAnchorPoint(Vec2(0.5f, 0.5f));
+    frame->setPosition(minion->getContentSize() / 2);
+    minion->addChild(frame, 1);
+    
+    // 创建并设置立绘精灵
+    auto portrait = Sprite::create(data.portraitPath);
+    if (!portrait) {
+        CCLOG("Failed to create portrait sprite");
+        return nullptr;
+    }
+    portrait->setAnchorPoint(Vec2(0.5f, 0.5f));
+    portrait->setPosition(minion->getContentSize() / 2);
+    minion->addChild(portrait, 0);
+    
+    // 添加特殊效果
+    if (data.hasBattlecry) {
+        minion->addEffect(std::make_shared<BattlecryEffect>([=]() {
+            minion->setAttack(minion->getAttack() + 1);
+        }));
+    }
+    
+    if (data.hasDivineShield) {
+        minion->addEffect(std::make_shared<DivineShieldEffect>());
+    }
+    
+    if (data.hasTaunt) {
+        minion->addEffect(std::make_shared<TauntEffect>());
+    }
+    
+    if (data.hasPoison) {
+        minion->addEffect(std::make_shared<PoisonousEffect>());
+    }
+
+    if (data.hasOutcast) {
+        minion->addEffect(std::make_shared<OutcastEffect>([=]() {
+            // 定义流放效果
+        }));
+    }
+    
     return minion;
 }
 
 SpellCard* CardFactory::createSpellCard(const CardData& data) {
     auto spell = SpellCard::create(data.id, data.name);
-    if (spell) {
-        // 设置基本属性
-        spell->setCardType(data.type);
-        spell->setRarity(data.rarity);
-        spell->setCost(data.cost);
-        spell->setDescription(data.description);
-        
-        // 添加框架
-        auto frame = Sprite::create(data.framePath);
-        if (frame) {
-            spell->addChild(frame, 1);
-        }
-        
-        // 添加立绘
-        auto portrait = Sprite::create(data.portraitPath);
-        if (portrait) {
-            spell->addChild(portrait, 0);
-        }
-        
-        // 添加特殊效果
-        if (data.id == 2001) { // 火球术的效果
-            spell->addEffect(std::make_shared<SpellEffect>([=](Card* target) {
-                if (target) {
-                    target->takeDamage(6);
-                }
-            }));
-        }
+    if (!spell) {
+        CCLOG("Failed to create SpellCard base object");
+        return nullptr;
     }
+
+    // 设置基本属性
+    spell->setCardType(data.type);
+    spell->setRarity(data.rarity);
+    spell->setCost(data.cost);
+    spell->setDescription(data.description);
+    
+    // 添加框架
+    auto frame = Sprite::create(data.framePath);
+    if (!frame) {
+        CCLOG("Failed to create frame sprite for spell %d: %s", data.id, data.framePath.c_str());
+        return nullptr;
+    }
+    spell->addChild(frame, 1);
+    
+    // 添加立绘
+    auto portrait = Sprite::create(data.portraitPath);
+    if (!portrait) {
+        CCLOG("Failed to create portrait sprite for spell %d: %s", data.id, data.portraitPath.c_str());
+        return nullptr;
+    }
+    spell->addChild(portrait, 0);
+    
     return spell;
 } 

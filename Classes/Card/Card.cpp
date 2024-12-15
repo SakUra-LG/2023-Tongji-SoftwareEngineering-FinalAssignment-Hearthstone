@@ -12,13 +12,40 @@
 // @param name: 卡牌名称
 // @return: 返回创建的卡牌指针，失败返回nullptr
 Card* Card::create(int id, const std::string& name) {
-    Card* card = new (std::nothrow) Card();  // 使用nothrow避免异常
-    if (card && card->init(id, name)) {
-        card->autorelease();  // 加入自动释放池
+    CCLOG("Creating card: id=%d, name=%s", id, name.c_str());
+    
+    try {
+        Card* card = new (std::nothrow) Card();
+        if (!card) {
+            CCLOG("Failed to allocate Card");
+            return nullptr;
+        }
+        
+        CCLOG("Card allocated, initializing Sprite");
+        if (!card->Sprite::init()) {
+            CCLOG("Sprite initialization failed");
+            CC_SAFE_DELETE(card);
+            return nullptr;
+        }
+        
+        CCLOG("Sprite initialized, initializing Card");
+        if (!card->init(id, name)) {
+            CCLOG("Card initialization failed");
+            CC_SAFE_DELETE(card);
+            return nullptr;
+        }
+        
+        CCLOG("Card initialized successfully");
+        card->autorelease();
         return card;
+        
+    } catch (const std::exception& e) {
+        CCLOG("Exception in Card::create: %s", e.what());
+        return nullptr;
+    } catch (...) {
+        CCLOG("Unknown exception in Card::create");
+        return nullptr;
     }
-    CC_SAFE_DELETE(card);    // 初始化失败时安全删除
-    return nullptr;
 }
 
 // 初始化卡牌
@@ -26,56 +53,48 @@ Card* Card::create(int id, const std::string& name) {
 // @param name: 卡牌名称
 // @return: 初始化成功返回true，失败返回false
 bool Card::init(int id, const std::string& name) {
-    // 调用精灵类的初始化
-    if (!Sprite::init()) {
-        return false;
-    }
-
-    // 初始化基本属性
+    // 不需要再调用 Sprite::init()，因为在 create 中已经调用过了
     _id = id;
     _cardName = name;
-    _isPlayable = false;     // 默认不可打出
-    _isSelected = false;     // 默认未选中
-    _hasEffect = false;      // 默认无特效
-    _owner = nullptr;        // 初始化所有者为空
+    _isPlayable = false;
+    _isSelected = false;
+    _hasEffect = false;
+    _owner = nullptr;
+    _health = 0;
+    _maxHealth = 0;
 
-    // 初始化生命值相关属性
-    _health = 0;             // 基础卡牌默认生命值为0
-    _maxHealth = 0;          // 基础卡牌默认最大生命值为0
+    // 设置默认大小
+    this->setContentSize(Size(180, 250));  // 设置一个合适的卡牌大小
 
     // 初始化UI组件
     initUI();
-
-    // 设置触摸事件监听器
-    auto listener = EventListenerTouchOneByOne::create();
-    listener->onTouchBegan = CC_CALLBACK_2(Card::onTouchBegan, this);
-    listener->onTouchMoved = CC_CALLBACK_2(Card::onTouchMoved, this);
-    listener->onTouchEnded = CC_CALLBACK_2(Card::onTouchEnded, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
     return true;
 }
 
 // 初始化卡牌UI元素
 void Card::initUI() {
-    // 创建并设置卡牌框架精灵
-    _cardFrame = Sprite::create("cards/frame.png");
-    this->addChild(_cardFrame);
-
     // 创建并设置卡牌名称标签
-    _nameLabel = Label::createWithTTF(_cardName, "fonts/arial.ttf", 24);  // 使用 _cardName
-    _nameLabel->setPosition(Vec2(0, 50));
-    this->addChild(_nameLabel);
+    _nameLabel = Label::createWithTTF(_cardName, "fonts/arial.ttf", 24);
+    if (_nameLabel) {
+        _nameLabel->setPosition(Vec2(this->getContentSize().width / 2,
+            this->getContentSize().height - 30));
+        this->addChild(_nameLabel);
+    }
 
     // 创建并设置法力值消耗标签
     _costLabel = Label::createWithTTF(std::to_string(_cost), "fonts/arial.ttf", 32);
-    _costLabel->setPosition(Vec2(-80, 80));
-    this->addChild(_costLabel);
+    if (_costLabel) {
+        _costLabel->setPosition(Vec2(30, this->getContentSize().height - 30));
+        this->addChild(_costLabel);
+    }
 
     // 创建并设置卡牌描述标签
     _descriptionLabel = Label::createWithTTF(_description, "fonts/arial.ttf", 18);
-    _descriptionLabel->setPosition(Vec2(0, -50));
-    this->addChild(_descriptionLabel);
+    if (_descriptionLabel) {
+        _descriptionLabel->setPosition(Vec2(this->getContentSize().width / 2, 50));
+        this->addChild(_descriptionLabel);
+    }
 }
 
 // 检查卡牌是否可以打出
@@ -156,7 +175,7 @@ void Card::onDraw() {
         // 可以添加抽牌动画或效果
         AnimationManager::getInstance()->playCardDrawAnimation(this);
 
-        // 触发抽牌相关效果
+        // 触发抽��相关效果
         triggerEffects();
     }
 }
