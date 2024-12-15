@@ -96,7 +96,7 @@ void DeckBuilderScene::loadCards() {
 
             // 如果是随从卡，添加攻击力和生命值
             if (id == 1003 || id == 1006 || id == 1008 || id == 1011 || id == 1016 ||
-                (id >= 2003 && id <= 2014)) {
+                id== 2004 ||id== 1013||id== 1015||id== 2001||id==2008||(id>=2009&&id<=2011)||id==2013||id==2014) {
                 // 攻击力标签
                 auto attackLabel = Label::createWithTTF(std::to_string(attack), "fonts/arial.ttf", 70);
                 attackLabel->setPosition(Vec2(-60, -140));

@@ -6,14 +6,18 @@
 
 class Card;
 class Player;
+class Deck;
 // 添加游戏状态枚举
 
 class GameScene : public cocos2d::Scene {
 public:
     static cocos2d::Scene* createScene();
+    static Scene* createWithDeck(Deck* deck);
     virtual bool init() override;
+    virtual bool initWithDeck(Deck* deck);
 
     CREATE_FUNC(GameScene);
+    virtual ~GameScene();
 
 private:
     // 添加新的成员变量
@@ -89,6 +93,8 @@ private:
     cocos2d::Label* _turnIndicatorLabel;  // 回合指示器
     void updateTurnIndicator();           // 更新回合指示器
     void useHeroPower();                  // 使用英雄技能
+
+    Deck* _playerDeck;
 };
 
 #endif // __GAME_SCENE_H__

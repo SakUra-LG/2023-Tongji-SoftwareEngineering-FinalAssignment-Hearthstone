@@ -5,6 +5,7 @@
 #include "Player/Player.h"      // 玩家类
 #include "Utils/Constants.h"    // 游戏常量
 #include "Animation/AnimationManager.h"  // 动画管理器
+#include "Card/DeckManager.h"  // 添加这行
 
 // 使用 cocos2d 命名空间
 USING_NS_CC;
@@ -129,6 +130,7 @@ void GameScene::initLayers() {
     //可删
     addDebugLabels();
 }
+
 // 添加调试标签（可选）
 // 添加调试标签（示各区域信息）
 void GameScene::addDebugLabels() {
@@ -177,7 +179,7 @@ void GameScene::initUI() {
     );
     _settingsButton->setPosition(Vec2(visibleSize.width - _settingsButton->getContentSize().width / 2, _settingsButton->getContentSize().height / 2));
 
-    // 添加玩家英雄技能（头像右侧）
+    // 添加玩家英雄技���（头像右侧）
     _playerHeroPower = MenuItemImage::create(
         "heroes/hero_power_normal.png",
         "heroes/hero_power_pressed.png",
@@ -542,7 +544,7 @@ void GameScene::endTurn() {
     // 重置所有卡牌的攻击状态
     _hasAttacked.clear();
 
-    // 更新UI显示
+    // 更新UI显���
     if (_isPlayerTurn) {
         // 我方回合开始
         _endTurnButton->setEnabled(true);  // 启用结束回合按钮
@@ -752,5 +754,41 @@ void GameScene::showGameOverUI() {
 void GameScene::onEndTurnClicked(cocos2d::Ref* sender) {
     if (_isPlayerTurn) {
         endTurn();
+    }
+}
+
+Scene* GameScene::createWithDeck(Deck* deck) {
+    auto scene = new GameScene();
+    if (scene && scene->initWithDeck(deck)) {
+        scene->autorelease();
+        return scene;
+    }
+    CC_SAFE_DELETE(scene);
+    return nullptr;
+}
+
+bool GameScene::initWithDeck(Deck* deck) {
+    if (!Scene::init()) {
+        return false;
+    }
+
+    _playerDeck = deck;
+    if (deck) {
+        deck->retain();  // 保持对卡组的引用
+    }
+
+    // 初始化游戏场景
+    initLayers();
+    initUI();
+    initListeners();
+    initGame();
+
+    return true;
+}
+
+// 在析构函数中释放卡组
+GameScene::~GameScene() {
+    if (_playerDeck) {
+        _playerDeck->release();
     }
 }

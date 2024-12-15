@@ -29,6 +29,7 @@ namespace GameConstants {
         const char* const BUTTON_PRESSED = "buttons/button_pressed.png";
         const char* const BACKGROUND = "backgrounds/game_bg.png";
         const char* const BACKGROUND_SETTING = "backgrounds/Background_For_Setting.png";
+        const char* const BACKGROUND_SELECTCARDS = "backgrounds/BackGround_For_SelectCards.png";
         const char* const BACKGROUND_DECKBUILDER = "backgrounds/Background_For_DeckBuilder.png";
         const char* const FONT_PATH = "fonts/arial.ttf";
     }
