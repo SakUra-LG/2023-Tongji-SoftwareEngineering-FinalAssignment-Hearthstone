@@ -26,13 +26,15 @@ private:
     std::map<cocos2d::Sprite*, bool> _hasAttacked;  // 记录每张卡本回合是否已攻击
     // 卡牌相关
     void dealCard(const std::string& cardName, bool isPlayerCard, int handPosition);
-    void createCardSprite(const std::string& cardName, bool isPlayerCard);
+    void createCardSprite(Card* card, bool isPlayerCard);
     void arrangeHandCards(bool isPlayerHand);
+    void drawInitialCard();
+    void updateHandPositions();
 
     // 卡牌常量
-    const float CARD_SPACING = 80.0f;        // 卡牌间距
-    const float CARD_SCALE = 0.8f;           // 卡牌缩放
-    const float CARD_MOVE_DURATION = 0.5f;   // 卡牌移动动画时间
+    static constexpr float CARD_SPACING = 80.0f;        // 卡牌间距
+    static constexpr float CARD_SCALE = 0.8f;           // 卡牌缩放
+    static constexpr float CARD_MOVE_DURATION = 0.5f;   // 卡牌移动动画时间
     std::vector<cocos2d::Sprite*> _playerFieldCards;    // 玩家战场卡牌
     std::vector<cocos2d::Sprite*> _opponentFieldCards;  // 对手战场卡牌
     // 卡牌容器
@@ -73,7 +75,6 @@ private:
     void initGame();
     // 更新方法
     void updateUI(float dt);
-    void updateHandPositions();
     void updateFieldPositions();
     void addDebugLabels();
     void showGameOverUI();

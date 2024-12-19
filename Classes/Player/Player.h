@@ -50,6 +50,8 @@ public:
     bool isDead() const { return _health <= 0; }
     bool canDrawCard() const { return !_deck.empty(); }
 
+    void setDeck(const std::vector<Card*>& deck) { _deck = deck; }
+
 private:
     std::vector<Card*> _deck;   // 牌库
     std::vector<Card*> _hand;   // 手牌

@@ -263,24 +263,6 @@ void CardFactory::initCardTemplates() {
 
         {
             CardData card;
-            card.id = 1013;
-            card.name = "战刃吉他";
-            card.type = CardType::WEAPON;
-            card.rarity = CardRarity::RARE;
-            card.cost = 4;
-            card.attack = 4;
-            card.health = 2;
-            card.description = "亡语：抽一张牌（在你装备期间，每使用过一张流放牌，提升此效果）";
-            card.hasDeathrattle = true;
-            card.framePath = "cards/frame_RARE_wuqi.png";
-            card.portraitPath = "cards/portraits_RenWuXiaDao.png";
-            _cardTemplates[card.id] = card;
-            cardCount++;
-            logger->log(LogLevel::DEBUG, "Created card: " + card.name);
-        }
-
-        {
-            CardData card;
             card.id = 1014;
             card.name = "滑翔";
             card.type = CardType::SPELL;
@@ -376,7 +358,7 @@ void CardFactory::initCardTemplates() {
         {
             CardData card;
             card.id = 2002;
-            card.name = "黑暗符文";
+            card.name = "黑暗符";
             card.type = CardType::SPELL;
             card.rarity = CardRarity::RARE;
             card.cost = 1;
@@ -682,6 +664,7 @@ Card* CardFactory::createCardById(int cardId) {
         
         if (card) {
             logger->log(LogLevel::INFO, "Successfully created card: " + data.name);
+            card->setPortraitPath(data.portraitPath);
         } else {
             logger->log(LogLevel::ERR, "Failed to create card: " + data.name);
         }

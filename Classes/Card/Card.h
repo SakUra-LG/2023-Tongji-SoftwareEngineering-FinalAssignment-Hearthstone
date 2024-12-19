@@ -17,7 +17,6 @@ class CardEffect;  // 添加 CardEffect 的前向声明
 enum class CardType {
     MINION,     // 随从
     SPELL,      // 法术
-    WEAPON,     // 武器
     HERO        // 英雄
 };
 
@@ -97,6 +96,8 @@ protected:
     int _maxHealth;
     int _attack;
     bool _hasAttacked;
+    
+    std::string _portraitPath;  // 卡牌图片路径
     
 public:
     // 创建方法
@@ -179,6 +180,9 @@ public:
     // 状态效果
     bool getHasProvoke() const { return false; }  // 默认实现
     virtual bool hasTaunt() const { return false; }  // 默认实现
+    
+    const std::string& getPortraitPath() const { return _portraitPath; }
+    void setPortraitPath(const std::string& path) { _portraitPath = path; }
 };
 
 #endif // __CARD_H__

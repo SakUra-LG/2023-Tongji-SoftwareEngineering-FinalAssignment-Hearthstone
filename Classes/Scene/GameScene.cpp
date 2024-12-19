@@ -6,6 +6,7 @@
 #include "Utils/Constants.h"    // 游戏常量
 #include "Animation/AnimationManager.h"  // 动画管理器
 #include "Card/DeckManager.h"  // 添加这行
+#include "Utils/GameLogger.h"  // 修正路径
 #pragma execution_character_set("utf-8")
 // 使用 cocos2d 命名空间
 USING_NS_CC;
@@ -35,14 +36,9 @@ bool GameScene::init() {
 
 void GameScene::initGame() {
     CCLOG("Initializing game...");
-    // 发初始手牌
-    for (int i = 0; i < 3; i++) {
-        CCLOG("Creating card %d", i + 1);
-        createCardSprite("card_" + std::to_string(i + 1), true);   // 玩家手牌
-        createCardSprite("card_" + std::to_string(i + 1), false);  // 对手手牌
-    }
-    CCLOG("Initial cards created. Player cards: %d, Opponent cards: %d",
-        _playerHandCards.size(), _opponentHandCards.size());
+    
+    // 游戏初始化逻辑现在在 initWithDeck 中处理
+    CCLOG("Initial game setup complete");
 }
 
 // 初始化游戏层级
@@ -179,7 +175,7 @@ void GameScene::initUI() {
     );
     _settingsButton->setPosition(Vec2(visibleSize.width - _settingsButton->getContentSize().width / 2, _settingsButton->getContentSize().height / 2));
 
-    // 添加玩家英雄技���（头像右侧）
+    // 添加玩家英雄技能（头像右侧）
     _playerHeroPower = MenuItemImage::create(
         "heroes/hero_power_normal.png",
         "heroes/hero_power_pressed.png",
@@ -277,69 +273,15 @@ void GameScene::initUI() {
     _uiLayer->addChild(_turnIndicatorLabel);
 }
 // 4. 卡牌相关方法
-// 创建卡牌精灵
-void GameScene::createCardSprite(const std::string& cardName, bool isPlayerCard) {
-    CCLOG("=== Creating Card ===");
-    auto cardSprite = Sprite::create(
-        isPlayerCard ?
-        "cards/" + cardName + ".png" :  // 玩家卡牌显示正面
-        "cards/card_back.png"           // 对手卡牌显示背面
-    );
-
-    if (!cardSprite) {
-        CCLOG("ERROR: Failed to create card sprite!");
-        return;
-    }
-
-    cardSprite->setScale(CARD_SCALE);  // 使用统一的卡牌缩放
-
-    // 添加到对应的容器
-    if (isPlayerCard) {
-        _playerHandCards.push_back(cardSprite);
-        _playerHand->addChild(cardSprite);
-        CCLOG("Added player card: %s", cardName.c_str());
-    }
-    else {
-        _opponentHandCards.push_back(cardSprite);
-        _opponentHand->addChild(cardSprite);
-        CCLOG("Added opponent card (back)");
-    }
-
-    // 重新排列手牌
-    arrangeHandCards(isPlayerCard);
-}
-
 // 重新排列手牌
 void GameScene::arrangeHandCards(bool isPlayerHand) {
     auto& cards = isPlayerHand ? _playerHandCards : _opponentHandCards;
-    int cardCount = cards.size();
-
-    // 计算起始X坐标，使卡牌居中
-    float startX = -((cardCount - 1) * 80.0f / 2);  // 80.0f 是卡牌间距
-
-    // 为每张卡牌创建移动动画
-    for (int i = 0; i < cardCount; i++) {
-        Vec2 targetPos = Vec2(startX + i * 80.0f, 0);
-
-        // 添加弧线动画
-        ccBezierConfig bezier;
-        bezier.controlPoint_1 = Vec2(targetPos.x, targetPos.y + 100);
-        bezier.controlPoint_2 = Vec2(targetPos.x, targetPos.y + 100);
-        bezier.endPosition = targetPos;
-
-        auto bezierTo = BezierTo::create(0.5f, bezier);
-        auto spawn = Spawn::create(
-            bezierTo,
-            ScaleTo::create(0.5f, 0.7f),  // 确保最终大小一致
-            nullptr
-        );
-
-        cards[i]->runAction(spawn);
-
-        // 如果是玩家卡牌，添加交互功能
-        if (isPlayerHand) {
-            addCardInteraction(cards[i]);
-        }
+    auto& cardNode = isPlayerHand ? _playerHand : _opponentHand;
+    
+    float startX = -((cards.size() - 1) * CARD_SPACING) / 2;
+    for (size_t i = 0; i < cards.size(); ++i) {
+        Vec2 targetPos = Vec2(startX + i * CARD_SPACING, 0);
+        cards[i]->runAction(MoveTo::create(0.3f, targetPos));
     }
 }
 // 修改卡牌交互逻辑
@@ -407,7 +349,7 @@ void GameScene::playCardToField(cocos2d::Sprite* cardSprite) {
     }
 
     // 重新排列手牌
-    arrangeHandCards(true);
+    this->arrangeHandCards(true);  // 添加 this->
 
     CCLOG("=== Card Play Complete ===");
 }
@@ -544,7 +486,7 @@ void GameScene::endTurn() {
     // 重置所有卡牌的攻击状态
     _hasAttacked.clear();
 
-    // 更新UI显���
+    // 更新UI显示
     if (_isPlayerTurn) {
         // 我方回合开始
         _endTurnButton->setEnabled(true);  // 启用结束回合按钮
@@ -772,18 +714,87 @@ bool GameScene::initWithDeck(Deck* deck) {
         return false;
     }
 
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::INFO, "Initializing game scene with deck");
+
     _playerDeck = deck;
     if (deck) {
         deck->retain();  // 保持对卡组的引用
+        logger->log(LogLevel::INFO, "Player deck set successfully");
     }
 
     // 初始化游戏场景
     initLayers();
     initUI();
     initListeners();
-    initGame();
+    
+    // 初始化游戏状态
+    auto gameManager = GameManager::getInstance();
+    gameManager->initGame();
+    
+    // 设置玩家的卡组并洗牌
+    if (_playerDeck) {
+        auto player = gameManager->getCurrentPlayer();
+        if (player) {
+            // 将卡组复制到玩家的牌库中
+            std::vector<Card*> shuffledDeck = _playerDeck->getCards();
+            // 随机打乱卡牌顺序
+            std::random_shuffle(shuffledDeck.begin(), shuffledDeck.end());
+            player->setDeck(shuffledDeck);
+            
+            logger->log(LogLevel::INFO, "Player deck shuffled and set");
+            
+            // 抽取初始手牌
+            for (int i = 0; i < 3; ++i) {
+                drawInitialCard();
+            }
+        }
+    }
 
     return true;
+}
+
+void GameScene::drawInitialCard() {
+    auto gameManager = GameManager::getInstance();
+    auto player = gameManager->getCurrentPlayer();
+    
+    if (!player) return;
+    
+    // 从牌库顶部抽一张牌
+    auto& deck = player->getDeck();
+    if (!deck.empty()) {
+        Card* card = deck.back();
+        deck.pop_back();
+        
+        // 添加到手牌
+        player->getHand().push_back(card);
+        
+        // 创建卡牌精灵并添加到手牌区域
+        createCardSprite(card, true);
+        
+        // 更新手牌位置
+        updateHandPositions();
+    }
+}
+
+void GameScene::createCardSprite(Card* card, bool isPlayerCard) {
+    if (!card) return;
+    
+    auto sprite = Sprite::create(card->getPortraitPath());
+    if (!sprite) return;
+    
+    sprite->setScale(CARD_SCALE);
+    
+    if (isPlayerCard) {
+        _playerHand->addChild(sprite);
+        _playerHandCards.push_back(sprite);
+    } else {
+        _opponentHand->addChild(sprite);
+        _opponentHandCards.push_back(sprite);
+    }
+    
+    // 将Card对象与Sprite关联
+    card->setSprite(sprite);
 }
 
 // 在析构函数中释放卡组
