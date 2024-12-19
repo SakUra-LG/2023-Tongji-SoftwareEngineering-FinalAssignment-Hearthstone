@@ -3,28 +3,28 @@
 #include "Utils/Constants.h"
 #include "Audio/AudioManager.h"
 #include"MenuScene.h"
-
+#pragma execution_character_set("utf-8")
 USING_NS_CC;
-// ´´½¨³¡¾°µÄ¾²Ì¬·½·¨
+// åˆ›å»ºåœºæ™¯çš„é™æ€æ–¹æ³•
 Scene* Settingscene1::createScene() {
     return Settingscene1::create();
 }
-// ³¡¾°³õÊ¼»¯·½·¨
+// åœºæ™¯åˆå§‹åŒ–æ–¹æ³•
 bool Settingscene1::init() {
     if (!Scene::init()) {
         return false;
     }
-    // ³õÊ¼»¯³¡¾°µÄÈý¸öÖ÷Òª×é¼þ
-    Settingscene1::initBackground1();// ³õÊ¼»¯±³¾°
-    Settingscene1::initMenu1(); // ³õÊ¼»¯²Ëµ¥°´Å¥
-    Settingscene1::initUI1();// ³õÊ¼»¯UIÔªËØ
+    // åˆå§‹åŒ–åœºæ™¯çš„ä¸‰ä¸ªä¸»è¦ç»„ä»¶
+    Settingscene1::initBackground1();// åˆå§‹åŒ–èƒŒæ™¯
+    Settingscene1::initMenu1(); // åˆå§‹åŒ–èœå•æŒ‰é’®
+    Settingscene1::initUI1();// åˆå§‹åŒ–UIå…ƒç´ 
     return true;
 }
 
-void Settingscene1::initBackground1() { // »ñÈ¡ÆÁÄ»³ß´çºÍÔ­µãÎ»ÖÃ
+void Settingscene1::initBackground1() { // èŽ·å–å±å¹•å°ºå¯¸å’ŒåŽŸç‚¹ä½ç½®
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    // ´´½¨²¢ÉèÖÃ±³¾°¾«Áé
+    // åˆ›å»ºå¹¶è®¾ç½®èƒŒæ™¯ç²¾çµ
     auto background = Sprite::create(GameConstants::Resources::BACKGROUND_SETTING);
     background->setPosition(Vec2(visibleSize.width / 2 + origin.x,
         visibleSize.height / 2 + origin.y));
@@ -34,21 +34,21 @@ void Settingscene1::initBackground1() { // »ñÈ¡ÆÁÄ»³ß´çºÍÔ­µãÎ»ÖÃ
 void Settingscene1::initMenu1() {
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    // ´´½¨ËÄ¸öÖ÷Òª²Ëµ¥Ïî£º¿ªÊ¼ÓÎÏ·¡¢¿¨×é¹¹½¨¡¢ÉèÖÃºÍÍË³ö
-       // ÉèÖÃËüÃÇµÄ´¹Ö±¼ä¾àºÍÎ»ÖÃ
-       // Ìí¼Óµã»÷»Øµ÷º¯Êý
-       // ´´½¨¶¯»­Ð§¹û
+    // åˆ›å»ºå››ä¸ªä¸»è¦èœå•é¡¹ï¼šå¼€å§‹æ¸¸æˆã€å¡ç»„æž„å»ºã€è®¾ç½®å’Œé€€å‡º
+       // è®¾ç½®å®ƒä»¬çš„åž‚ç›´é—´è·å’Œä½ç½®
+       // æ·»åŠ ç‚¹å‡»å›žè°ƒå‡½æ•°
+       // åˆ›å»ºåŠ¨ç”»æ•ˆæžœ
 
-    float upOffset = 70.0f;  // ÕûÌåÐÔÉÏÆ«ÒÆÁ¿
+    float upOffset = 70.0f;  // æ•´ä½“æ€§ä¸Šåç§»é‡
     float spacing = 80.0f;
 
-    // ÉèÖÃ±³¾°Í¼
+    // è®¾ç½®èƒŒæ™¯å›¾
     auto settingBackground = Sprite::create("menu/SettingBackground.png");
     settingBackground->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y + upOffset));
 
     this->addChild(settingBackground, 0);
 
-    // ÉèÖÃ²Ëµ¥°´Å¥
+    // è®¾ç½®èœå•æŒ‰é’®
     auto selectionItem = MenuItemImage::create(
         "menu/Selection_Button_Normal.png",
         "menu/Selection_Button_Selected.png",
@@ -59,7 +59,7 @@ void Settingscene1::initMenu1() {
         "menu/Quite_Button_Selected.png",
         CC_CALLBACK_1(Settingscene1::onQuit1, this));
 
-    //ÏÖÎªÉèÖÃ°´Å¥£¬Ó¦¸ÃÎªÉèÖÃ°´Å¥£¨ÄÚÈÝ²»¸Ä£¬Í¼Æ¬¸ü»»£¬Î»ÖÃ¸ü»»£©
+    //çŽ°ä¸ºè®¾ç½®æŒ‰é’®ï¼Œåº”è¯¥ä¸ºè®¾ç½®æŒ‰é’®ï¼ˆå†…å®¹ä¸æ”¹ï¼Œå›¾ç‰‡æ›´æ¢ï¼Œä½ç½®æ›´æ¢ï¼‰
     auto settingsItem = MenuItemImage::create(
         "menu/Setting_Button_Normal.png",
         "menu/Setting_Button_Selected.png",
@@ -74,7 +74,7 @@ void Settingscene1::initMenu1() {
     this->addChild(menu2,1);
     
     
-    // ²¥·Å²Ëµ¥¶¯»­
+    // æ’­æ”¾èœå•åŠ¨ç”»
     //playMenuAnimation();
 }
 
@@ -82,7 +82,7 @@ void Settingscene1::initUI1() {
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    // Ìí¼Ó±êÌâ
+    // æ·»åŠ æ ‡é¢˜
     auto titleLabel = Label::createWithTTF("HearthStone", "fonts/arial.ttf", 48);
     if (titleLabel) {
         titleLabel->setPosition(Vec2(origin.x + visibleSize.width / 2,
@@ -90,7 +90,7 @@ void Settingscene1::initUI1() {
         this->addChild(titleLabel, 1);
     }
 
-    // Ìí¼Ó°æ±¾ºÅ
+    // æ·»åŠ ç‰ˆæœ¬å·
     auto versionLabel = Label::createWithTTF("Version 1.0", "fonts/arial.ttf", 24);
     if (versionLabel) {
         versionLabel->setPosition(Vec2(versionLabel->getContentSize().width / 2,
@@ -99,25 +99,25 @@ void Settingscene1::initUI1() {
     }
 
     
-    // ²Ëµ¥Ïî»Øµ÷º¯Êý
+    // èœå•é¡¹å›žè°ƒå‡½æ•°
 }
 
 void Settingscene1::onSelection1(Ref* sender)
 {
-    //´Ë¹¦ÄÜ¿¼ÂÇµ½Êµ¼Ê×÷ÓÃ²»´ó£¬ÊÓÊ±¼äÇé¿öÍê³É
+    //æ­¤åŠŸèƒ½è€ƒè™‘åˆ°å®žé™…ä½œç”¨ä¸å¤§ï¼Œè§†æ—¶é—´æƒ…å†µå®Œæˆ
 }
 
 void Settingscene1::onQuit1(Ref* sender) {
     AudioManager::getInstance()->playEffect(GameConstants::Sound::MAIN_MENU_THREEBUTTON_CLICK);
-    Director::getInstance()->end();    // ²¥·Å°´Å¥µã»÷ÒôÐ§
-    // ÍË³öÓÎÏ·
+    Director::getInstance()->end();    // æ’­æ”¾æŒ‰é’®ç‚¹å‡»éŸ³æ•ˆ
+    // é€€å‡ºæ¸¸æˆ
 }
 
 void Settingscene1::onSettings1(Ref* sender)
 {
     AudioManager::getInstance()->playEffect(GameConstants::Sound::CHANGE_HELP_SCENE);
 
-    // ÇÐ»»µ½ÉèÖÃ1³¡¾°
+    // åˆ‡æ¢åˆ°è®¾ç½®1åœºæ™¯
     auto scene = MenuScene::createScene();
     Director::getInstance()->replaceScene(scene);
 }

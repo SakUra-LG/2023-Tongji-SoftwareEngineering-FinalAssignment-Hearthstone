@@ -1,5 +1,5 @@
 #pragma execution_character_set("utf-8")
-
+#pragma execution_character_set("utf-8")
 #ifndef __SPELL_CARD_H__
 #define __SPELL_CARD_H__
 
@@ -17,6 +17,8 @@ enum class SpellTarget {
 class SpellCard : public Card {
 public:
     static SpellCard* create(int id, const std::string& name);
+
+    SpellCard() : _targetType(SpellTarget::NONE), _needsTarget(false) {}
 
     CC_SYNTHESIZE(SpellTarget, _targetType, TargetType);
     CC_SYNTHESIZE(bool, _needsTarget, NeedsTarget);

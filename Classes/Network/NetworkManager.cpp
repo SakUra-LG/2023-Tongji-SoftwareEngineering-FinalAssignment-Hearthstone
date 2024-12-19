@@ -3,12 +3,13 @@
 #include "json/writer.h"
 #include "json/stringbuffer.h"
 #include "Utils/GameLogger.h"
-// µ¥ÀıÊµÀıÖ¸Õë³õÊ¼»¯
+#pragma execution_character_set("utf-8")
+// å•ä¾‹å®ä¾‹æŒ‡é’ˆåˆå§‹åŒ–
 NetworkManager* NetworkManager::_instance = nullptr;
 
 /**
- * @brief »ñÈ¡NetworkManagerµÄµ¥ÀıÊµÀı
- * @return NetworkManagerµÄÎ¨Ò»ÊµÀı
+ * @brief è·å–NetworkManagerçš„å•ä¾‹å®ä¾‹
+ * @return NetworkManagerçš„å”¯ä¸€å®ä¾‹
  */
 NetworkManager* NetworkManager::getInstance() {
     if (!_instance) {
@@ -18,36 +19,36 @@ NetworkManager* NetworkManager::getInstance() {
 }
 
 /**
- * @brief ¹¹Ôìº¯Êı£¬³õÊ¼»¯³ÉÔ±±äÁ¿
+ * @brief æ„é€ å‡½æ•°ï¼Œåˆå§‹åŒ–æˆå‘˜å˜é‡
  */
 NetworkManager::NetworkManager()
-    : _webSocket(nullptr)        // WebSocketÁ¬½ÓÖ¸Õë³õÊ¼»¯Îª¿Õ
-    , _serverPort(0)            // ·şÎñÆ÷¶Ë¿Ú³õÊ¼»¯Îª0
-    , _isReconnecting(false)    // ÖØÁ¬×´Ì¬³õÊ¼»¯Îªfalse
-    , _reconnectAttempts(0) {   // ÖØÁ¬³¢ÊÔ´ÎÊı³õÊ¼»¯Îª0
+    : _webSocket(nullptr)        // WebSocketè¿æ¥æŒ‡é’ˆåˆå§‹åŒ–ä¸ºç©º
+    , _serverPort(0)            // æœåŠ¡å™¨ç«¯å£åˆå§‹åŒ–ä¸º0
+    , _isReconnecting(false)    // é‡è¿çŠ¶æ€åˆå§‹åŒ–ä¸ºfalse
+    , _reconnectAttempts(0) {   // é‡è¿å°è¯•æ¬¡æ•°åˆå§‹åŒ–ä¸º0
 }
 
 /**
- * @brief Á¬½Óµ½WebSocket·şÎñÆ÷
- * @param serverIP ·şÎñÆ÷IPµØÖ·
- * @param port ·şÎñÆ÷¶Ë¿Ú
- * @return Á¬½ÓÊÇ·ñ³É¹¦
+ * @brief è¿æ¥åˆ°WebSocketæœåŠ¡å™¨
+ * @param serverIP æœåŠ¡å™¨IPåœ°å€
+ * @param port æœåŠ¡å™¨ç«¯å£
+ * @return è¿æ¥æ˜¯å¦æˆåŠŸ
  */
 bool NetworkManager::connect(const std::string& serverIP, int port) {
-    // Èç¹ûÒÑ¾­´æÔÚÁ¬½Ó£¬ÏÈ¶Ï¿ª
+    // å¦‚æœå·²ç»å­˜åœ¨è¿æ¥ï¼Œå…ˆæ–­å¼€
     if (_webSocket) {
         disconnect();
     }
 
-    // ±£´æ·şÎñÆ÷ĞÅÏ¢
+    // ä¿å­˜æœåŠ¡å™¨ä¿¡æ¯
     _serverIP = serverIP;
     _serverPort = port;
 
-    // ¹¹½¨WebSocket URL
+    // æ„å»ºWebSocket URL
     std::string url = "ws://" + serverIP + ":" + std::to_string(port);
     _webSocket = new cocos2d::network::WebSocket();
 
-    // ³õÊ¼»¯WebSocketÁ¬½Ó
+    // åˆå§‹åŒ–WebSocketè¿æ¥
     if (!_webSocket->init(*this, url)) {
         delete _webSocket;
         _webSocket = nullptr;
@@ -58,85 +59,85 @@ bool NetworkManager::connect(const std::string& serverIP, int port) {
 }
 
 /**
- * @brief ·¢ËÍÓÎÏ·¶¯×÷µ½·şÎñÆ÷
- * @param action Òª·¢ËÍµÄÓÎÏ·¶¯×÷
+ * @brief å‘é€æ¸¸æˆåŠ¨ä½œåˆ°æœåŠ¡å™¨
+ * @param action è¦å‘é€çš„æ¸¸æˆåŠ¨ä½œ
  */
 void NetworkManager::sendGameAction(const GameAction& action) {
-    // ... (±£³ÖÏÖÓĞ×¢ÊÍ)
+    // ... (ä¿æŒç°æœ‰æ³¨é‡Š)
 }
 
 /**
- * @brief ´¦Àí´Ó·şÎñÆ÷½ÓÊÕµ½µÄÏûÏ¢
- * @param ws WebSocketÊµÀı
- * @param data ½ÓÊÕµ½µÄÊı¾İ
+ * @brief å¤„ç†ä»æœåŠ¡å™¨æ¥æ”¶åˆ°çš„æ¶ˆæ¯
+ * @param ws WebSocketå®ä¾‹
+ * @param data æ¥æ”¶åˆ°çš„æ•°æ®
  */
 void NetworkManager::onMessage(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::Data& data) {
-    // ... (±£³ÖÏÖÓĞ×¢ÊÍ)
+    // ... (ä¿æŒç°æœ‰æ³¨é‡Š)
 }
 
 /**
- * @brief ¶Ï¿ªWebSocketÁ¬½Ó
+ * @brief æ–­å¼€WebSocketè¿æ¥
  */
 void NetworkManager::disconnect() {
     if (_webSocket) {
-        _webSocket->close();     // ¹Ø±ÕÁ¬½Ó
-        delete _webSocket;       // ÊÍ·Å×ÊÔ´
-        _webSocket = nullptr;    // ÖÃ¿ÕÖ¸Õë
+        _webSocket->close();     // å…³é—­è¿æ¥
+        delete _webSocket;       // é‡Šæ”¾èµ„æº
+        _webSocket = nullptr;    // ç½®ç©ºæŒ‡é’ˆ
     }
-    _isReconnecting = false;     // ÖØÖÃÖØÁ¬×´Ì¬
+    _isReconnecting = false;     // é‡ç½®é‡è¿çŠ¶æ€
 }
 
 /**
- * @brief ¼ì²éÊÇ·ñÒÑÁ¬½Óµ½·şÎñÆ÷
- * @return ÊÇ·ñÒÑÁ¬½Ó
+ * @brief æ£€æŸ¥æ˜¯å¦å·²è¿æ¥åˆ°æœåŠ¡å™¨
+ * @return æ˜¯å¦å·²è¿æ¥
  */
 bool NetworkManager::isConnected() const {
     return _webSocket && _webSocket->getReadyState() == cocos2d::network::WebSocket::State::OPEN;
 }
 
 /**
- * @brief WebSocketÁ¬½Ó³É¹¦Ê±µÄ»Øµ÷
- * @param ws WebSocketÊµÀı
+ * @brief WebSocketè¿æ¥æˆåŠŸæ—¶çš„å›è°ƒ
+ * @param ws WebSocketå®ä¾‹
  */
 void NetworkManager::onOpen(cocos2d::network::WebSocket* ws) {
-    _isReconnecting = false;     // ÖØÖÃÖØÁ¬×´Ì¬
-    _reconnectAttempts = 0;      // ÖØÖÃÖØÁ¬³¢ÊÔ´ÎÊı
+    _isReconnecting = false;     // é‡ç½®é‡è¿çŠ¶æ€
+    _reconnectAttempts = 0;      // é‡ç½®é‡è¿å°è¯•æ¬¡æ•°
 
-    // Èç¹ûÉèÖÃÁËÁ¬½Ó³É¹¦»Øµ÷£¬Ôòµ÷ÓÃ
+    // å¦‚æœè®¾ç½®äº†è¿æ¥æˆåŠŸå›è°ƒï¼Œåˆ™è°ƒç”¨
     if (_onConnectedCallback) {
         _onConnectedCallback();
     }
 }
 void NetworkManager::onError(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::ErrorCode& error) {
-    // ¼ÇÂ¼´íÎóÈÕÖ¾
+    // è®°å½•é”™è¯¯æ—¥å¿—
     GameLogger::getInstance()->log(LogLevel::ERR,
         "WebSocket error occurred: " + std::to_string(static_cast<int>(error)));
 
-    // ¸ù¾İ´íÎóÀàĞÍ´¦Àí
+    // æ ¹æ®é”™è¯¯ç±»å‹å¤„ç†
     if (!_isReconnecting && _reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
         startReconnectTimer();
     }
 
-    // ¼ÇÂ¼¾ßÌå´íÎóĞÅÏ¢
+    // è®°å½•å…·ä½“é”™è¯¯ä¿¡æ¯
     GameLogger::getInstance()->log(LogLevel::ERR,
         "WebSocket connection failed, attempting to reconnect...");
 }void NetworkManager::startReconnectTimer() {
     if (_isReconnecting) {
-        return;  // ÒÑ¾­ÔÚÖØÁ¬ÖĞ
+        return;  // å·²ç»åœ¨é‡è¿ä¸­
     }
 
     _isReconnecting = true;
     _reconnectAttempts++;
 
-    // ¼ÆËãÖØÁ¬ÑÓ³Ù£¨Ê¹ÓÃÖ¸ÊıÍË±Ü£©
-    float delay = std::min(1.0f * (1 << _reconnectAttempts), 30.0f);  // ×î´ó30Ãë
+    // è®¡ç®—é‡è¿å»¶è¿Ÿï¼ˆä½¿ç”¨æŒ‡æ•°é€€é¿ï¼‰
+    float delay = std::min(1.0f * (1 << _reconnectAttempts), 30.0f);  // æœ€å¤§30ç§’
 
-    // ¼ÇÂ¼ÖØÁ¬³¢ÊÔ
+    // è®°å½•é‡è¿å°è¯•
     GameLogger::getInstance()->log(LogLevel::INFO,
         "Starting reconnection attempt " + std::to_string(_reconnectAttempts) +
         " in " + std::to_string(delay) + " seconds");
 
-    // Ê¹ÓÃ cocos2d µÄµ÷¶ÈÆ÷À´ÑÓ³ÙÖ´ĞĞÖØÁ¬
+    // ä½¿ç”¨ cocos2d çš„è°ƒåº¦å™¨æ¥å»¶è¿Ÿæ‰§è¡Œé‡è¿
     auto scheduler = cocos2d::Director::getInstance()->getScheduler();
     scheduler->schedule([this](float dt) {
         this->reconnect();
@@ -152,9 +153,9 @@ void NetworkManager::stopReconnectTimer() {
 bool NetworkManager::reconnect() {
     GameLogger::getInstance()->log(LogLevel::INFO, "Attempting to reconnect...");
 
-    stopReconnectTimer();  // Í£Ö¹ÖØÁ¬¼ÆÊ±Æ÷
+    stopReconnectTimer();  // åœæ­¢é‡è¿è®¡æ—¶å™¨
 
-    // ³¢ÊÔÖØĞÂÁ¬½Ó
+    // å°è¯•é‡æ–°è¿æ¥
     if (connect(_serverIP, _serverPort)) {
         GameLogger::getInstance()->log(LogLevel::INFO, "Reconnection successful");
         return true;
@@ -162,7 +163,7 @@ bool NetworkManager::reconnect() {
     else {
         GameLogger::getInstance()->log(LogLevel::ERR, "Reconnection failed");
 
-        // Èç¹û»¹¿ÉÒÔ¼ÌĞøÖØÊÔ£¬Æô¶¯ÏÂÒ»´ÎÖØÁ¬¼ÆÊ±Æ÷
+        // å¦‚æœè¿˜å¯ä»¥ç»§ç»­é‡è¯•ï¼Œå¯åŠ¨ä¸‹ä¸€æ¬¡é‡è¿è®¡æ—¶å™¨
         if (_reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
             startReconnectTimer();
         }
@@ -186,30 +187,30 @@ void NetworkManager::setOnActionReceivedCallback(const std::function<void(const 
     _onActionReceivedCallback = callback;
 }
 /**
- * @brief WebSocketÁ¬½Ó¹Ø±ÕÊ±µÄ»Øµ÷
- * @param ws WebSocketÊµÀı
+ * @brief WebSocketè¿æ¥å…³é—­æ—¶çš„å›è°ƒ
+ * @param ws WebSocketå®ä¾‹
  */
 void NetworkManager::onClose(cocos2d::network::WebSocket* ws) {
-    // µ÷ÓÃ¶Ï¿ªÁ¬½Ó»Øµ÷
+    // è°ƒç”¨æ–­å¼€è¿æ¥å›è°ƒ
     if (_onDisconnectedCallback) {
         _onDisconnectedCallback();
     }
 
-    // Èç¹ûÎ´ÔÚÖØÁ¬ÇÒÎ´³¬¹ı×î´óÖØÁ¬´ÎÊı£¬¿ªÊ¼ÖØÁ¬
+    // å¦‚æœæœªåœ¨é‡è¿ä¸”æœªè¶…è¿‡æœ€å¤§é‡è¿æ¬¡æ•°ï¼Œå¼€å§‹é‡è¿
     if (!_isReconnecting && _reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
         startReconnectTimer();
     }
 }
 
 /**
- * @brief WebSocket·¢Éú´íÎóÊ±µÄ»Øµ÷
- * @param ws WebSocketÊµÀı
- * @param error ´íÎó´úÂë
+ * @brief WebSocketå‘ç”Ÿé”™è¯¯æ—¶çš„å›è°ƒ
+ * @param ws WebSocketå®ä¾‹
+ * @param error é”™è¯¯ä»£ç 
  */
 
 /**
- * @brief Îö¹¹º¯Êı£¬È·±£ÇåÀí×ÊÔ´
+ * @brief ææ„å‡½æ•°ï¼Œç¡®ä¿æ¸…ç†èµ„æº
  */
 NetworkManager::~NetworkManager() {
-    disconnect();  // ¶Ï¿ªÁ¬½Ó²¢ÇåÀí×ÊÔ´
+    disconnect();  // æ–­å¼€è¿æ¥å¹¶æ¸…ç†èµ„æº
 }

@@ -1,6 +1,6 @@
 #ifndef __NETWORK_MANAGER_H__
 #define __NETWORK_MANAGER_H__
-
+#pragma execution_character_set("utf-8")
 #include "cocos2d.h"
 #include "Network/WebSocket.h"
 #include "Network/GameAction.h"
@@ -11,27 +11,27 @@ class NetworkManager : public cocos2d::network::WebSocket::Delegate {
 public:
     static NetworkManager* getInstance();
 
-    // Á¬½Ó¹ÜÀí
+    // è¿æ¥ç®¡ç†
     bool connect(const std::string& serverIP, int port);
     void disconnect();
     bool reconnect();
     bool isConnected() const;
 
-    // ÓÎÏ·¶¯×÷
+    // æ¸¸æˆåŠ¨ä½œ
     void sendGameAction(const GameAction& action);
     void processActionQueue();
 
-    // ×´Ì¬Í¬²½
+    // çŠ¶æ€åŒæ­¥
     void syncGameState();
     void requestGameState();
 
-    // WebSocket»Øµ÷
+    // WebSocketå›è°ƒ
     virtual void onOpen(cocos2d::network::WebSocket* ws) override;
     virtual void onMessage(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::Data& data) override;
     virtual void onClose(cocos2d::network::WebSocket* ws) override;
     virtual void onError(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::ErrorCode& error) override;
 
-    // »Øµ÷×¢²á
+    // å›è°ƒæ³¨å†Œ
     void setOnConnectedCallback(const std::function<void()>& callback);
     void setOnDisconnectedCallback(const std::function<void()>& callback);
     void setOnActionReceivedCallback(const std::function<void(const GameAction&)>& callback);
@@ -47,12 +47,12 @@ private:
     int _serverPort;
     bool _isReconnecting;
 
-    // »Øµ÷º¯Êı
+    // å›è°ƒå‡½æ•°
     std::function<void()> _onConnectedCallback;
     std::function<void()> _onDisconnectedCallback;
     std::function<void(const GameAction&)> _onActionReceivedCallback;
 
-    // ÖØÁ¬»úÖÆ
+    // é‡è¿æœºåˆ¶
     void startReconnectTimer();
     void stopReconnectTimer();
     int _reconnectAttempts;

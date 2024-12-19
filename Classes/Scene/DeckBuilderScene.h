@@ -1,6 +1,6 @@
 #ifndef __DECK_BUILDER_SCENE_H__
 #define __DECK_BUILDER_SCENE_H__
-
+#pragma execution_character_set("utf-8")
 #include "cocos2d.h"
 #include "Card/Card.h"
 #include "Card/CardFactory.h"

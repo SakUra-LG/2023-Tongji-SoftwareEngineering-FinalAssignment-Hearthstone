@@ -1,129 +1,165 @@
 // SpellCard.cpp
-// ·¨Êõ¿¨ÅÆÀàµÄÊµÏÖÎÄ¼þ
-// ´¦Àí·¨Êõ¿¨ÅÆµÄ´´½¨¡¢³õÊ¼»¯¡¢Ê©·ÅµÈ¹¦ÄÜ
-
+// æ³•æœ¯å¡ç‰Œç±»çš„å®žçŽ°æ–‡ä»¶
+// å¤„ç†æ³•æœ¯å¡ç‰Œçš„åˆ›å»ºã€åˆå§‹åŒ–ã€æ–½æ”¾ç­‰åŠŸèƒ½
+#pragma execution_character_set("utf-8")
 #include "SpellCard.h"
 #include "Manager/GameManager.h"
 #include "Animation/AnimationManager.h"
 #include "Effect/EffectManager.h"
 
-// ´´½¨·¨Êõ¿¨ÅÆµÄ¾²Ì¬¹¤³§·½·¨
-// @param id: ¿¨ÅÆID
-// @param name: ¿¨ÅÆÃû³Æ
-// @return: ·µ»Ø´´½¨µÄ·¨Êõ¿¨ÅÆÖ¸Õë£¬´´½¨Ê§°Ü·µ»Ønullptr
+// åˆ›å»ºæ³•æœ¯å¡ç‰Œçš„é™æ€å·¥åŽ‚æ–¹æ³•
+// @param id: å¡ç‰ŒID
+// @param name: å¡ç‰Œåç§°
+// @return: è¿”å›žåˆ›å»ºçš„æ³•æœ¯å¡ç‰ŒæŒ‡é’ˆï¼Œåˆ›å»ºå¤±è´¥è¿”å›žnullptr
 SpellCard* SpellCard::create(int id, const std::string& name) {
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::DEBUG, "Creating SpellCard: " + name);
+    
     SpellCard* spell = new (std::nothrow) SpellCard();
-    if (spell && spell->init(id, name)) {
-        spell->autorelease();  // ¼ÓÈë×Ô¶¯ÊÍ·Å³Ø
+    if (!spell) {
+        logger->log(LogLevel::ERR, "Failed to allocate SpellCard");
+        return nullptr;
+    }
+    
+    // æ·»åŠ æ›´å¤šæ—¥å¿—æ¥è¿½è¸ªåˆå§‹åŒ–è¿‡ç¨‹
+    logger->log(LogLevel::DEBUG, "Starting SpellCard initialization");
+    
+    if (spell->init(id, name)) {
+        spell->autorelease();
+        logger->log(LogLevel::DEBUG, "SpellCard initialization successful");
         return spell;
     }
-    CC_SAFE_DELETE(spell);    // ´´½¨Ê§°ÜÊ±°²È«É¾³ý
+    
+    logger->log(LogLevel::ERR, "SpellCard initialization failed");
+    CC_SAFE_DELETE(spell);
     return nullptr;
 }
 
-// ³õÊ¼»¯·¨Êõ¿¨ÅÆ
-// @param id: ¿¨ÅÆID
-// @param name: ¿¨ÅÆÃû³Æ
-// @return: ³õÊ¼»¯³É¹¦·µ»Øtrue£¬Ê§°Ü·µ»Øfalse
+// åˆå§‹åŒ–æ³•æœ¯å¡ç‰Œ
+// @param id: å¡ç‰ŒID
+// @param name: å¡ç‰Œåç§°
+// @return: åˆå§‹åŒ–æˆåŠŸè¿”å›žtrueï¼Œå¤±è´¥è¿”å›žfalse
 bool SpellCard::init(int id, const std::string& name) {
-    // µ÷ÓÃ¸¸Àà³õÊ¼»¯
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::DEBUG, "Initializing SpellCard: " + name);
+    
+    // è°ƒç”¨åŸºç±»åˆå§‹åŒ–
     if (!Card::init(id, name)) {
+        logger->log(LogLevel::ERR, "Base Card initialization failed");
         return false;
     }
-
-    // ÉèÖÃ¿¨ÅÆÀàÐÍÎª·¨Êõ
-    _cardType = CardType::SPELL;
-    // Ä¬ÈÏ²»ÐèÒªÄ¿±ê
+    
+    // è®¾ç½®é»˜è®¤å¤§å°
+    this->setContentSize(Size(90, 120));
+    
+    // åˆå§‹åŒ–æ³•æœ¯å¡ç‰¹æœ‰çš„å±žæ€§
     _targetType = SpellTarget::NONE;
     _needsTarget = false;
-
+    
+    logger->log(LogLevel::DEBUG, "SpellCard initialization complete");
     return true;
 }
 
-// ³õÊ¼»¯·¨Êõ¿¨ÅÆµÄUIÔªËØ
+// åˆå§‹åŒ–æ³•æœ¯å¡ç‰Œçš„UIå…ƒç´ 
 void SpellCard::initUI() {
-    // Ê×ÏÈ³õÊ¼»¯»ù´¡¿¨ÅÆUI
-    Card::initUI();
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::DEBUG, "Starting SpellCard UI initialization");
+    
+    try {
+        // é¦–å…ˆåˆå§‹åŒ–åŸºç¡€å¡ç‰ŒUI
+        Card::initUI();
+        logger->log(LogLevel::DEBUG, "Base Card UI initialized");
 
-    // Ìí¼Ó·¨ÊõÌØÓÐµÄÍ¼±ê
-    auto spellIcon = Sprite::create("cards/spell_icon.png");
-    spellIcon->setPosition(Vec2(0, 30));
-    this->addChild(spellIcon);
+        // æ·»åŠ æ³•æœ¯ç‰¹æœ‰çš„å›¾æ ‡
+        auto spellIcon = Sprite::create("cards/spell_icon.png");
+        if (spellIcon) {
+            spellIcon->setPosition(Vec2(0, 30));
+            this->addChild(spellIcon);
+            logger->log(LogLevel::DEBUG, "Spell icon added");
+        } else {
+            logger->log(LogLevel::WARNING, "Failed to create spell icon");
+        }
+        
+        logger->log(LogLevel::DEBUG, "SpellCard UI initialization complete");
+    } catch (const std::exception& e) {
+        logger->log(LogLevel::ERR, "Exception in SpellCard UI initialization: " + std::string(e.what()));
+        throw;
+    }
 }
 
-// Ê©·Å·¨Êõ
-// @param target: ·¨ÊõÄ¿±ê£¬¿ÉÒÔÎªnullptr£¨ÎÞÄ¿±ê·¨Êõ£©
+// æ–½æ”¾æ³•æœ¯
+// @param target: æ³•æœ¯ç›®æ ‡ï¼Œå¯ä»¥ä¸ºnullptrï¼ˆæ— ç›®æ ‡æ³•æœ¯ï¼‰
 void SpellCard::castSpell(Card* target) {
-    // ¼ì²éÄ¿±êÒªÇó
+    // æ£€æŸ¥ç›®æ ‡è¦æ±‚
     if (_needsTarget && !target) {
-        // ÐèÒªÄ¿±êµ«Ã»ÓÐÌá¹©Ä¿±ê£¬Ö±½Ó·µ»Ø
+        // éœ€è¦ç›®æ ‡ä½†æ²¡æœ‰æä¾›ç›®æ ‡ï¼Œç›´æŽ¥è¿”å›ž
         return;
     }
 
-    // ¼ì²éÄ¿±êºÏ·¨ÐÔ
+    // æ£€æŸ¥ç›®æ ‡åˆæ³•æ€§
     if (_needsTarget && !canTargetCard(target)) {
-        // Ä¿±ê²»ºÏ·¨£¬Ö±½Ó·µ»Ø
+        // ç›®æ ‡ä¸åˆæ³•ï¼Œç›´æŽ¥è¿”å›ž
         return;
     }
 
-    // ²¥·Å·¨ÊõÊ©·Å¶¯»­
+    // æ’­æ”¾æ³•æœ¯æ–½æ”¾åŠ¨ç”»
     playSpellEffect();
 
-    // ´¥·¢ËùÓÐ·¨ÊõÐ§¹û
+    // è§¦å‘æ‰€æœ‰æ³•æœ¯æ•ˆæžœ
     for (auto& effect : _effects) {
-        effect->setOwner(this);  // ÉèÖÃÐ§¹ûµÄËùÓÐÕß
-        effect->onActivate();    // ¼¤»îÐ§¹û
+        effect->setOwner(this);  // è®¾ç½®æ•ˆæžœçš„æ‰€æœ‰è€…
+        effect->onActivate();    // æ¿€æ´»æ•ˆæžœ
     }
 
-    // ·¨ÊõÊ©·ÅÍê³ÉµÄ´¦Àí
+    // æ³•æœ¯æ–½æ”¾å®Œæˆçš„å¤„ç†
     onSpellComplete();
 }
 
-// ¼ì²éÊÇ·ñ¿ÉÒÔ½«·¨ÊõÖ¸ÏòÄ¿±ê
-// @param target: Òª¼ì²éµÄÄ¿±ê
-// @return: Èç¹û¿ÉÒÔÖ¸Ïò·µ»Øtrue£¬·ñÔò·µ»Øfalse
+// æ£€æŸ¥æ˜¯å¦å¯ä»¥å°†æ³•æœ¯æŒ‡å‘ç›®æ ‡
+// @param target: è¦æ£€æŸ¥çš„ç›®æ ‡
+// @return: å¦‚æžœå¯ä»¥æŒ‡å‘è¿”å›žtrueï¼Œå¦åˆ™è¿”å›žfalse
 bool SpellCard::canTargetCard(Card* target) const {
-    // ¿ÕÖ¸Õë¼ì²é
+    // ç©ºæŒ‡é’ˆæ£€æŸ¥
     if (!target) return false;
 
-    // ¸ù¾Ý·¨ÊõÄ¿±êÀàÐÍÅÐ¶Ï
+    // æ ¹æ®æ³•æœ¯ç›®æ ‡ç±»åž‹åˆ¤æ–­
     switch (_targetType) {
     case SpellTarget::SINGLE_TARGET:
-        return true;  // µ¥ÌåÄ¿±ê£¬ÈÎºÎÓÐÐ§Ä¿±ê¶¼¿ÉÒÔ
+        return true;  // å•ä½“ç›®æ ‡ï¼Œä»»ä½•æœ‰æ•ˆç›®æ ‡éƒ½å¯ä»¥
     case SpellTarget::FRIENDLY:
-        // ¼ì²éÄ¿±êÊÇ·ñÎªÓÑ·½Ëæ´Ó
+        // æ£€æŸ¥ç›®æ ‡æ˜¯å¦ä¸ºå‹æ–¹éšä»Ž
         return target->getOwner() == GameManager::getInstance()->getCurrentPlayer();
     case SpellTarget::ENEMY:
-        // ¼ì²éÄ¿±êÊÇ·ñÎªµÐ·½Ëæ´Ó
+        // æ£€æŸ¥ç›®æ ‡æ˜¯å¦ä¸ºæ•Œæ–¹éšä»Ž
         return target->getOwner() == GameManager::getInstance()->getOpponentPlayer();
     default:
         return false;
     }
 }
 
-// ²¥·Å·¨ÊõÌØÐ§
+// æ’­æ”¾æ³•æœ¯ç‰¹æ•ˆ
 void SpellCard::playSpellEffect() {
-    // µ÷ÓÃ¶¯»­¹ÜÀíÆ÷²¥·Å·¨Êõ¶¯»­
+    // è°ƒç”¨åŠ¨ç”»ç®¡ç†å™¨æ’­æ”¾æ³•æœ¯åŠ¨ç”»
     AnimationManager::getInstance()->playSpellAnimation(getName(), nullptr);
 }
 
-// ·¨ÊõÊ©·ÅÍê³ÉºóµÄ´¦Àí
+// æ³•æœ¯æ–½æ”¾å®ŒæˆåŽçš„å¤„ç†
 void SpellCard::onSpellComplete() {
-    // ½«·¨Êõ¿¨ÅÆÒÆµ½ÆúÅÆ¶Ñ
+    // å°†æ³•æœ¯å¡ç‰Œç§»åˆ°å¼ƒç‰Œå †
     GameManager::getInstance()->discardCard(this);
 }
 
 /*
-Ê¹ÓÃÊ¾Àý£º
+ä½¿ç”¨ç¤ºä¾‹ï¼š
 
-// ´´½¨Ò»¸ö·¨Êõ¿¨ÅÆ
-auto spell = SpellCard::create(1, "»ðÇòÊõ");
+// åˆ›å»ºä¸€ä¸ªæ³•æœ¯å¡ç‰Œ
+auto spell = SpellCard::create(1, "ç«çƒæœ¯");
 
-// ÉèÖÃ·¨ÊõÊôÐÔ
+// è®¾ç½®æ³•æœ¯å±žæ€§
 spell->setTargetType(SpellTarget::SINGLE_TARGET);
 spell->setNeedsTarget(true);
 
-// µ±Íæ¼ÒÑ¡ÔñÄ¿±êºóÊ©·Å·¨Êõ
+// å½“çŽ©å®¶é€‰æ‹©ç›®æ ‡åŽæ–½æ”¾æ³•æœ¯
 Card* target = getSelectedTarget();
 if (target) {
     spell->castSpell(target);

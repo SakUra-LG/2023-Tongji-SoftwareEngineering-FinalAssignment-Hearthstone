@@ -1,9 +1,10 @@
 #ifndef __CARD_FACTORY_H__
 #define __CARD_FACTORY_H__
-
+#pragma execution_character_set("utf-8")
 #include "Card/Card.h"
 #include "Card/MinionCard.h"
 #include "Card/SpellCard.h"
+#include "Utils/GameLogger.h"
 #include <map>
 
 /**
@@ -57,6 +58,12 @@ public:
      */
     Card* createCardById(int cardId);
     
+    // 新增方法
+    void initializeDecks();                    // 初始化卡组
+    const std::vector<Card*>& getDeck1() const;  // 获取卡组1
+    const std::vector<Card*>& getDeck2() const;  // 获取卡组2
+    void setCardCount(int cardId, int count);    // 设置卡牌数量
+    
 private:
     CardFactory();
     static CardFactory* _instance;
@@ -81,6 +88,10 @@ private:
      * @return 返回创建的法术卡牌指针
      */
     SpellCard* createSpellCard(const CardData& data);
+    
+    std::vector<Card*> allCards;  // 存储所有卡牌
+    std::vector<Card*> deck1;     // 卡组1
+    std::vector<Card*> deck2;     // 卡组2
 };
 
 #endif // __CARD_FACTORY_H__ 

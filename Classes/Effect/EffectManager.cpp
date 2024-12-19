@@ -1,85 +1,85 @@
 // EffectManager.cpp
-// Ğ§¹û¹ÜÀíÆ÷µÄÊµÏÖÎÄ¼ş£¬¸ºÔğ¹ÜÀíºÍ´¥·¢ÓÎÏ·ÖĞµÄ¸÷ÖÖĞ§¹û
-
+// æ•ˆæœç®¡ç†å™¨çš„å®ç°æ–‡ä»¶ï¼Œè´Ÿè´£ç®¡ç†å’Œè§¦å‘æ¸¸æˆä¸­çš„å„ç§æ•ˆæœ
+#pragma execution_character_set("utf-8")
 #include "EffectManager.h"
 #include "Card/Card.h"
 
-// ¾²Ì¬ÊµÀıÖ¸Õë³õÊ¼»¯
+// é™æ€å®ä¾‹æŒ‡é’ˆåˆå§‹åŒ–
 EffectManager* EffectManager::_instance = nullptr;
 
-// »ñÈ¡Ğ§¹û¹ÜÀíÆ÷µÄµ¥ÀıÊµÀı
-// @return: ·µ»Ø EffectManager µÄÎ¨Ò»ÊµÀı
+// è·å–æ•ˆæœç®¡ç†å™¨çš„å•ä¾‹å®ä¾‹
+// @return: è¿”å› EffectManager çš„å”¯ä¸€å®ä¾‹
 EffectManager* EffectManager::getInstance() {
     if (!_instance) {
-        _instance = new EffectManager();  // ÀÁººÊ½µ¥ÀıÄ£Ê½
+        _instance = new EffectManager();  // æ‡’æ±‰å¼å•ä¾‹æ¨¡å¼
     }
     return _instance;
 }
 
-// ¹¹Ôìº¯Êı
-// ³õÊ¼»¯Ğ§¹û´¦Àí×´Ì¬ÎªÎ´´¦Àí
+// æ„é€ å‡½æ•°
+// åˆå§‹åŒ–æ•ˆæœå¤„ç†çŠ¶æ€ä¸ºæœªå¤„ç†
 EffectManager::EffectManager()
-    : _isProcessingEffects(false) {  // ·ÀÖ¹Ğ§¹û´¥·¢Ê±µÄµİ¹éµ÷ÓÃ
+    : _isProcessingEffects(false) {  // é˜²æ­¢æ•ˆæœè§¦å‘æ—¶çš„é€’å½’è°ƒç”¨
 }
 
-// ×¢²áÒ»¸öĞ§¹ûµ½¹ÜÀíÆ÷
-// @param card: Ğ§¹ûËùÊôµÄ¿¨ÅÆ
-// @param effect: Òª×¢²áµÄĞ§¹û
-// @param trigger: Ğ§¹ûµÄ´¥·¢ÀàĞÍ
+// æ³¨å†Œä¸€ä¸ªæ•ˆæœåˆ°ç®¡ç†å™¨
+// @param card: æ•ˆæœæ‰€å±çš„å¡ç‰Œ
+// @param effect: è¦æ³¨å†Œçš„æ•ˆæœ
+// @param trigger: æ•ˆæœçš„è§¦å‘ç±»å‹
 void EffectManager::registerEffect(Card* card, std::shared_ptr<IEffect> effect, TriggerType trigger) {
-    // Ê¹ÓÃ multimap ´æ´¢Ğ§¹û£¬ÔÊĞí¶à¸öĞ§¹ûÊ¹ÓÃÏàÍ¬µÄ´¥·¢ÀàĞÍ
+    // ä½¿ç”¨ multimap å­˜å‚¨æ•ˆæœï¼Œå…è®¸å¤šä¸ªæ•ˆæœä½¿ç”¨ç›¸åŒçš„è§¦å‘ç±»å‹
     _effects.insert({ trigger, {card, effect} });
 }
 
-// ×¢ÏúÖ¸¶¨¿¨ÅÆµÄËùÓĞĞ§¹û
-// @param card: Òª×¢ÏúĞ§¹ûµÄ¿¨ÅÆ
+// æ³¨é”€æŒ‡å®šå¡ç‰Œçš„æ‰€æœ‰æ•ˆæœ
+// @param card: è¦æ³¨é”€æ•ˆæœçš„å¡ç‰Œ
 void EffectManager::unregisterEffect(Card* card) {
-    // ±éÀúËùÓĞĞ§¹û²¢ÒÆ³ıÊôÓÚÖ¸¶¨¿¨ÅÆµÄĞ§¹û
+    // éå†æ‰€æœ‰æ•ˆæœå¹¶ç§»é™¤å±äºæŒ‡å®šå¡ç‰Œçš„æ•ˆæœ
     for (auto it = _effects.begin(); it != _effects.end();) {
         if (it->second.first == card) {
-            // Èç¹ûĞ§¹ûÊôÓÚÖ¸¶¨¿¨ÅÆ£¬ÔòÉ¾³ı
+            // å¦‚æœæ•ˆæœå±äºæŒ‡å®šå¡ç‰Œï¼Œåˆ™åˆ é™¤
             it = _effects.erase(it);
         }
         else {
-            // ·ñÔò¼ÌĞø¼ì²éÏÂÒ»¸öĞ§¹û
+            // å¦åˆ™ç»§ç»­æ£€æŸ¥ä¸‹ä¸€ä¸ªæ•ˆæœ
             ++it;
         }
     }
 }
 
-// ´¥·¢Ö¸¶¨ÀàĞÍµÄËùÓĞĞ§¹û
-// @param trigger: Òª´¥·¢µÄĞ§¹ûÀàĞÍ
+// è§¦å‘æŒ‡å®šç±»å‹çš„æ‰€æœ‰æ•ˆæœ
+// @param trigger: è¦è§¦å‘çš„æ•ˆæœç±»å‹
 void EffectManager::triggerEffects(TriggerType trigger) {
-    // »ñÈ¡ËùÓĞ¾ßÓĞÖ¸¶¨´¥·¢ÀàĞÍµÄĞ§¹û
+    // è·å–æ‰€æœ‰å…·æœ‰æŒ‡å®šè§¦å‘ç±»å‹çš„æ•ˆæœ
     auto range = _effects.equal_range(trigger);
 
-    // ±éÀúËùÓĞÆ¥ÅäµÄĞ§¹û
+    // éå†æ‰€æœ‰åŒ¹é…çš„æ•ˆæœ
     for (auto it = range.first; it != range.second; ++it) {
-        // ¼ì²é¿¨ÅÆÊÇ·ñ¼¤»îÇÒĞ§¹ûÊÇ·ñ¿ÉÒÔ´¥·¢
+        // æ£€æŸ¥å¡ç‰Œæ˜¯å¦æ¿€æ´»ä¸”æ•ˆæœæ˜¯å¦å¯ä»¥è§¦å‘
         if (it->second.first->isActive() && it->second.second->canActivate()) {
-            // ½«¿ÉÒÔ´¥·¢µÄĞ§¹û¼ÓÈë¶ÓÁĞ
+            // å°†å¯ä»¥è§¦å‘çš„æ•ˆæœåŠ å…¥é˜Ÿåˆ—
             _effectQueue.push(it->second.second);
         }
     }
 
-    // Èç¹ûµ±Ç°Ã»ÓĞÔÚ´¦ÀíĞ§¹û¶ÓÁĞ£¬Ôò¿ªÊ¼´¦Àí
+    // å¦‚æœå½“å‰æ²¡æœ‰åœ¨å¤„ç†æ•ˆæœé˜Ÿåˆ—ï¼Œåˆ™å¼€å§‹å¤„ç†
     if (!_isProcessingEffects) {
         processEffectQueue();
     }
 }
 void EffectManager::processEffectQueue() {
     if (_isProcessingEffects) {
-        return;  // ·ÀÖ¹µİ¹éµ÷ÓÃ
+        return;  // é˜²æ­¢é€’å½’è°ƒç”¨
     }
 
     _isProcessingEffects = true;
 
-    // ´¦Àí¶ÓÁĞÖĞµÄËùÓĞĞ§¹û
+    // å¤„ç†é˜Ÿåˆ—ä¸­çš„æ‰€æœ‰æ•ˆæœ
     while (!_effectQueue.empty()) {
         auto effect = _effectQueue.front();
         _effectQueue.pop();
 
-        // ¼ì²éĞ§¹ûÊÇ·ñÓĞĞ§²¢¿ÉÒÔ¼¤»î
+        // æ£€æŸ¥æ•ˆæœæ˜¯å¦æœ‰æ•ˆå¹¶å¯ä»¥æ¿€æ´»
         if (effect && effect->canActivate()) {
             try {
                 effect->onActivate();
@@ -94,35 +94,35 @@ void EffectManager::processEffectQueue() {
 }
 
 void EffectManager::clearEffects() {
-    // Çå¿ÕĞ§¹û¶ÓÁĞ
+    // æ¸…ç©ºæ•ˆæœé˜Ÿåˆ—
     std::queue<std::shared_ptr<IEffect>> empty;
     std::swap(_effectQueue, empty);
 
-    // Çå¿ÕĞ§¹û×¢²á±í
+    // æ¸…ç©ºæ•ˆæœæ³¨å†Œè¡¨
     _effects.clear();
 
-    // ÖØÖÃ´¦Àí×´Ì¬
+    // é‡ç½®å¤„ç†çŠ¶æ€
     _isProcessingEffects = false;
 }
 /*
-Ê¹ÓÃÊ¾Àı£º
+ä½¿ç”¨ç¤ºä¾‹ï¼š
 
-// ×¢²áĞ§¹û
+// æ³¨å†Œæ•ˆæœ
 auto effect = std::make_shared<SomeEffect>();
 EffectManager::getInstance()->registerEffect(card, effect, TriggerType::ON_PLAY);
 
-// ´¥·¢Ğ§¹û
+// è§¦å‘æ•ˆæœ
 EffectManager::getInstance()->triggerEffects(TriggerType::ON_PLAY);
 
-// ×¢ÏúĞ§¹û
+// æ³¨é”€æ•ˆæœ
 EffectManager::getInstance()->unregisterEffect(card);
 */
 
 /*
-¿ÉÄÜµÄÀ©Õ¹£º
-1. Ìí¼ÓĞ§¹ûÓÅÏÈ¼¶ÏµÍ³
-2. Ìí¼ÓĞ§¹ûµÄÌõ¼ş¼ì²é
-3. Ìí¼ÓĞ§¹ûµÄ³ÖĞøÊ±¼ä¹ÜÀí
-4. Ìí¼ÓĞ§¹ûµÄµş¼Ó¹æÔò
-5. Ìí¼ÓĞ§¹ûµÄ»¥³â¼ì²é
+å¯èƒ½çš„æ‰©å±•ï¼š
+1. æ·»åŠ æ•ˆæœä¼˜å…ˆçº§ç³»ç»Ÿ
+2. æ·»åŠ æ•ˆæœçš„æ¡ä»¶æ£€æŸ¥
+3. æ·»åŠ æ•ˆæœçš„æŒç»­æ—¶é—´ç®¡ç†
+4. æ·»åŠ æ•ˆæœçš„å åŠ è§„åˆ™
+5. æ·»åŠ æ•ˆæœçš„äº’æ–¥æ£€æŸ¥
 */

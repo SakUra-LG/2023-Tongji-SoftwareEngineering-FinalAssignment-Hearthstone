@@ -1,6 +1,6 @@
 // MinionCard.cpp
 // 随从卡牌类的实现文件
-
+#pragma execution_character_set("utf-8")
 // 包含所需的头文件
 #include "Card.h"                      // 卡牌基类
 #include "MinionCard.h"                // 随从卡牌类

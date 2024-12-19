@@ -1,6 +1,6 @@
 #ifndef __CONFIG_MANAGER_H__
 #define __CONFIG_MANAGER_H__
-
+#pragma execution_character_set("utf-8")
 #include "cocos2d.h"
 #include <map>
 
@@ -12,7 +12,7 @@ struct CardConfig {
     int health;
     std::string description;
     std::string imagePath;
-    // ... ÆäËûÅäÖÃÏî
+    // ... å…¶ä»–é…ç½®é¡¹
 };
 
 class ConfigManager {

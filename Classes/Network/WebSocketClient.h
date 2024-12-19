@@ -1,7 +1,7 @@
  
 #ifndef __WEBSOCKET_CLIENT_H__
 #define __WEBSOCKET_CLIENT_H__
-
+#pragma execution_character_set("utf-8")
 #include "cocos2d.h"
 #include "network/WebSocket.h"
 #include <functional>
@@ -10,7 +10,7 @@
 
 class WebSocketClient : public cocos2d::network::WebSocket::Delegate {
 public:
-    // Á¬½Ó×´Ì¬
+    // è¿æ¥çŠ¶æ€
     enum class State {
         DISCONNECTED,
         CONNECTING,
@@ -19,22 +19,22 @@ public:
 
     static WebSocketClient* getInstance();
 
-    // Á¬½Ó¹ÜÀí
+    // è¿æ¥ç®¡ç†
     bool connect(const std::string& url);
     void disconnect();
     bool isConnected() const { return _state == State::CONNECTED; }
 
-    // ÏûÏ¢·¢ËÍ
+    // æ¶ˆæ¯å‘é€
     void sendMessage(const std::string& message);
     void sendBinary(const char* data, unsigned int len);
 
-    // »Øµ÷ÉèÖÃ
+    // å›è°ƒè®¾ç½®
     void setOnConnectedCallback(const std::function<void()>& callback);
     void setOnMessageCallback(const std::function<void(const std::string&)>& callback);
     void setOnErrorCallback(const std::function<void(const std::string&)>& callback);
     void setOnClosedCallback(const std::function<void()>& callback);
 
-    // WebSocket´úÀí·½·¨
+    // WebSocketä»£ç†æ–¹æ³•
     virtual void onOpen(cocos2d::network::WebSocket* ws) override;
     virtual void onMessage(cocos2d::network::WebSocket* ws,
         const cocos2d::network::WebSocket::Data& data) override;
@@ -50,7 +50,7 @@ private:
     cocos2d::network::WebSocket* _ws;
     State _state;
 
-    // »Øµ÷º¯Êı
+    // å›è°ƒå‡½æ•°
     std::function<void()> _onConnectedCallback;
     std::function<void(const std::string&)> _onMessageCallback;
     std::function<void(const std::string&)> _onErrorCallback;

@@ -2,8 +2,11 @@
 #define __GAME_LOGGER_H__
 
 #include <string>
+#include <fstream>
+#include "cocos2d.h"
+#pragma execution_character_set("utf-8")
 
-// ÈÕÖ¾¼¶±ğÃ¶¾Ù
+// æ—¥å¿—çº§åˆ«æšä¸¾
 enum class LogLevel {
     DEBUG,
     INFO,
@@ -12,14 +15,14 @@ enum class LogLevel {
 };
 
 class GameLogger {
+private:
+    static GameLogger* _instance;
+    GameLogger() {}  // ç§æœ‰æ„é€ å‡½æ•°
+    std::string getLogLevelString(LogLevel level);
+
 public:
     static GameLogger* getInstance();
     void log(LogLevel level, const std::string& message);
-
-private:
-    GameLogger() {}  // Ë½ÓĞ¹¹Ôìº¯Êı
-    static GameLogger* _instance;
-    std::string getLogLevelString(LogLevel level);
 };
 
 #endif // __GAME_LOGGER_H__

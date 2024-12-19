@@ -1,26 +1,26 @@
 #include "Player.h"
 #include "Card/Card.h"
-
+#pragma execution_character_set("utf-8")
 Player::Player()
     : _health(30)
     , _maxHealth(30)
     , _armor(0)
     , _fatigueDamage(1)
-    , _mana(0)          // ³õÊ¼·¨Á¦Öµ
-    , _maxMana(0)       // ³õÊ¼×î´ó·¨Á¦Öµ
-    , _tempMana(0)      // ³õÊ¼ÁÙÊ±·¨Á¦Öµ 
+    , _mana(0)          // åˆå§‹æ³•åŠ›å€¼
+    , _maxMana(0)       // åˆå§‹æœ€å¤§æ³•åŠ›å€¼
+    , _tempMana(0)      // åˆå§‹ä¸´æ—¶æ³•åŠ›å€¼ 
 {
 }
 
 Player::~Player() {
-    // ÇåÀí¿¨ÅÆ
+    // æ¸…ç†å¡ç‰Œ
     for (auto card : _deck) delete card;
     for (auto card : _hand) delete card;
     for (auto card : _field) delete card;
 }
 
 void Player::takeDamage(int amount) {
-    // ÏÈ¿Û»¤¼×
+    // å…ˆæ‰£æŠ¤ç”²
     if (_armor > 0) {
         if (_armor >= amount) {
             _armor -= amount;
@@ -32,7 +32,7 @@ void Player::takeDamage(int amount) {
         }
     }
 
-    // ¿ÛÉúÃüÖµ
+    // æ‰£ç”Ÿå‘½å€¼
     _health = std::max(0, _health - amount);
 }
 void Player::removeCardFromHand(Card* card) {
@@ -52,45 +52,54 @@ void Player::addArmor(int amount) {
 void Player::increaseFatigueDamage() {
     _fatigueDamage++;
 }
-// ÏûºÄ·¨Á¦Öµ
+// æ¶ˆè€—æ³•åŠ›å€¼
 void Player::spendMana(int amount) {
-    // ÓÅÏÈÊ¹ÓÃÁÙÊ±·¨Á¦Öµ
+    // ä¼˜å…ˆä½¿ç”¨ä¸´æ—¶æ³•åŠ›å€¼
     int tempUsed = std::min(_tempMana, amount);
     _tempMana -= tempUsed;
     amount -= tempUsed;
 
-    // Ê¹ÓÃÆÕÍ¨·¨Á¦Öµ
+    // ä½¿ç”¨æ™®é€šæ³•åŠ›å€¼
     _mana = std::max(0, _mana - amount);
 }
 
-// »ØºÏ¿ªÊ¼Ê±»Ö¸´·¨Á¦Öµ
+// å›åˆå¼€å§‹æ—¶æ¢å¤æ³•åŠ›å€¼
 void Player::restoreMana() {
     _mana = _maxMana;
-    _tempMana = 0;  // Çå³ıÁÙÊ±·¨Á¦Öµ
+    _tempMana = 0;  // æ¸…é™¤ä¸´æ—¶æ³•åŠ›å€¼
 }
 
-// »ñµÃÁÙÊ±·¨Á¦Öµ
+// è·å¾—ä¸´æ—¶æ³•åŠ›å€¼
 void Player::gainMana(int amount) {
     _tempMana += amount;
 }
 
-// Ôö¼Ó×î´ó·¨Á¦Öµ£¨Ã¿»ØºÏ£©
+// å¢åŠ æœ€å¤§æ³•åŠ›å€¼ï¼ˆæ¯å›åˆï¼‰
 void Player::incrementMaxMana() {
-    if (_maxMana < 10) {  // ×î´ó·¨Á¦ÖµÉÏÏŞÎª10
+    if (_maxMana < 10) {  // æœ€å¤§æ³•åŠ›å€¼ä¸Šé™ä¸º10
         _maxMana++;
         _mana = _maxMana;
     }
 }
 
-// ¼ì²é·¨Á¦ÖµÊÇ·ñ×ã¹»
+// æ£€æŸ¥æ³•åŠ›å€¼æ˜¯å¦è¶³å¤Ÿ
 bool Player::hasEnoughMana(int cost) const {
     return (_mana + _tempMana) >= cost;
 }
 
 void Player::removeFromField(Card* card) {
-    // ´Ó³¡ÉÏÒÆ³ı¿¨ÅÆ
+    if (!card) return;
+    
+    // ä»åœºä¸Šç§»é™¤å¡ç‰Œ
     auto it = std::find(_field.begin(), _field.end(), card);
     if (it != _field.end()) {
         _field.erase(it);
+        
+        // å°†å¡ç‰Œç§»åˆ°å¼ƒç‰Œå †
+        _discardPile.push_back(card);
+        
+        // è®°å½•æ—¥å¿—
+        GameLogger::getInstance()->log(LogLevel::INFO, 
+            "Card removed from field: " + card->getCardName());
     }
 }

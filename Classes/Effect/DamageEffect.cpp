@@ -1,3 +1,4 @@
+#pragma execution_character_set("utf-8")
 #include "DamageEffect.h"
 #include "Card/Card.h"
 #include "Manager/GameManager.h"
@@ -22,12 +23,12 @@ void DamageEffect::onActivate() {
 }
 
 void DamageEffect::onDeactivate() {
-    // 清理效果相关资源
+    // 娓呯悊鏁堟灉鐩稿叧璧勬簮
 }
 
 bool DamageEffect::canActivate() {
     if (!_owner) return false;
-
+    
     if (_targetAll) {
         return true;
     }
@@ -36,13 +37,17 @@ bool DamageEffect::canActivate() {
     }
 }
 
+bool DamageEffect::canActivate(Card* target) const {
+    return target && target->getType() == CardType::MINION;
+}
+
 void DamageEffect::damageTarget(Card* target) {
     if (!target) return;
 
-    // 播放伤害动画
+    // 鎾斁浼ゅ鍔ㄧ敾
     AnimationManager::getInstance()->playDamageAnimation(target, _damage);
 
-    // 造成伤害
+    // 閫犳垚浼ゅ
     if (target->getCardType() == CardType::MINION) {
         dynamic_cast<MinionCard*>(target)->takeDamage(_damage);
     }
@@ -53,7 +58,7 @@ void DamageEffect::damageAllTargets() {
     auto& playerField = gameManager->getCurrentPlayer()->getField();
     auto& opponentField = gameManager->getOpponentPlayer()->getField();
 
-    // 对所有随从造成伤害
+    // 瀵规墍鏈夐殢浠庨�犳垚浼ゅ
     for (auto minion : playerField) {
         damageTarget(minion);
     }

@@ -1,6 +1,6 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
-
+#pragma execution_character_set("utf-8")
 #include "cocos2d.h"
 #include <vector>
 
@@ -10,46 +10,51 @@ class Player {
 public:
     Player();
     ~Player();
-    // »ù´¡ÊôĞÔ
+    // åŸºç¡€å±æ€§
     CC_SYNTHESIZE(int, _health, Health);
     CC_SYNTHESIZE(int, _maxHealth, MaxHealth);
     CC_SYNTHESIZE(int, _armor, Armor);
     CC_SYNTHESIZE(int, _fatigueDamage, FatigueDamage);
 
-    // ·¨Á¦ÖµÏà¹Ø
-    CC_SYNTHESIZE(int, _mana, Mana);              // µ±Ç°·¨Á¦Öµ
-    CC_SYNTHESIZE(int, _maxMana, MaxMana);        // ×î´ó·¨Á¦Öµ
-    CC_SYNTHESIZE(int, _tempMana, TempMana);      // ÁÙÊ±·¨Á¦Öµ£¨±¾»ØºÏ¿ÉÓÃ£©
+    // æ³•åŠ›å€¼ç›¸å…³
+    CC_SYNTHESIZE(int, _mana, Mana);              // å½“å‰æ³•åŠ›å€¼
+    CC_SYNTHESIZE(int, _maxMana, MaxMana);        // æœ€å¤§æ³•åŠ›å€¼
+    CC_SYNTHESIZE(int, _tempMana, TempMana);      // ä¸´æ—¶æ³•åŠ›å€¼ï¼ˆæœ¬å›åˆå¯ç”¨ï¼‰
 
-    // ·¨Á¦Öµ²Ù×÷
-    void spendMana(int amount);                   // ÏûºÄ·¨Á¦Öµ
-    void restoreMana();                           // »Ö¸´·¨Á¦Öµ
-    void gainMana(int amount);                    // »ñµÃÁÙÊ±·¨Á¦Öµ
-    void incrementMaxMana();                      // Ôö¼Ó×î´ó·¨Á¦Öµ
-    bool hasEnoughMana(int cost) const;           // ¼ì²é·¨Á¦ÖµÊÇ·ñ×ã¹»
+    // æ³•åŠ›å€¼æ“ä½œ
+    void spendMana(int amount);                   // æ¶ˆè€—æ³•åŠ›å€¼
+    void restoreMana();                           // æ¢å¤æ³•åŠ›å€¼
+    void gainMana(int amount);                    // è·å¾—ä¸´æ—¶æ³•åŠ›å€¼
+    void incrementMaxMana();                      // å¢åŠ æœ€å¤§æ³•åŠ›å€¼
+    bool hasEnoughMana(int cost) const;           // æ£€æŸ¥æ³•åŠ›å€¼æ˜¯å¦è¶³å¤Ÿ
 
-    // ¿¨ÅÆ¹ÜÀí
+    // å¡ç‰Œç®¡ç†
     std::vector<Card*>& getDeck() { return _deck; }
     std::vector<Card*>& getHand() { return _hand; }
     std::vector<Card*>& getField() { return _field; }
     std::vector<Card*>& getDiscardPile() { return _discardPile; }
-    // ÓÎÏ·ĞĞÎª
+    // æ¸¸æˆè¡Œä¸º
     void takeDamage(int amount);
     void heal(int amount);
     void addArmor(int amount);
     void increaseFatigueDamage();
     void removeCardFromHand(Card* card);
     bool hasValidTaunt() const;
+    
+    // åœºä¸Šéšä»ç®¡ç†
+    void addToField(Card* card);
     void removeFromField(Card* card);
-    // ×´Ì¬¼ì²é
+    const std::vector<Card*>& getField() const { return _field; }
+
+    // çŠ¶æ€æ£€æŸ¥
     bool isDead() const { return _health <= 0; }
     bool canDrawCard() const { return !_deck.empty(); }
 
 private:
-    std::vector<Card*> _deck;   // ÅÆ¿â
-    std::vector<Card*> _hand;   // ÊÖÅÆ
-    std::vector<Card*> _field;  // ³¡ÉÏËæ´Ó
-    std::vector<Card*> _discardPile;//ÆúÅÆ
+    std::vector<Card*> _deck;   // ç‰Œåº“
+    std::vector<Card*> _hand;   // æ‰‹ç‰Œ
+    std::vector<Card*> _field;  // åœºä¸Šéšä»
+    std::vector<Card*> _discardPile;  // å¼ƒç‰Œå †
 };
 
 #endif // __PLAYER_H__

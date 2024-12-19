@@ -1,7 +1,7 @@
 #include "ConfigManager.h"
 #include "json/document.h"
 #include "Utils/GameLogger.h"
-
+#pragma execution_character_set("utf-8")
 ConfigManager* ConfigManager::_instance = nullptr;
 
 ConfigManager* ConfigManager::getInstance() {
@@ -12,15 +12,15 @@ ConfigManager* ConfigManager::getInstance() {
 }
 
 ConfigManager::ConfigManager() {
-    // ³õÊ¼»¯³ÉÔ±±äÁ¿
+    // åˆå§‹åŒ–æˆå‘˜å˜é‡
     _cardConfigs.clear();
 }
 
 bool ConfigManager::loadConfigs() {
-    // ¼ÓÔØËùÓĞÅäÖÃ
+    // åŠ è½½æ‰€æœ‰é…ç½®
     bool success = true;
 
-    // ¼ÓÔØ¿¨ÅÆÅäÖÃ
+    // åŠ è½½å¡ç‰Œé…ç½®
     if (!loadCardConfigs()) {
         GameLogger::getInstance()->log(LogLevel::ERR, "Failed to load card configs");
         success = false;
@@ -30,7 +30,7 @@ bool ConfigManager::loadConfigs() {
 }
 
 bool ConfigManager::loadCardConfigs() {
-    // ¶ÁÈ¡¿¨ÅÆÅäÖÃÎÄ¼ş
+    // è¯»å–å¡ç‰Œé…ç½®æ–‡ä»¶
     std::string filePath = "configs/cards.json";
     std::string jsonString = cocos2d::FileUtils::getInstance()->getStringFromFile(filePath);
 
@@ -54,16 +54,16 @@ bool ConfigManager::parseCardJson(const std::string& jsonString) {
         return false;
     }
 
-    // Çå¿ÕÏÖÓĞÅäÖÃ
+    // æ¸…ç©ºç°æœ‰é…ç½®
     _cardConfigs.clear();
 
-    // ½âÎöÃ¿¸ö¿¨ÅÆÅäÖÃ
+    // è§£ææ¯ä¸ªå¡ç‰Œé…ç½®
     for (const auto& cardJson : doc.GetArray()) {
         if (!cardJson.IsObject()) continue;
 
         CardConfig config;
 
-        // ½âÎö±ØÒª×Ö¶Î
+        // è§£æå¿…è¦å­—æ®µ
         if (cardJson.HasMember("id") && cardJson["id"].IsInt()) {
             config.id = cardJson["id"].GetInt();
         }
@@ -93,7 +93,7 @@ bool ConfigManager::parseCardJson(const std::string& jsonString) {
             config.imagePath = cardJson["imagePath"].GetString();
         }
 
-        // ´æ´¢ÅäÖÃ
+        // å­˜å‚¨é…ç½®
         _cardConfigs[config.id] = config;
     }
 

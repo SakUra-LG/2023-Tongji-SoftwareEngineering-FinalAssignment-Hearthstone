@@ -1,14 +1,14 @@
 #include "AppDelegate.h"
-#include "Scene/MenuScene.h"  // Ìæ»» HelloWorldScene.h
-
-// Èç¹ûÄãÊ¹ÓÃ cocos2d-x µÄÔ¤±àÒëÍ·ÎÄ¼ş
+#include "Scene/MenuScene.h"  // æ›¿æ¢ HelloWorldScene.h
+#pragma execution_character_set("utf-8")
+// å¦‚æœä½ ä½¿ç”¨ cocos2d-x çš„é¢„ç¼–è¯‘å¤´æ–‡ä»¶
 #if USE_AUDIO_ENGINE
 #include "audio/include/AudioEngine.h"
 #endif
 
 USING_NS_CC;
 
-static cocos2d::Size designResolutionSize = cocos2d::Size(1920, 1080);  // ĞŞ¸ÄÉè¼Æ·Ö±æÂÊ
+static cocos2d::Size designResolutionSize = cocos2d::Size(1920, 1080);  // ä¿®æ”¹è®¾è®¡åˆ†è¾¨ç‡
 static cocos2d::Size smallResolutionSize = cocos2d::Size(1280, 720);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(1920, 1080);
 static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
@@ -23,12 +23,12 @@ AppDelegate::~AppDelegate() {
 }
 // AppDelegate.cpp
 void AppDelegate::initGLContextAttrs() {
-    // ÉèÖÃ OpenGL context ÊôĞÔ
+    // è®¾ç½® OpenGL context å±æ€§
     GLContextAttrs glContextAttrs = { 8, 8, 8, 8, 24, 8, 0 };
     GLView::setGLContextAttrs(glContextAttrs);
 }
 bool AppDelegate::applicationDidFinishLaunching() {
-    // ³õÊ¼»¯µ¼Ñİ
+    // åˆå§‹åŒ–å¯¼æ¼”
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if (!glview) {
@@ -41,23 +41,27 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setOpenGLView(glview);
     }
 
-    // ÉèÖÃÏÔÊ¾FPS
-    director->setDisplayStats(true);  // ¸ÄÎª false£¬²»ÏÔÊ¾FPS
+    // è®¾ç½®æ˜¾ç¤ºFPS
+    director->setDisplayStats(true);  // æ”¹ä¸º falseï¼Œä¸æ˜¾ç¤ºFPS
 
-    // ÉèÖÃFPS
+    // è®¾ç½®FPS
     director->setAnimationInterval(1.0f / 60);
 
-    // ÉèÖÃÉè¼Æ·Ö±æÂÊ
+    // è®¾ç½®è®¾è®¡åˆ†è¾¨ç‡
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height,
         ResolutionPolicy::NO_BORDER);
 
-    // ÉèÖÃ×ÊÔ´ËÑË÷Â·¾¶
+    // è®¾ç½®èµ„æºæœç´¢è·¯å¾„
     std::vector<std::string> searchPaths;
     searchPaths.push_back("res");
     FileUtils::getInstance()->setSearchPaths(searchPaths);
 
-    // ´´½¨³¡¾°
-    auto scene = MenuScene::createScene();  // Ê¹ÓÃ MenuScene Ìæ»» HelloWorld
+    // åœ¨è¿™é‡Œæ·»åŠ 
+    FileUtils::getInstance()->setWritablePath("logs/");
+    CCLOG("Log path: %s", FileUtils::getInstance()->getWritablePath().c_str());
+
+    // åˆ›å»ºåœºæ™¯
+    auto scene = MenuScene::createScene();  // ä½¿ç”¨ MenuScene æ›¿æ¢ HelloWorld
     director->runWithScene(scene);
 
     return true;

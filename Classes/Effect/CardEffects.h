@@ -1,6 +1,6 @@
 #ifndef __CARD_EFFECTS_H__
 #define __CARD_EFFECTS_H__
-
+#pragma execution_character_set("utf-8")
 #include "IEffect.h"
 #include <functional>
 

@@ -2,21 +2,21 @@
 #define __RESOURCE_MANAGER_H__
 
 #include "cocos2d.h"
-
+#pragma execution_character_set("utf-8")
 class ResourceManager {
 public:
     static ResourceManager* getInstance();
 
-    // ×ÊÔ´Ô¤¼ÓÔØ
+    // èµ„æºé¢„åŠ è½½
     void preloadCardTextures();
     void preloadEffects();
     void preloadAudio();
 
-    // ×ÊÔ´»ñÈ¡
+    // èµ„æºè·å–
     cocos2d::Texture2D* getCardTexture(int cardId);
     cocos2d::Animation* getEffectAnimation(const std::string& effectName);
 
-    // ×ÊÔ´ÊÍ·Å
+    // èµ„æºé‡Šæ”¾
     void purgeUnusedResources();
 
 private:

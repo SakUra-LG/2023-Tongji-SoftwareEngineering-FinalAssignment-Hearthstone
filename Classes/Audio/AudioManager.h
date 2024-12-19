@@ -1,7 +1,7 @@
 // Audio/AudioManager.h
 #ifndef __AUDIO_MANAGER_H__
 #define __AUDIO_MANAGER_H__
-
+#pragma execution_character_set("utf-8")
 #include "cocos2d.h"
 #include "audio/include/AudioEngine.h"
 #include <string>

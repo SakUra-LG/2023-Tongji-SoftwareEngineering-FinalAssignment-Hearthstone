@@ -1,3 +1,4 @@
+#pragma execution_character_set("utf-8")
 #include "CombatManager.h"
 #include "Card/Card.h"
 #include "Player/Player.h"
@@ -5,7 +6,7 @@
 #include "Effect/IEffect.h"
 #include "Animation/AnimationManager.h"
 #include"Utils/GameLogger.h"
-#include <algorithm>  // Îª std::min Ìí¼Ó
+#include <algorithm>  // ä¸º std::min æ·»åŠ 
 CombatManager* CombatManager::_instance = nullptr;
 
 CombatManager* CombatManager::getInstance() {
@@ -14,9 +15,9 @@ CombatManager* CombatManager::getInstance() {
     }
     return _instance;
 }
-// ¹¹Ôìº¯ÊıÊµÏÖ
+// æ„é€ å‡½æ•°å®ç°
 CombatManager::CombatManager()
-    : _deathQueue() {  // ³õÊ¼»¯ËÀÍö¶ÓÁĞ
+    : _deathQueue() {  // åˆå§‹åŒ–æ­»äº¡é˜Ÿåˆ—
 }
 bool CombatManager::canAttack(Card* attacker, Card* target) {
     if (!attacker || !target) return false;
@@ -28,29 +29,29 @@ bool CombatManager::canAttack(Card* attacker, Card* target) {
 void CombatManager::performAttack(Card* attacker, Card* target) {
     if (!canAttack(attacker, target)) return;
 
-    // ²¥·Å¹¥»÷¶¯»­
+    // æ’­æ”¾æ”»å‡»åŠ¨ç”»
     AnimationManager::getInstance()->playAttackAnimation(attacker, target);
 
-    // Ôì³ÉÉËº¦
+    // é€ æˆä¼¤å®³
     dealDamage(target, attacker->getAttack());
     dealDamage(attacker, target->getAttack());
 
-    // ÉèÖÃ¹¥»÷×´Ì¬
+    // è®¾ç½®æ”»å‡»çŠ¶æ€
     attacker->setHasAttacked(true);
 
-    // ¼ì²éËÀÍö
+    // æ£€æŸ¥æ­»äº¡
     checkDeaths();
 }
 
 void CombatManager::dealDamage(Card* target, int amount) {
     if (!target) return;
-    // ´¥·¢ÊÜÉËĞ§¹û
+    // è§¦å‘å—ä¼¤æ•ˆæœ
     EffectManager::getInstance()->triggerEffects(TriggerType::ON_DAMAGE);
-    // ¼ÆËãÊµ¼ÊÉËº¦
+    // è®¡ç®—å®é™…ä¼¤å®³
     int actualDamage = amount;
-    // Ôì³ÉÉËº¦
+    // é€ æˆä¼¤å®³
     target->setHealth(target->getHealth() - actualDamage);
-    // ¼ì²éÊÇ·ñĞèÒªËÀÍö
+    // æ£€æŸ¥æ˜¯å¦éœ€è¦æ­»äº¡
     if (target->getHealth() <= 0) {
         _deathQueue.push_back(target);
     }
@@ -58,31 +59,31 @@ void CombatManager::dealDamage(Card* target, int amount) {
 bool CombatManager::isValidTarget(Card* target) {
     if (!target) return false;
 
-    // ¼ì²éÄ¿±êÊÇ·ñ´æ»î
+    // æ£€æŸ¥ç›®æ ‡æ˜¯å¦å­˜æ´»
     if (target->getHealth() <= 0) return false;
 
-    // ¼ì²éÄ¿±êÊÇ·ñ¿ÉÒÔ±»¹¥»÷£¨ÀıÈç£ºÇ±ĞĞ×´Ì¬£©
+    // æ£€æŸ¥ç›®æ ‡æ˜¯å¦å¯ä»¥è¢«æ”»å‡»ï¼ˆä¾‹å¦‚ï¼šæ½œè¡ŒçŠ¶æ€ï¼‰
     return true;
 }
 void CombatManager::checkDeaths() {
-    // ´¦ÀíËÀÍö¶ÓÁĞÖĞµÄ¿¨ÅÆ
+    // å¤„ç†æ­»äº¡é˜Ÿåˆ—ä¸­çš„å¡ç‰Œ
     for (auto card : _deathQueue) {
         handleDeath(card);
     }
 
-    // Çå¿ÕËÀÍö¶ÓÁĞ
+    // æ¸…ç©ºæ­»äº¡é˜Ÿåˆ—
     _deathQueue.clear();
 }
 void CombatManager::handleDeath(Card* card) {
     if (!card) return;
 
-    // ´¥·¢ËÀÍöĞ§¹û
+    // è§¦å‘æ­»äº¡æ•ˆæœ
     EffectManager::getInstance()->triggerEffects(TriggerType::ON_DEATH);
 
-    // ´Ó³¡ÉÏÒÆ³ı
+    // ä»åœºä¸Šç§»é™¤
     card->getOwner()->removeFromField(card);
 
-    // ¼ÇÂ¼ÈÕÖ¾
+    // è®°å½•æ—¥å¿—
     GameLogger::getInstance()->log(LogLevel::INFO,
         "Card died: " + card->getCardName());
 }
@@ -92,16 +93,16 @@ void CombatManager::healTarget(Card* target, int amount) {
     int currentHealth = target->getHealth();
     int maxHealth = target->getMaxHealth();
 
-    // ¼ÆËãÊµ¼ÊÖÎÁÆÁ¿
+    // è®¡ç®—å®é™…æ²»ç–—é‡
     int actualHeal = std::min(amount, maxHealth - currentHealth);
 
     if (actualHeal > 0) {
         target->setHealth(currentHealth + actualHeal);
 
-        // ´¥·¢ÖÎÁÆĞ§¹û
+        // è§¦å‘æ²»ç–—æ•ˆæœ
         EffectManager::getInstance()->triggerEffects(TriggerType::ON_HEAL);
 
-        // ¼ÇÂ¼ÈÕÖ¾
+        // è®°å½•æ—¥å¿—
         GameLogger::getInstance()->log(LogLevel::INFO,
             "Healed " + target->getCardName() + " for " + std::to_string(actualHeal));
     }
@@ -109,9 +110,9 @@ void CombatManager::healTarget(Card* target, int amount) {
 void CombatManager::resolveEffects(Card* attacker, Card* target) {
     if (!attacker || !target) return;
 
-    // ´¥·¢¹¥»÷Ğ§¹û
-    EffectManager::getInstance()->triggerEffects(TriggerType::ON_ATTACK);    // Ê¹ÓÃ×÷ÓÃÓòÔËËã·û
+    // è§¦å‘æ”»å‡»æ•ˆæœ
+    EffectManager::getInstance()->triggerEffects(TriggerType::ON_ATTACK);    // ä½¿ç”¨ä½œç”¨åŸŸè¿ç®—ç¬¦
 
-    // ´¥·¢±»¹¥»÷Ğ§¹û
-    EffectManager::getInstance()->triggerEffects(TriggerType::ON_ATTACKED);  // Ê¹ÓÃ×÷ÓÃÓòÔËËã·û
+    // è§¦å‘è¢«æ”»å‡»æ•ˆæœ
+    EffectManager::getInstance()->triggerEffects(TriggerType::ON_ATTACKED);  // ä½¿ç”¨ä½œç”¨åŸŸè¿ç®—ç¬¦
 }

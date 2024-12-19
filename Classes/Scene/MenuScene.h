@@ -3,7 +3,7 @@
 #define __MENU_SCENE_H__
 
 #include "cocos2d.h"
-
+#pragma execution_character_set("utf-8")
 class MenuScene : public cocos2d::Scene {
 public:
     static cocos2d::Scene* createScene();

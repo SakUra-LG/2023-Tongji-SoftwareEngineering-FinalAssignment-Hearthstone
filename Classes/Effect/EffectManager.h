@@ -1,6 +1,6 @@
 #ifndef __EFFECT_MANAGER_H__
 #define __EFFECT_MANAGER_H__
-
+#pragma execution_character_set("utf-8")
 #include "cocos2d.h"
 #include "IEffect.h"
 #include <map>
@@ -13,11 +13,11 @@ class EffectManager {
 public:
     static EffectManager* getInstance();
     void triggerEffects(TriggerType type);
-    // Ğ§¹û×¢²áºÍ´¥·¢
+    // æ•ˆæœæ³¨å†Œå’Œè§¦å‘
     void registerEffect(Card* card, std::shared_ptr<IEffect> effect, TriggerType trigger);
     void unregisterEffect(Card* card);
 
-    // Ğ§¹û¶ÓÁĞ¹ÜÀí
+    // æ•ˆæœé˜Ÿåˆ—ç®¡ç†
     void processEffectQueue();
     void clearEffects();
 
@@ -25,7 +25,7 @@ private:
     EffectManager();
     static EffectManager* _instance;
 
-    // Ğ§¹û´æ´¢
+    // æ•ˆæœå­˜å‚¨
     std::multimap<TriggerType, std::pair<Card*, std::shared_ptr<IEffect>>> _effects;
     std::queue<std::shared_ptr<IEffect>> _effectQueue;
 

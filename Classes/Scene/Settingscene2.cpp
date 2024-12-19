@@ -4,28 +4,28 @@
 #include "Utils/Constants.h"
 #include "Audio/AudioManager.h"
 #include"MenuScene.h"
-
+#pragma execution_character_set("utf-8")
 USING_NS_CC;
-// ´´½¨³¡¾°µÄ¾²Ì¬·½·¨
+// åˆ›å»ºåœºæ™¯çš„é™æ€æ–¹æ³•
 Scene* Settingscene2::createScene() {
     return Settingscene2::create();
 }
-// ³¡¾°³õÊ¼»¯·½·¨
+// åœºæ™¯åˆå§‹åŒ–æ–¹æ³•
 bool Settingscene2::init() {
     if (!Scene::init()) {
         return false;
     }
-    // ³õÊ¼»¯³¡¾°µÄÈý¸öÖ÷Òª×é¼þ
-    Settingscene2::initBackground2();// ³õÊ¼»¯±³¾°
-    Settingscene2::initMenu2(); // ³õÊ¼»¯²Ëµ¥°´Å¥
-    Settingscene2::initUI2();// ³õÊ¼»¯UIÔªËØ
+    // åˆå§‹åŒ–åœºæ™¯çš„ä¸‰ä¸ªä¸»è¦ç»„ä»¶
+    Settingscene2::initBackground2();// åˆå§‹åŒ–èƒŒæ™¯
+    Settingscene2::initMenu2(); // åˆå§‹åŒ–èœå•æŒ‰é’®
+    Settingscene2::initUI2();// åˆå§‹åŒ–UIå…ƒç´ 
     return true;
 }
 
-void Settingscene2::initBackground2() { // »ñÈ¡ÆÁÄ»³ß´çºÍÔ­µãÎ»ÖÃ
+void Settingscene2::initBackground2() { // èŽ·å–å±å¹•å°ºå¯¸å’ŒåŽŸç‚¹ä½ç½®
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    // ´´½¨²¢ÉèÖÃ±³¾°¾«Áé
+    // åˆ›å»ºå¹¶è®¾ç½®èƒŒæ™¯ç²¾çµ
     auto background = Sprite::create(GameConstants::Resources::BACKGROUND_SETTING);
     background->setPosition(Vec2(visibleSize.width / 2 + origin.x,
         visibleSize.height / 2 + origin.y));

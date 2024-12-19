@@ -5,7 +5,7 @@
 #include "Settingscene1.h"
 #include "DeckBuilderScene.h"
 #include "SelectCardsScene.h"
-
+#pragma execution_character_set("utf-8")
 USING_NS_CC;
 // 创建场景的静态方法
 Scene* MenuScene::createScene() {

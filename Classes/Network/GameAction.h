@@ -1,56 +1,56 @@
 // GameAction.h
 #ifndef __GAME_ACTION_H__
 #define __GAME_ACTION_H__
-
+#pragma execution_character_set("utf-8")
 #include <map>
 #include <string>
 
-// ÓÎÏ·¶¯×÷ÀàÐÍÃ¶¾Ù
+// æ¸¸æˆåŠ¨ä½œç±»åž‹æžšä¸¾
 enum class ActionType {
-    GAME_START,     // Ìí¼ÓÕâÐÐ£ºÓÎÏ·¿ªÊ¼¶¯×÷
-    PLAY_CARD,      // ´ò³ö¿¨ÅÆ£¨´ÓÊÖÅÆÊ¹ÓÃ¿¨ÅÆ£©
-    ATTACK,         // ¹¥»÷¶¯×÷£¨Ëæ´Ó¹¥»÷»òÓ¢ÐÛ¹¥»÷£©
-    END_TURN,       // ½áÊø»ØºÏ
-    USE_HERO_POWER, // Ê¹ÓÃÓ¢ÐÛ¼¼ÄÜ
-    CONCEDE        // Í¶½µÈÏÊä
+    GAME_START,     // æ·»åŠ è¿™è¡Œï¼šæ¸¸æˆå¼€å§‹åŠ¨ä½œ
+    PLAY_CARD,      // æ‰“å‡ºå¡ç‰Œï¼ˆä»Žæ‰‹ç‰Œä½¿ç”¨å¡ç‰Œï¼‰
+    ATTACK,         // æ”»å‡»åŠ¨ä½œï¼ˆéšä»Žæ”»å‡»æˆ–è‹±é›„æ”»å‡»ï¼‰
+    END_TURN,       // ç»“æŸå›žåˆ
+    USE_HERO_POWER, // ä½¿ç”¨è‹±é›„æŠ€èƒ½
+    CONCEDE        // æŠ•é™è®¤è¾“
 };
 
 /**
- * @brief ÓÎÏ·¶¯×÷½á¹¹Ìå£¬ÓÃÓÚÃèÊöÍæ¼ÒµÄ¸÷ÖÖÓÎÏ·²Ù×÷
+ * @brief æ¸¸æˆåŠ¨ä½œç»“æž„ä½“ï¼Œç”¨äºŽæè¿°çŽ©å®¶çš„å„ç§æ¸¸æˆæ“ä½œ
  *
- * Õâ¸ö½á¹¹ÌåÓÃÓÚ·â×°ÓÎÏ·ÖÐµÄ¸÷ÖÖ¶¯×÷£¬°üÀ¨´ò³ö¿¨ÅÆ¡¢¹¥»÷µÈ
- * ¿ÉÒÔÍ¨¹ýÍøÂç´«Êä£¬ÓÃÓÚÍ¬²½Íæ¼Ò²Ù×÷
+ * è¿™ä¸ªç»“æž„ä½“ç”¨äºŽå°è£…æ¸¸æˆä¸­çš„å„ç§åŠ¨ä½œï¼ŒåŒ…æ‹¬æ‰“å‡ºå¡ç‰Œã€æ”»å‡»ç­‰
+ * å¯ä»¥é€šè¿‡ç½‘ç»œä¼ è¾“ï¼Œç”¨äºŽåŒæ­¥çŽ©å®¶æ“ä½œ
  */
 struct GameAction {
-    ActionType type;    // ¶¯×÷ÀàÐÍ£¬±íÃ÷ÕâÊÇÊ²Ã´ÀàÐÍµÄ²Ù×÷
-    int sourceId;       // ¶¯×÷·¢ÆðÕßµÄID£¨ÀýÈç£º¹¥»÷ÕßµÄID»ò±»Ê¹ÓÃ¿¨ÅÆµÄID£©
-    int targetId;       // ¶¯×÷Ä¿±êµÄID£¨ÀýÈç£º±»¹¥»÷µÄÄ¿±êID£©
+    ActionType type;    // åŠ¨ä½œç±»åž‹ï¼Œè¡¨æ˜Žè¿™æ˜¯ä»€ä¹ˆç±»åž‹çš„æ“ä½œ
+    int sourceId;       // åŠ¨ä½œå‘èµ·è€…çš„IDï¼ˆä¾‹å¦‚ï¼šæ”»å‡»è€…çš„IDæˆ–è¢«ä½¿ç”¨å¡ç‰Œçš„IDï¼‰
+    int targetId;       // åŠ¨ä½œç›®æ ‡çš„IDï¼ˆä¾‹å¦‚ï¼šè¢«æ”»å‡»çš„ç›®æ ‡IDï¼‰
 
-    // ¶îÍâÊý¾Ý×Öµä£¬ÓÃÓÚ´æ´¢¶¯×÷Ïà¹ØµÄÆäËûÐÅÏ¢
-    // key: Êý¾Ý±êÊ¶·û
-    // value: Êý¾ÝÖµ
-    // ÀýÈç£º{"damage": "5", "effect": "poison"}
+    // é¢å¤–æ•°æ®å­—å…¸ï¼Œç”¨äºŽå­˜å‚¨åŠ¨ä½œç›¸å…³çš„å…¶ä»–ä¿¡æ¯
+    // key: æ•°æ®æ ‡è¯†ç¬¦
+    // value: æ•°æ®å€¼
+    // ä¾‹å¦‚ï¼š{"damage": "5", "effect": "poison"}
     std::map<std::string, std::string> data;
 
-    // Ä¬ÈÏ¹¹Ôìº¯Êý
+    // é»˜è®¤æž„é€ å‡½æ•°
     GameAction() : type(ActionType::PLAY_CARD), sourceId(0), targetId(0) {}
 };
 
 /*
-Ê¹ÓÃÊ¾Àý£º
+ä½¿ç”¨ç¤ºä¾‹ï¼š
 
-// ´´½¨Ò»¸ö¹¥»÷¶¯×÷
+// åˆ›å»ºä¸€ä¸ªæ”»å‡»åŠ¨ä½œ
 GameAction attackAction;
 attackAction.type = ActionType::ATTACK;
-attackAction.sourceId = 1;  // ¹¥»÷ÕßID
-attackAction.targetId = 2;  // Ä¿±êID
-attackAction.data["damage"] = "5";  // ÉèÖÃÉËº¦Öµ
+attackAction.sourceId = 1;  // æ”»å‡»è€…ID
+attackAction.targetId = 2;  // ç›®æ ‡ID
+attackAction.data["damage"] = "5";  // è®¾ç½®ä¼¤å®³å€¼
 
-// ´´½¨Ò»¸öÊ¹ÓÃ¿¨ÅÆ¶¯×÷
+// åˆ›å»ºä¸€ä¸ªä½¿ç”¨å¡ç‰ŒåŠ¨ä½œ
 GameAction playCardAction;
 playCardAction.type = ActionType::PLAY_CARD;
 playCardAction.sourceId = cardId;
-playCardAction.data["position"] = "3";  // ·ÅÖÃÎ»ÖÃ
+playCardAction.data["position"] = "3";  // æ”¾ç½®ä½ç½®
 */
 
 #endif // __GAME_ACTION_H__

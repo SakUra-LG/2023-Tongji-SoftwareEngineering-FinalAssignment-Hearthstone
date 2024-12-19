@@ -6,7 +6,7 @@
 #include "Utils/Constants.h"    // 游戏常量
 #include "Animation/AnimationManager.h"  // 动画管理器
 #include "Card/DeckManager.h"  // 添加这行
-
+#pragma execution_character_set("utf-8")
 // 使用 cocos2d 命名空间
 USING_NS_CC;
 

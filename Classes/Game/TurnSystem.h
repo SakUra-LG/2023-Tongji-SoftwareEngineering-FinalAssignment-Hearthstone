@@ -1,18 +1,18 @@
 #ifndef __TURN_SYSTEM_H__
 #define __TURN_SYSTEM_H__
-
+#pragma execution_character_set("utf-8")
 #include "cocos2d.h"
 
 class TurnSystem {
 public:
     static TurnSystem* getInstance();
 
-    // 回合控制
+    // 鍥炲悎鎺у埗
     void startTurn();
     void endTurn();
     bool isPlayerTurn() const { return _isPlayerTurn; }
 
-    // 法力水晶
+    // 娉曞姏姘存櫠
     void addManaSlot();
     void refillMana();
     bool useMana(int cost);
@@ -28,7 +28,7 @@ private:
     int _maxMana;
     int _turnCount;
 
-    // 禁止拷贝
+    // 绂佹鎷疯礉
     TurnSystem(const TurnSystem&) = delete;
     TurnSystem& operator=(const TurnSystem&) = delete;
 };

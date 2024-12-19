@@ -3,7 +3,7 @@
 #define __SETTING2_SCENE_H__
 
 #include "cocos2d.h"
-
+#pragma execution_character_set("utf-8")
 class Settingscene2 : public cocos2d::Scene {
 public:
     static cocos2d::Scene* createScene();
@@ -15,17 +15,17 @@ private:
     void initBackground2();
     void initMenu2();
     void initUI2();
-    void initListeners2();      // Õâ¸öº¯ÊıĞèÒªÊµÏÖ
-    // ²Ëµ¥»Øµ÷
+    void initListeners2();      // è¿™ä¸ªå‡½æ•°éœ€è¦å®ç°
+    // èœå•å›è°ƒ
     //void onPlayGame(cocos2d::Ref* sender);
     //void onAdventureMode(cocos2d::Ref* sender);
     //void onDeckBuilder(cocos2d::Ref* sender);
     void onSettings2(cocos2d::Ref* sender);
     //void onQuit(cocos2d::Ref* sender);
-    ///void onEndTurnClicked(cocos2d::Ref* sender);    // Õâ¸öº¯ÊıĞèÒªÊµÏÖ
-    //void onSettingsClicked(cocos2d::Ref* sender);   // Õâ¸öº¯ÊıĞèÒªÊµÏÖ
-    //void updateUI(float dt);   // Õâ¸öº¯ÊıĞèÒªÊµÏÖ
-    // ¶¯»­
+    ///void onEndTurnClicked(cocos2d::Ref* sender);    // è¿™ä¸ªå‡½æ•°éœ€è¦å®ç°
+    //void onSettingsClicked(cocos2d::Ref* sender);   // è¿™ä¸ªå‡½æ•°éœ€è¦å®ç°
+    //void updateUI(float dt);   // è¿™ä¸ªå‡½æ•°éœ€è¦å®ç°
+    // åŠ¨ç”»
    // void playMenuAnimation();
     //void playButtonAnimation(cocos2d::Node* button);
 };

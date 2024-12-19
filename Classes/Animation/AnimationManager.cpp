@@ -1,3 +1,4 @@
+#pragma execution_character_set("utf-8")
 #include "AnimationManager.h"
 #include "Card/Card.h"
 #include"Audio/AudioManager.h"
@@ -18,13 +19,13 @@ void AnimationManager::playCardDrawAnimation(Card* card) {
 
     _isAnimating = true;
 
-    // ´´½¨¿¨ÅÆ³éÈ¡¶¯»­ĞòÁĞ
+    // åˆ›å»ºå¡ç‰ŒæŠ½å–åŠ¨ç”»åºåˆ—
     auto moveUp = MoveBy::create(0.2f, Vec2(0, 30));
     auto moveDown = MoveBy::create(0.1f, Vec2(0, -30));
     auto scale = ScaleTo::create(0.2f, 1.2f);
     auto scaleBack = ScaleTo::create(0.1f, 1.0f);
 
-    // Ìí¼Ó·¢¹âĞ§¹û
+    // æ·»åŠ å‘å…‰æ•ˆæœ
     auto glow = Sprite::create("effects/card_glow.png");
     if (glow) {
         card->addChild(glow, -1);
@@ -34,7 +35,7 @@ void AnimationManager::playCardDrawAnimation(Card* card) {
         glow->runAction(Sequence::create(fadeIn, fadeOut, RemoveSelf::create(), nullptr));
     }
 
-    // ÔËĞĞ¶¯»­ĞòÁĞ
+    // è¿è¡ŒåŠ¨ç”»åºåˆ—
     auto sequence = Sequence::create(
         Spawn::create(moveUp, scale, nullptr),
         Spawn::create(moveDown, scaleBack, nullptr),
@@ -51,14 +52,14 @@ void AnimationManager::playAttackAnimation(Card* attacker, Card* target) {
 
     _isAnimating = true;
 
-    // ±£´æÔ­Ê¼Î»ÖÃ
+    // ä¿å­˜åŸå§‹ä½ç½®
     Vec2 originalPos = attacker->getPosition();
     Vec2 targetPos = target->getPosition();
-    // ´´½¨¹¥»÷¶¯»­ĞòÁĞ:
-// 1. ÒÆ¶¯µ½Ä¿±êÎ»ÖÃ (0.3Ãë)
-// 2. ÔÚÄ¿±êÎ»ÖÃÕğ¶¯
-// 3. ·µ»ØÔ­Ê¼Î»ÖÃ (0.2Ãë)
-    // ´´½¨¹¥»÷¶¯»­ĞòÁĞ
+    // åˆ›å»ºæ”»å‡»åŠ¨ç”»åºåˆ—:
+// 1. ç§»åŠ¨åˆ°ç›®æ ‡ä½ç½® (0.3ç§’)
+// 2. åœ¨ç›®æ ‡ä½ç½®éœ‡åŠ¨
+// 3. è¿”å›åŸå§‹ä½ç½® (0.2ç§’)
+    // åˆ›å»ºæ”»å‡»åŠ¨ç”»åºåˆ—
     auto moveToTarget = MoveTo::create(0.3f, targetPos);
     auto moveBack = MoveTo::create(0.2f, originalPos);
     auto shake = Sequence::create(
@@ -67,7 +68,7 @@ void AnimationManager::playAttackAnimation(Card* attacker, Card* target) {
         nullptr
     );
 
-    // ´´½¨ÍêÕûµÄ¶¯»­ĞòÁĞ
+    // åˆ›å»ºå®Œæ•´çš„åŠ¨ç”»åºåˆ—
     auto sequence = Sequence::create(
         moveToTarget,
         shake,
@@ -80,7 +81,7 @@ void AnimationManager::playAttackAnimation(Card* attacker, Card* target) {
 
     attacker->runAction(sequence);
 
-    // ²¥·Å¹¥»÷ÌØĞ§
+    // æ’­æ”¾æ”»å‡»ç‰¹æ•ˆ
     playParticleEffect("attack_effect", targetPos);
 }
 void AnimationManager::playDamageAnimation(Card* target, int damage) {
@@ -88,27 +89,27 @@ void AnimationManager::playDamageAnimation(Card* target, int damage) {
 
     _isAnimating = true;
 
-    // ´´½¨ÉËº¦Êı×Ö±êÇ© // ´´½¨ÉËº¦Êı×Ö±êÇ©,°üº¬µ­³öºÍÏòÉÏÆ®¶¯Ğ§¹û
+    // åˆ›å»ºä¼¤å®³æ•°å­—æ ‡ç­¾ // åˆ›å»ºä¼¤å®³æ•°å­—æ ‡ç­¾,åŒ…å«æ·¡å‡ºå’Œå‘ä¸Šé£˜åŠ¨æ•ˆæœ
     auto damageLabel = Label::createWithTTF("-" + std::to_string(damage), "fonts/arial.ttf", 32);
     damageLabel->setColor(Color3B::RED);
     damageLabel->setPosition(target->getPosition() + Vec2(0, 50));
     target->getParent()->addChild(damageLabel);
 
-    // Ä¿±ê¿¨ÅÆµÄÕğ¶¯Ğ§¹û
+    // ç›®æ ‡å¡ç‰Œçš„éœ‡åŠ¨æ•ˆæœ
     auto shake = Sequence::create(
-        MoveBy::create(0.05f, Vec2(5, 0)),   // ÏòÓÒ
-        MoveBy::create(0.05f, Vec2(-5, 0)),  // Ïò×ó
-        MoveBy::create(0.05f, Vec2(5, 0)),   // ÏòÓÒ
-        MoveBy::create(0.05f, Vec2(-5, 0)),  // Ïò×ó
+        MoveBy::create(0.05f, Vec2(5, 0)),   // å‘å³
+        MoveBy::create(0.05f, Vec2(-5, 0)),  // å‘å·¦
+        MoveBy::create(0.05f, Vec2(5, 0)),   // å‘å³
+        MoveBy::create(0.05f, Vec2(-5, 0)),  // å‘å·¦
         nullptr
     );
 
-    // ÉËº¦Êı×ÖµÄ¶¯»­Ğ§¹û
+    // ä¼¤å®³æ•°å­—çš„åŠ¨ç”»æ•ˆæœ
     auto fadeIn = FadeIn::create(0.1f);
     auto moveUp = MoveBy::create(0.5f, Vec2(0, 30));
     auto fadeOut = FadeOut::create(0.2f);
 
-    // ÔËĞĞÄ¿±ê¿¨ÅÆµÄÕğ¶¯¶¯»­
+    // è¿è¡Œç›®æ ‡å¡ç‰Œçš„éœ‡åŠ¨åŠ¨ç”»
     target->runAction(Sequence::create(
         shake,
         CallFunc::create([this, target]() {
@@ -117,7 +118,7 @@ void AnimationManager::playDamageAnimation(Card* target, int damage) {
         nullptr
     ));
 
-    // ÔËĞĞÉËº¦Êı×ÖµÄ¶¯»­
+    // è¿è¡Œä¼¤å®³æ•°å­—çš„åŠ¨ç”»
     damageLabel->runAction(Sequence::create(
         fadeIn,
         Spawn::create(moveUp, fadeOut, nullptr),
@@ -125,7 +126,7 @@ void AnimationManager::playDamageAnimation(Card* target, int damage) {
         nullptr
     ));
 
-    // ²¥·ÅÉËº¦ÌØĞ§
+    // æ’­æ”¾ä¼¤å®³ç‰¹æ•ˆ
     playParticleEffect("damage_effect", target->getPosition());
 }
 void AnimationManager::playCardAnimation(Card* card) {
@@ -133,11 +134,11 @@ void AnimationManager::playCardAnimation(Card* card) {
 
     _isAnimating = true;
 
-    // ¿¨ÅÆ·Å´óĞ§¹û
+    // å¡ç‰Œæ”¾å¤§æ•ˆæœ
     auto scale = ScaleTo::create(0.2f, 1.2f);
     auto scaleBack = ScaleTo::create(0.1f, 1.0f);
 
-    // ·¢¹âĞ§¹û
+    // å‘å…‰æ•ˆæœ
     auto glow = Sprite::create("effects/card_glow.png");
     card->addChild(glow, -1);
     glow->setOpacity(0);
@@ -160,12 +161,12 @@ void AnimationManager::deathAnimation(Card* card) {
     if (!card) return;
 
     _isAnimating = true;
-    // ´´½¨ÏûÊ§¶¯»­£ºÍ¬Ê±½øĞĞµ­³öºÍËõĞ¡
-    auto fadeOut = cocos2d::FadeOut::create(0.5f);     // 0.5ÃëÄÚµ­³ö
-    auto scale = cocos2d::ScaleTo::create(0.5f, 0.0f); // 0.5ÃëÄÚËõĞ¡µ½0
+    // åˆ›å»ºæ¶ˆå¤±åŠ¨ç”»ï¼šåŒæ—¶è¿›è¡Œæ·¡å‡ºå’Œç¼©å°
+    auto fadeOut = cocos2d::FadeOut::create(0.5f);     // 0.5ç§’å†…æ·¡å‡º
+    auto scale = cocos2d::ScaleTo::create(0.5f, 0.0f); // 0.5ç§’å†…ç¼©å°åˆ°0
     auto spawn = cocos2d::Spawn::create(fadeOut, scale, nullptr);
 
-    // Ìí¼ÓÍê³É»Øµ÷£¬ÔÚ¶¯»­½áÊøºóÒÆ³ı¿¨ÅÆ
+    // æ·»åŠ å®Œæˆå›è°ƒï¼Œåœ¨åŠ¨ç”»ç»“æŸåç§»é™¤å¡ç‰Œ
     auto sequence = cocos2d::Sequence::create(
         spawn,
         cocos2d::CallFunc::create([this, card]() {
@@ -179,12 +180,12 @@ void AnimationManager::deathAnimation(Card* card) {
 }
 
 void AnimationManager::playParticleEffect(const std::string& effectName, const cocos2d::Vec2& position) {
-    // ´ÓplistÎÄ¼ş´´½¨Á£×ÓÏµÍ³
+    // ä»plistæ–‡ä»¶åˆ›å»ºç²’å­ç³»ç»Ÿ
     auto particleSystem = cocos2d::ParticleSystemQuad::create("particles/" + effectName + ".plist");
     if (particleSystem) {
         particleSystem->setPosition(position);
         cocos2d::Director::getInstance()->getRunningScene()->addChild(particleSystem);
-        particleSystem->setAutoRemoveOnFinish(true);  // ÌØĞ§Íê³Éºó×Ô¶¯ÒÆ³ı
+        particleSystem->setAutoRemoveOnFinish(true);  // ç‰¹æ•ˆå®Œæˆåè‡ªåŠ¨ç§»é™¤
     }
 }
 
@@ -193,14 +194,14 @@ void AnimationManager::playSpellAnimation(const std::string& spellName, Card* ta
 
     _isAnimating = true;
 
-    // ´´½¨·¨ÊõÌØĞ§¾«Áé
+    // åˆ›å»ºæ³•æœ¯ç‰¹æ•ˆç²¾çµ
     auto spellSprite = cocos2d::Sprite::create("spells/" + spellName + ".png");
     if (!spellSprite) return;
 
     spellSprite->setPosition(target->getPosition());
     target->getParent()->addChild(spellSprite);
 
-    // ´´½¨·¨Êõ¶¯»­ĞòÁĞ£º·Å´ó(0.3s) -> »Ö¸´´óĞ¡(0.3s) -> µ­³ö(0.2s)
+    // åˆ›å»ºæ³•æœ¯åŠ¨ç”»åºåˆ—ï¼šæ”¾å¤§(0.3s) -> æ¢å¤å¤§å°(0.3s) -> æ·¡å‡º(0.2s)
     auto animation = cocos2d::Sequence::create(
         cocos2d::ScaleTo::create(0.3f, 1.2f),
         cocos2d::ScaleTo::create(0.3f, 1.0f),
@@ -217,12 +218,12 @@ void AnimationManager::playSpellAnimation(const std::string& spellName, Card* ta
 
 
 bool AnimationManager::isAnimating() const {
-    // ¼ì²éÊÇ·ñÓĞ¶¯»­ÕıÔÚ²¥·Å
+    // æ£€æŸ¥æ˜¯å¦æœ‰åŠ¨ç”»æ­£åœ¨æ’­æ”¾
     return !_currentAnimations.empty() && _isAnimating;
 }
 
 void AnimationManager::onAnimationComplete(cocos2d::Node* target) {
-    // Ê¹ÓÃremove_ifËã·¨ÇåÀíÒÑÍê³ÉµÄ¶¯»­
+    // ä½¿ç”¨remove_ifç®—æ³•æ¸…ç†å·²å®Œæˆçš„åŠ¨ç”»
     _currentAnimations.erase(
         std::remove_if(_currentAnimations.begin(), _currentAnimations.end(),
             [](cocos2d::Action* action) {
@@ -232,7 +233,7 @@ void AnimationManager::onAnimationComplete(cocos2d::Node* target) {
         _currentAnimations.end()
     );
 
-    // ¸üĞÂ¶¯»­¹ÜÀíÆ÷×´Ì¬
+    // æ›´æ–°åŠ¨ç”»ç®¡ç†å™¨çŠ¶æ€
     if (_currentAnimations.empty()) {
         _isAnimating = false;
     }
@@ -240,19 +241,19 @@ void AnimationManager::onAnimationComplete(cocos2d::Node* target) {
 void AnimationManager::playHealAnimation(Card* target, int amount) {
     if (!target) return;
 
-    // ´´½¨·¢¹âĞ§¹û
+    // åˆ›å»ºå‘å…‰æ•ˆæœ
     auto glow = Sprite::create("effects/heal_glow.png");
     target->addChild(glow, 1);
     glow->setScale(0.0f);
     glow->setOpacity(0);
 
-    // ´´½¨Êı×Ö±êÇ©
+    // åˆ›å»ºæ•°å­—æ ‡ç­¾
     auto healLabel = Label::createWithTTF("+" + std::to_string(amount), "fonts/arial.ttf", 24);
     healLabel->setColor(Color3B::GREEN);
     healLabel->setPosition(Vec2(target->getContentSize().width / 2, target->getContentSize().height));
     target->addChild(healLabel, 2);
 
-    // ·¢¹â¶¯»­
+    // å‘å…‰åŠ¨ç”»
     auto glowIn = Spawn::create(
         ScaleTo::create(0.3f, 1.0f),
         FadeIn::create(0.3f),
@@ -271,7 +272,7 @@ void AnimationManager::playHealAnimation(Card* target, int amount) {
     );
     glow->runAction(glowSeq);
 
-    // Êı×ÖÉÏÉı¶¯»­
+    // æ•°å­—ä¸Šå‡åŠ¨ç”»
     auto moveUp = MoveBy::create(1.0f, Vec2(0, 50));
     auto fadeOut = FadeOut::create(1.0f);
     auto labelSeq = Sequence::create(
@@ -281,7 +282,7 @@ void AnimationManager::playHealAnimation(Card* target, int amount) {
     );
     healLabel->runAction(labelSeq);
 
-    // ²¥·ÅÒôĞ§
+    // æ’­æ”¾éŸ³æ•ˆ
     AudioManager::play2d("sounds/heal.mp3");
 }
 void AnimationManager::pauseAllAnimations() {

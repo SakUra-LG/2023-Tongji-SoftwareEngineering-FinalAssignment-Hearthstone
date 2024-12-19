@@ -1,6 +1,6 @@
 // Card.cpp
 // 卡牌基类的实现文件，包含卡牌的基础功能实现
-
+#pragma execution_character_set("utf-8")
 #include "Card.h"
 #include "Manager/GameManager.h"
 #include "Animation/AnimationManager.h"
@@ -12,40 +12,19 @@
 // @param name: 卡牌名称
 // @return: 返回创建的卡牌指针，失败返回nullptr
 Card* Card::create(int id, const std::string& name) {
-    CCLOG("Creating card: id=%d, name=%s", id, name.c_str());
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::DEBUG, "Creating Card instance");
     
-    try {
-        Card* card = new (std::nothrow) Card();
-        if (!card) {
-            CCLOG("Failed to allocate Card");
-            return nullptr;
-        }
-        
-        CCLOG("Card allocated, initializing Sprite");
-        if (!card->Sprite::init()) {
-            CCLOG("Sprite initialization failed");
-            CC_SAFE_DELETE(card);
-            return nullptr;
-        }
-        
-        CCLOG("Sprite initialized, initializing Card");
-        if (!card->init(id, name)) {
-            CCLOG("Card initialization failed");
-            CC_SAFE_DELETE(card);
-            return nullptr;
-        }
-        
-        CCLOG("Card initialized successfully");
+    Card* card = new (std::nothrow) Card();
+    if (card && card->init(id, name)) {
         card->autorelease();
+        logger->log(LogLevel::DEBUG, "Card created successfully");
         return card;
-        
-    } catch (const std::exception& e) {
-        CCLOG("Exception in Card::create: %s", e.what());
-        return nullptr;
-    } catch (...) {
-        CCLOG("Unknown exception in Card::create");
-        return nullptr;
     }
+    
+    logger->log(LogLevel::ERR, "Failed to create Card");
+    CC_SAFE_DELETE(card);
+    return nullptr;
 }
 
 // 初始化卡牌
@@ -53,47 +32,81 @@ Card* Card::create(int id, const std::string& name) {
 // @param name: 卡牌名称
 // @return: 初始化成功返回true，失败返回false
 bool Card::init(int id, const std::string& name) {
-    // 不需要再调用 Sprite::init()，因为在 create 中已经调用过了
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::DEBUG, "Starting Card base class initialization");
+    
+    if (!Node::init()) {
+        logger->log(LogLevel::ERR, "Node::init() failed");
+        return false;
+    }
+    
+    logger->log(LogLevel::DEBUG, "Setting basic properties");
+    
     _id = id;
-    _cardName = name;
-    _isPlayable = false;
-    _isSelected = false;
-    _hasEffect = false;
-    _owner = nullptr;
-    _health = 0;
-    _maxHealth = 0;
-
+    _name = name;
+    
     // 设置默认大小
-    this->setContentSize(Size(180, 250));  // 设置一个合适的卡牌大小
-
-    // 初始化UI组件
-    initUI();
-
+    this->setContentSize(Size(90, 120));
+    
+    logger->log(LogLevel::DEBUG, "Initializing UI components");
+    
+    try {
+        // 初始化UI组件
+        initUI();
+        logger->log(LogLevel::DEBUG, "UI initialization complete");
+    } catch (const std::exception& e) {
+        logger->log(LogLevel::ERR, "Exception in UI initialization: " + std::string(e.what()));
+        return false;
+    } catch (...) {
+        logger->log(LogLevel::ERR, "Unknown exception in UI initialization");
+        return false;
+    }
+    
+    logger->log(LogLevel::DEBUG, "Card base class initialization complete");
     return true;
 }
 
 // 初始化卡牌UI元素
 void Card::initUI() {
-    // 创建并设置卡牌名称标签
-    _nameLabel = Label::createWithTTF(_cardName, "fonts/arial.ttf", 24);
-    if (_nameLabel) {
-        _nameLabel->setPosition(Vec2(this->getContentSize().width / 2,
-            this->getContentSize().height - 30));
-        this->addChild(_nameLabel);
-    }
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::DEBUG, "Starting Card UI initialization");
+    
+    try {
+        // 创建并设置卡牌名称标签
+        _nameLabel = Label::createWithTTF(_name, "fonts/arial.ttf", 24);
+        if (_nameLabel) {
+            _nameLabel->setPosition(Vec2(this->getContentSize().width / 2,
+                this->getContentSize().height - 30));
+            this->addChild(_nameLabel);
+            logger->log(LogLevel::DEBUG, "Name label created and added");
+        } else {
+            logger->log(LogLevel::WARNING, "Failed to create name label");
+        }
 
-    // 创建并设置法力值消耗标签
-    _costLabel = Label::createWithTTF(std::to_string(_cost), "fonts/arial.ttf", 32);
-    if (_costLabel) {
-        _costLabel->setPosition(Vec2(30, this->getContentSize().height - 30));
-        this->addChild(_costLabel);
-    }
+        // 创建并设置法力值消耗标签
+        _costLabel = Label::createWithTTF(std::to_string(_cost), "fonts/arial.ttf", 32);
+        if (_costLabel) {
+            _costLabel->setPosition(Vec2(30, this->getContentSize().height - 30));
+            this->addChild(_costLabel);
+            logger->log(LogLevel::DEBUG, "Cost label created and added");
+        } else {
+            logger->log(LogLevel::WARNING, "Failed to create cost label");
+        }
 
-    // 创建并设置卡牌描述标签
-    _descriptionLabel = Label::createWithTTF(_description, "fonts/arial.ttf", 18);
-    if (_descriptionLabel) {
-        _descriptionLabel->setPosition(Vec2(this->getContentSize().width / 2, 50));
-        this->addChild(_descriptionLabel);
+        // 创建并设置卡牌描述标签
+        _descriptionLabel = Label::createWithTTF(_description, "fonts/arial.ttf", 18);
+        if (_descriptionLabel) {
+            _descriptionLabel->setPosition(Vec2(this->getContentSize().width / 2, 50));
+            this->addChild(_descriptionLabel);
+            logger->log(LogLevel::DEBUG, "Description label created and added");
+        } else {
+            logger->log(LogLevel::WARNING, "Failed to create description label");
+        }
+        
+        logger->log(LogLevel::DEBUG, "Card UI initialization complete");
+    } catch (const std::exception& e) {
+        logger->log(LogLevel::ERR, "Exception in Card UI initialization: " + std::string(e.what()));
+        throw;
     }
 }
 
@@ -175,17 +188,11 @@ void Card::onDraw() {
         // 可以添加抽牌动画或效果
         AnimationManager::getInstance()->playCardDrawAnimation(this);
 
-        // 触发抽��相关效果
+        // 触发抽牌相关效果
         triggerEffects();
     }
 }
 
-bool Card::isActive() const {
-    // 检查卡牌是否处于可用状态
-    return getIsActive() &&
-        !getIsFrozen() &&
-        !getIsSilenced();
-}
 void Card::onTouchMoved(Touch* touch, Event* event) {
     if (_isSelected) {
         // 更新卡牌位置
@@ -244,5 +251,19 @@ void Card::addEffect(std::shared_ptr<IEffect> effect) {
     if (effect) {
         effect->setOwner(this);
         _effects.push_back(effect);
+    }
+}
+
+void Card::takeDamage(int amount) {
+    if (amount <= 0) return;  // 伤害必须为正数
+    
+    // 计算新的生命值
+    int newHealth = _health - amount;
+    setHealth(std::max(0, newHealth));  // 生命值不能低于0
+    
+    // 如果生命值降到0或以下，卡牌死亡
+    if (_health <= 0) {
+        // 通知游戏管理器处理卡牌死亡
+        GameManager::getInstance()->handleCardDeath(this);
     }
 }

@@ -1,6 +1,6 @@
 #include "Audio/AudioManager.h"
 #include "Utils/GameLogger.h"
-
+#pragma execution_character_set("utf-8")
 AudioManager* AudioManager::_instance = nullptr;
 
 AudioManager* AudioManager::getInstance() {
@@ -61,7 +61,7 @@ int AudioManager::play2d(const std::string& filename, bool loop, float volume) {
     int audioId = cocos2d::experimental::AudioEngine::play2d(filename, loop, adjustedVolume);
 
     if (audioId != -1) {
-        // Ê¹ÓÃ _effectsMap ¶ø²»ÊÇ _audioCache
+        // ä½¿ç”¨ _effectsMap è€Œä¸æ˜¯ _audioCache
         getInstance()->_effectsMap[filename] = audioId;
     }
 

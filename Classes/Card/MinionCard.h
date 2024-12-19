@@ -1,6 +1,6 @@
 #ifndef __MINION_CARD_H__
 #define __MINION_CARD_H__
-
+#pragma execution_character_set("utf-8")
 #include "Card.h"
 
 /**
@@ -82,7 +82,7 @@ protected:
     /**
      * @brief 初始化UI组件
      */
-    virtual void initUI() override;
+    virtual void initUI();
 
     /**
      * @brief 更新UI显示

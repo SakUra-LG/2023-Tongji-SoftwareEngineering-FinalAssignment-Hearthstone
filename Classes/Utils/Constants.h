@@ -1,30 +1,30 @@
  
 #ifndef __CONSTANTS_H__
 #define __CONSTANTS_H__
-
+#pragma execution_character_set("utf-8")
 namespace GameConstants {
-    // ÓÎÏ·¹æÔò
-    const int MAX_HAND_SIZE = 10;        // ×î´óÊÖÅÆÊıÁ¿
-    const int MAX_FIELD_SIZE = 7;        // ³¡ÉÏ×î´óËæ´ÓÊıÁ¿
-    const int MAX_MANA = 10;             // ×î´ó·¨Á¦Öµ
-    const int STARTING_HAND_SIZE = 3;    // ÆğÊ¼ÊÖÅÆÊıÁ¿
-    const int TURN_TIME_LIMIT = 90;      // »ØºÏÊ±¼äÏŞÖÆ£¨Ãë£©
+    // æ¸¸æˆè§„åˆ™
+    const int MAX_HAND_SIZE = 10;        // æœ€å¤§æ‰‹ç‰Œæ•°é‡
+    const int MAX_FIELD_SIZE = 7;        // åœºä¸Šæœ€å¤§éšä»æ•°é‡
+    const int MAX_MANA = 10;             // æœ€å¤§æ³•åŠ›å€¼
+    const int STARTING_HAND_SIZE = 3;    // èµ·å§‹æ‰‹ç‰Œæ•°é‡
+    const int TURN_TIME_LIMIT = 90;      // å›åˆæ—¶é—´é™åˆ¶ï¼ˆç§’ï¼‰
 
-    // UI³£Á¿
-    const float CARD_SCALE = 0.8f;       // ¿¨ÅÆËõ·Å±ÈÀı
-    const float CARD_SPACING = 80.0f;    // ¿¨ÅÆ¼ä¾à
-    const float FIELD_SPACING = 100.0f;  // ³¡µØ¼ä¾à
-    const float ANIMATION_DURATION = 0.3f;// ¶¯»­³ÖĞøÊ±¼ä
+    // UIå¸¸é‡
+    const float CARD_SCALE = 0.8f;       // å¡ç‰Œç¼©æ”¾æ¯”ä¾‹
+    const float CARD_SPACING = 80.0f;    // å¡ç‰Œé—´è·
+    const float FIELD_SPACING = 100.0f;  // åœºåœ°é—´è·
+    const float ANIMATION_DURATION = 0.3f;// åŠ¨ç”»æŒç»­æ—¶é—´
 
-    // ÍøÂç³£Á¿
-    const int RECONNECT_ATTEMPTS = 3;     // ÖØÁ¬³¢ÊÔ´ÎÊı
-    const float RECONNECT_DELAY = 2.0f;   // ÖØÁ¬ÑÓ³ÙÊ±¼ä
-    const int NETWORK_TIMEOUT = 5000;     // ÍøÂç³¬Ê±Ê±¼ä£¨ºÁÃë£©
+    // ç½‘ç»œå¸¸é‡
+    const int RECONNECT_ATTEMPTS = 3;     // é‡è¿å°è¯•æ¬¡æ•°
+    const float RECONNECT_DELAY = 2.0f;   // é‡è¿å»¶è¿Ÿæ—¶é—´
+    const int NETWORK_TIMEOUT = 5000;     // ç½‘ç»œè¶…æ—¶æ—¶é—´ï¼ˆæ¯«ç§’ï¼‰
 
-    // ×ÊÔ´Â·¾¶
+    // èµ„æºè·¯å¾„
     namespace Resources {
-        const char* const CARD_FRAME = "cards/frame.png";    // ¿¨ÅÆ¿ò¼ÜÍ¼Æ¬Â·¾¶
-        const char* const CARD_BACK = "cards/card_back.png"; // ¿¨ÅÆ±³ÃæÍ¼Æ¬Â·¾¶
+        const char* const CARD_FRAME = "cards/frame.png";    // å¡ç‰Œæ¡†æ¶å›¾ç‰‡è·¯å¾„
+        const char* const CARD_BACK = "cards/card_back.png"; // å¡ç‰ŒèƒŒé¢å›¾ç‰‡è·¯å¾„
         const char* const BUTTON_NORMAL = "buttons/button_normal.png";
         const char* const BUTTON_PRESSED = "buttons/button_pressed.png";
         const char* const BACKGROUND = "backgrounds/game_bg.png";
@@ -34,35 +34,35 @@ namespace GameConstants {
         const char* const FONT_PATH = "fonts/arial.ttf";
     }
 
-    // ¶¯»­³£Á¿
+    // åŠ¨ç”»å¸¸é‡
     namespace Animation {
-        const float CARD_DRAW_DURATION = 0.5f;  // ³é¿¨¶¯»­Ê±¼ä
-        const float CARD_PLAY_DURATION = 0.3f;  // ³öÅÆ¶¯»­Ê±¼ä
+        const float CARD_DRAW_DURATION = 0.5f;  // æŠ½å¡åŠ¨ç”»æ—¶é—´
+        const float CARD_PLAY_DURATION = 0.3f;  // å‡ºç‰ŒåŠ¨ç”»æ—¶é—´
         const float ATTACK_DURATION = 0.4f;
         const float DAMAGE_DURATION = 0.2f;
         const float HEAL_DURATION = 0.3f;
     }
 
-    // ÒôĞ§Ãû³Æ
+    // éŸ³æ•ˆåç§°
     namespace Sound {
-        const char* const CARD_DRAW = "sounds/card_draw.mp3";  // ³é¿¨ÒôĞ§
-        const char* const CARD_PLAY = "sounds/card_play.mp3";  // ³öÅÆÒôĞ§
+        const char* const CARD_DRAW = "sounds/card_draw.mp3";  // æŠ½å¡éŸ³æ•ˆ
+        const char* const CARD_PLAY = "sounds/card_play.mp3";  // å‡ºç‰ŒéŸ³æ•ˆ
         const char* const ATTACK = "sounds/attack.mp3";
         const char* const DAMAGE = "sounds/damage.mp3";
         const char* const VICTORY = "sounds/victory.mp3";
         const char* const DEFEAT = "sounds/defeat.mp3";
-        // UIÒôĞ§
-        const char* const MAIN_MENU_THREEBUTTON_CLICK = "sounds/Main_Menu_ThreeButton_Click.ogg";    // Ìí¼Ó°´Å¥µã»÷ÒôĞ§
-        const char* const MAIN_MENU_BUTTON_HOVER = "sounds/Main_Menu_Botton_Over.ogg";    // ¿ÉÑ¡£ºÌí¼Ó°´Å¥ĞüÍ£ÒôĞ§
-        const char* const CHANGE_SCENE_FROM_MAIN = "sounds/Change_Scene_From_Main.ogg";    // ´ÓÖ÷²Ëµ¥ÇĞ»»»­ÃæÒôĞ§
-        const char* const ENTER_MYCOLLECTION = "sounds/Enter_MyCollection.ogg";    // ½øÈëÎÒµÄÊÕ²ØÒôĞ§
-        const char* const CHANGE_HELP_SCENE = "sounds/Enter_Help.ogg";    // ½øÈëÓÒÏÂ½Ç³İÂÖ
-        const char* const MENU_OPEN = "sounds/menu_open.mp3";         // ¿ÉÑ¡£ºÌí¼Ó²Ëµ¥´ò¿ªÒôĞ§
-        const char* const MENU_CLOSE = "sounds/menu_close.mp3";       // ¿ÉÑ¡£ºÌí¼Ó²Ëµ¥¹Ø±ÕÒôĞ§
+        // UIéŸ³æ•ˆ
+        const char* const MAIN_MENU_THREEBUTTON_CLICK = "sounds/Main_Menu_ThreeButton_Click.ogg";    // æ·»åŠ æŒ‰é’®ç‚¹å‡»éŸ³æ•ˆ
+        const char* const MAIN_MENU_BUTTON_HOVER = "sounds/Main_Menu_Botton_Over.ogg";    // å¯é€‰ï¼šæ·»åŠ æŒ‰é’®æ‚¬åœéŸ³æ•ˆ
+        const char* const CHANGE_SCENE_FROM_MAIN = "sounds/Change_Scene_From_Main.ogg";    // ä»ä¸»èœå•åˆ‡æ¢ç”»é¢éŸ³æ•ˆ
+        const char* const ENTER_MYCOLLECTION = "sounds/Enter_MyCollection.ogg";    // è¿›å…¥æˆ‘çš„æ”¶è—éŸ³æ•ˆ
+        const char* const CHANGE_HELP_SCENE = "sounds/Enter_Help.ogg";    // è¿›å…¥å³ä¸‹è§’é½¿è½®
+        const char* const MENU_OPEN = "sounds/menu_open.mp3";         // å¯é€‰ï¼šæ·»åŠ èœå•æ‰“å¼€éŸ³æ•ˆ
+        const char* const MENU_CLOSE = "sounds/menu_close.mp3";       // å¯é€‰ï¼šæ·»åŠ èœå•å…³é—­éŸ³æ•ˆ
 
-        // ±³¾°ÒôÀÖ
-        const char* const MENU_BGM = "music/menu_bgm.mp3";           // Ö÷²Ëµ¥±³¾°ÒôÀÖ
-        const char* const GAME_BGM = "music/game_bgm.mp3";           // ÓÎÏ·±³¾°ÒôÀÖ
+        // èƒŒæ™¯éŸ³ä¹
+        const char* const MENU_BGM = "music/menu_bgm.mp3";           // ä¸»èœå•èƒŒæ™¯éŸ³ä¹
+        const char* const GAME_BGM = "music/game_bgm.mp3";           // æ¸¸æˆèƒŒæ™¯éŸ³ä¹
     }
 }
 

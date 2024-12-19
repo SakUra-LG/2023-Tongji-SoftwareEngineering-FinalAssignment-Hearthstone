@@ -1,6 +1,6 @@
 #ifndef __I_EFFECT_H__
 #define __I_EFFECT_H__
-
+#pragma execution_character_set("utf-8")
 class Card; // 前向声明
 
 /**
@@ -75,7 +75,7 @@ public:
     Card* getOwner() const { return _owner; }
 
 protected:
-    Card* _owner;  // 效果所属的卡牌指针
+    Card* _owner = nullptr;  // 初始化为 nullptr
 };
 
 #endif // __I_EFFECT_H__ 

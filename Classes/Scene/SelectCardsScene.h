@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "Card/DeckManager.h"
 #include "GameScene.h"
-
+#pragma execution_character_set("utf-8")
 class SelectCardsScene : public cocos2d::Scene {
 public:
     static cocos2d::Scene* createScene();

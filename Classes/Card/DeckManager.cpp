@@ -1,5 +1,6 @@
+#include "CardFactory.h"
 #include "DeckManager.h"
-
+#pragma execution_character_set("utf-8")
 DeckManager* DeckManager::_instance = nullptr;
 
 DeckManager* DeckManager::getInstance() {
@@ -12,11 +13,16 @@ DeckManager* DeckManager::getInstance() {
 Deck* DeckManager::createQuestDemonHunterDeck() {
     auto deck = Deck::create("Quest Demon Hunter");
     if (deck) {
-        // 添加任务瞎卡组的卡牌
-        deck->addCard(1001, 2);  // 二段跳 x2
-        deck->addCard(1002, 2);  // 伊利达雷研习 x2
-        deck->addCard(1003, 2);  // 凶猛的外来者 x2
-        // ... 继续添加其他卡牌
+        // 从 CardFactory 获取卡牌信息
+        auto factory = CardFactory::getInstance();
+        const auto& deck1 = factory->getDeck1();
+        
+        // 根据 CardFactory 中设置的数量添加卡牌
+        for (const auto& card : deck1) {
+            if (card->getCount() > 0) {
+                deck->addCard(card->getId(), card->getCount());
+            }
+        }
     }
     return deck;
 }
@@ -24,11 +30,31 @@ Deck* DeckManager::createQuestDemonHunterDeck() {
 Deck* DeckManager::createRainbowDKDeck() {
     auto deck = Deck::create("Rainbow DK");
     if (deck) {
-        // 添加彩虹DK卡组的卡牌
-        deck->addCard(2001, 2);  // 奇迹推销员 x2
-        deck->addCard(2002, 2);  // 黑暗符文 x2
-        deck->addCard(2003, 2);  // 冰霜打击 x2
-        // ... 继续添加其他卡牌
+        // 从 CardFactory 获取卡牌信息
+        auto factory = CardFactory::getInstance();
+        const auto& deck2 = factory->getDeck2();
+        
+        // 根据 CardFactory 中设置的数量添加卡牌
+        for (const auto& card : deck2) {
+            if (card->getCount() > 0) {
+                deck->addCard(card->getId(), card->getCount());
+            }
+        }
+    }
+    return deck;
+}
+
+Deck* DeckManager::createDeckFromTemplate(const std::vector<Card*>& templateDeck) {
+    auto deck = Deck::create(templateDeck[0]->getId() / 1000 == 1 ? 
+        "Quest Demon Hunter" : "Rainbow DK");
+    
+    if (deck) {
+        // 直接根据模板卡组添加卡牌
+        for (const auto& card : templateDeck) {
+            if (card && card->getCount() > 0) {
+                deck->addCard(card->getId(), card->getCount());
+            }
+        }
     }
     return deck;
 } 

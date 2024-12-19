@@ -1,6 +1,6 @@
 #ifndef __ANIMATION_MANAGER_H__
 #define __ANIMATION_MANAGER_H__
-
+#pragma execution_character_set("utf-8")
 #include "cocos2d.h"
 
 class Card;
@@ -9,21 +9,21 @@ class AnimationManager {
 public:
     static AnimationManager* getInstance();
 
-    // ¿¨ÅÆ¶¯»­
+    // å¡ç‰ŒåŠ¨ç”»
     void playCardAnimation(Card* card);
-    void playAttackAnimation(Card* attacker, Card* target);  // ¸ÄÎª playAttackAnimation
-    void deathAnimation(Card* card);// ¿¨ÅÆËÀÍö¶¯»­
+    void playAttackAnimation(Card* attacker, Card* target);  // æ”¹ä¸º playAttackAnimation
+    void deathAnimation(Card* card);// å¡ç‰Œæ­»äº¡åŠ¨ç”»
 
-    // ÌØĞ§¶¯»­
-    void playDamageAnimation(Card* target, int damage);  // Ìí¼ÓÉËº¦¶¯»­·½·¨
-    void playHealAnimation(Card* target, int healing);  // Ìí¼ÓÖÎÁÆ¶¯»­·½·¨
+    // ç‰¹æ•ˆåŠ¨ç”»
+    void playDamageAnimation(Card* target, int damage);  // æ·»åŠ ä¼¤å®³åŠ¨ç”»æ–¹æ³•
+    void playHealAnimation(Card* target, int healing);  // æ·»åŠ æ²»ç–—åŠ¨ç”»æ–¹æ³•
     void playParticleEffect(const std::string& effectName, const cocos2d::Vec2& position);
     void playSpellAnimation(const std::string& spellName, Card* target);
     void playCardDrawAnimation(Card* card);
-    // ¶¯»­¿ØÖÆ
-    void pauseAllAnimations();// ÔİÍ£ËùÓĞ¶¯»­
-    void resumeAllAnimations();// »Ö¸´ËùÓĞ¶¯»­
-    bool isAnimating() const;// ¼ì²éÊÇ·ñÓĞ¶¯»­ÕıÔÚ²¥·Å
+    // åŠ¨ç”»æ§åˆ¶
+    void pauseAllAnimations();// æš‚åœæ‰€æœ‰åŠ¨ç”»
+    void resumeAllAnimations();// æ¢å¤æ‰€æœ‰åŠ¨ç”»
+    bool isAnimating() const;// æ£€æŸ¥æ˜¯å¦æœ‰åŠ¨ç”»æ­£åœ¨æ’­æ”¾
 
 private:
     AnimationManager();
@@ -32,7 +32,7 @@ private:
     bool _isAnimating;
     std::vector<cocos2d::Action*> _currentAnimations;
 
-    void onAnimationComplete(cocos2d::Node* target);// ¶¯»­Íê³É»Øµ÷
+    void onAnimationComplete(cocos2d::Node* target);// åŠ¨ç”»å®Œæˆå›è°ƒ
 };
 
 #endif // __ANIMATION_MANAGER_H__

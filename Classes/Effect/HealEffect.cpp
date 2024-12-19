@@ -1,107 +1,106 @@
 // HealEffect.cpp
-// ÖÎÁÆÐ§¹ûµÄÊµÏÖÎÄ¼þ£¬°üº¬µ¥ÌåÖÎÁÆºÍÈºÌåÖÎÁÆ¹¦ÄÜ
-
+// æ²»ç–—æ•ˆæžœçš„å®žçŽ°æ–‡ä»¶ï¼ŒåŒ…å«å•ä½“æ²»ç–—å’Œç¾¤ä½“æ²»ç–—åŠŸèƒ½
+#pragma execution_character_set("utf-8")
 #include "HealEffect.h"
 #include "Card/Card.h"
 #include "Manager/GameManager.h"
 #include "Animation/AnimationManager.h"
 #include"Player/Player.h"
 #include"Card/MinionCard.h"
-// ¹¹Ôìº¯Êý£º³õÊ¼»¯ÖÎÁÆÐ§¹û
-// @param healing: ÖÎÁÆÁ¿
-// @param targetAll: ÊÇ·ñÎªÈºÌåÖÎÁÆ
+// æž„é€ å‡½æ•°ï¼šåˆå§‹åŒ–æ²»ç–—æ•ˆæžœ
+// @param healing: æ²»ç–—é‡
+// @param targetAll: æ˜¯å¦ä¸ºç¾¤ä½“æ²»ç–—
 HealEffect::HealEffect(int healing, bool targetAll)
-    : _healing(healing)      // ÉèÖÃÖÎÁÆÁ¿
-    , _targetAll(targetAll)  // ÉèÖÃÊÇ·ñÈºÌåÖÎÁÆ
+    : _healing(healing)      // è®¾ç½®æ²»ç–—é‡
+    , _targetAll(targetAll)  // è®¾ç½®æ˜¯å¦ç¾¤ä½“æ²»ç–—
 {
-    // ¹¹Ôìº¯ÊýÌåÎª¿Õ£¬Ê¹ÓÃ³õÊ¼»¯ÁÐ±íÍê³É³õÊ¼»¯
+    // æž„é€ å‡½æ•°ä½“ä¸ºç©ºï¼Œä½¿ç”¨åˆå§‹åŒ–åˆ—è¡¨å®Œæˆåˆå§‹åŒ–
 }
 
-// Ð§¹û¼¤»îÊ±µÄ´¦Àíº¯Êý
-// ¸ù¾ÝÐ§¹ûÀàÐÍ£¨ÈºÌå/µ¥Ìå£©Ö´ÐÐÏàÓ¦µÄÖÎÁÆÂß¼­
+// æ•ˆæžœæ¿€æ´»æ—¶çš„å¤„ç†å‡½æ•°
+// æ ¹æ®æ•ˆæžœç±»åž‹ï¼ˆç¾¤ä½“/å•ä½“ï¼‰æ‰§è¡Œç›¸åº”çš„æ²»ç–—é€»è¾‘
 void HealEffect::onActivate() {
     if (_targetAll) {
-        // Èç¹ûÊÇÈºÌåÖÎÁÆ£¬µ÷ÓÃÈºÌåÖÎÁÆº¯Êý
+        // å¦‚æžœæ˜¯ç¾¤ä½“æ²»ç–—ï¼Œè°ƒç”¨ç¾¤ä½“æ²»ç–—å‡½æ•°
         healAllTargets();
     }
     else {
-        // µ¥ÌåÖÎÁÆ£º»ñÈ¡µ±Ç°Ñ¡ÖÐµÄÄ¿±ê
+        // å•ä½“æ²»ç–—ï¼šèŽ·å–å½“å‰é€‰ä¸­çš„ç›®æ ‡
         Card* target = GameManager::getInstance()->getSelectedTarget();
         if (target) {
-            // Èç¹ûÓÐÓÐÐ§Ä¿±ê£¬½øÐÐÖÎÁÆ
+            // å¦‚æžœæœ‰æœ‰æ•ˆç›®æ ‡ï¼Œè¿›è¡Œæ²»ç–—
             healTarget(target);
         }
     }
 }
 
-// Ð§¹ûÍ£ÓÃÊ±µÄ´¦Àíº¯Êý
-// ÓÃÓÚÇåÀíÐ§¹ûÏà¹ØµÄ×ÊÔ´ºÍ×´Ì¬
+// æ•ˆæžœåœç”¨æ—¶çš„å¤„ç†å‡½æ•°
+// ç”¨äºŽæ¸…ç†æ•ˆæžœç›¸å…³çš„èµ„æºå’ŒçŠ¶æ€
 void HealEffect::onDeactivate() {
-    // µ±Ç°°æ±¾ÎÞÐèÇåÀí×ÊÔ´
-    // Ô¤Áô½Ó¿ÚÒÔ¹©ºóÐøÀ©Õ¹
+    // å½“å‰ç‰ˆæœ¬æ— éœ€æ¸…ç†èµ„æº
+    // é¢„ç•™æŽ¥å£ä»¥ä¾›åŽç»­æ‰©å±•
 }
 
-// ¼ì²éÐ§¹ûÊÇ·ñ¿ÉÒÔ±»¼¤»î
-// @return: ·µ»ØÊÇ·ñ¿ÉÒÔ¼¤»îÐ§¹û
+// æ£€æŸ¥æ•ˆæžœæ˜¯å¦å¯ä»¥è¢«æ¿€æ´»
+// @return: è¿”å›žæ˜¯å¦å¯ä»¥æ¿€æ´»æ•ˆæžœ
 bool HealEffect::canActivate() {
-    // ¼ì²éÐ§¹ûÊÇ·ñÓÐËùÊô¿¨ÅÆ
     if (!_owner) return false;
-
+    
     if (_targetAll) {
-        // ÈºÌåÖÎÁÆ×ÜÊÇ¿ÉÒÔÊÍ·Å
-        // ¼´Ê¹³¡ÉÏÃ»ÓÐÊÜÉËµÄËæ´Ó£¬Ò²¿ÉÒÔÊÍ·Å¼¼ÄÜ
         return true;
     }
     else {
-        // »ñÈ¡µ±Ç°Ñ¡ÖÐµÄÄ¿±ê
         Card* target = GameManager::getInstance()->getSelectedTarget();
-        // ¼ì²éÄ¿±êÊÇ·ñ´æÔÚÇÒÉúÃüÖµÎ´Âú
         return target && target->getHealth() < target->getMaxHealth();
     }
 }
 
-// ¶Ôµ¥¸öÄ¿±ê½øÐÐÖÎÁÆ
-// @param target: ÖÎÁÆÄ¿±ê
+bool HealEffect::canActivate(Card* target) const {
+    return target && target->getType() == CardType::MINION;
+}
+
+// å¯¹å•ä¸ªç›®æ ‡è¿›è¡Œæ²»ç–—
+// @param target: æ²»ç–—ç›®æ ‡
 void HealEffect::healTarget(Card* target) {
-    // ¿ÕÖ¸Õë¼ì²é
+    // ç©ºæŒ‡é’ˆæ£€æŸ¥
     if (!target) return;
 
-    // ²¥·ÅÖÎÁÆ¶¯»­Ð§¹û
+    // æ’­æ”¾æ²»ç–—åŠ¨ç”»æ•ˆæžœ
     AnimationManager::getInstance()->playHealAnimation(target, _healing);
 
-    // ¼ì²éÄ¿±êÊÇ·ñÎªËæ´Ó¿¨ÅÆ
+    // æ£€æŸ¥ç›®æ ‡æ˜¯å¦ä¸ºéšä»Žå¡ç‰Œ
     if (target->getCardType() == CardType::MINION) {
-        // ½«Ä¿±ê×ª»»ÎªËæ´Ó¿¨ÅÆÀàÐÍ²¢½øÐÐÖÎÁÆ
-        // Ê¹ÓÃ dynamic_cast È·±£ÀàÐÍ×ª»»µÄ°²È«ÐÔ
+        // å°†ç›®æ ‡è½¬æ¢ä¸ºéšä»Žå¡ç‰Œç±»åž‹å¹¶è¿›è¡Œæ²»ç–—
+        // ä½¿ç”¨ dynamic_cast ç¡®ä¿ç±»åž‹è½¬æ¢çš„å®‰å…¨æ€§
         dynamic_cast<MinionCard*>(target)->heal(_healing);
     }
 }
 
-// Ö´ÐÐÈºÌåÖÎÁÆÐ§¹û
-// ÖÎÁÆ³¡ÉÏËùÓÐËæ´Ó
+// æ‰§è¡Œç¾¤ä½“æ²»ç–—æ•ˆæžœ
+// æ²»ç–—åœºä¸Šæ‰€æœ‰éšä»Ž
 void HealEffect::healAllTargets() {
-    // »ñÈ¡ÓÎÏ·¹ÜÀíÆ÷ÊµÀý
+    // èŽ·å–æ¸¸æˆç®¡ç†å™¨å®žä¾‹
     auto gameManager = GameManager::getInstance();
 
-    // »ñÈ¡Ë«·½³¡ÉÏµÄËæ´ÓÒýÓÃ
-    // Ê¹ÓÃÒýÓÃ±ÜÃâ²»±ØÒªµÄ¸´ÖÆ
+    // èŽ·å–åŒæ–¹åœºä¸Šçš„éšä»Žå¼•ç”¨
+    // ä½¿ç”¨å¼•ç”¨é¿å…ä¸å¿…è¦çš„å¤åˆ¶
     auto& playerField = gameManager->getCurrentPlayer()->getField();
     auto& opponentField = gameManager->getOpponentPlayer()->getField();
 
-    // ÖÎÁÆ¼º·½³¡ÉÏËùÓÐËæ´Ó
+    // æ²»ç–—å·±æ–¹åœºä¸Šæ‰€æœ‰éšä»Ž
     for (auto minion : playerField) {
         healTarget(minion);
     }
 
-    // ÖÎÁÆ¶Ô·½³¡ÉÏËùÓÐËæ´Ó
+    // æ²»ç–—å¯¹æ–¹åœºä¸Šæ‰€æœ‰éšä»Ž
     for (auto minion : opponentField) {
         healTarget(minion);
     }
 }
 
-/* ¿ÉÄÜµÄÀ©Õ¹£º
-1. Ìí¼ÓÖÎÁÆÄ¿±êµÄ¹ýÂËÌõ¼þ£¨ÈçÖ»ÖÎÁÆÓÑ·½Ëæ´Ó£©
-2. Ìí¼ÓÖÎÁÆÐ§¹ûµÄÐÞÊÎ£¨Èç¹ýÁ¿ÖÎÁÆ×ª»¯Îª»¤¼×£©
-3. Ìí¼ÓÖÎÁÆÐ§¹ûµÄ´¥·¢ÊÂ¼þ£¨ÈçÖÎÁÆºó³éÅÆ£©
-4. Ìí¼ÓÖÎÁÆÁ¿µÄ¼ÆËãÐÞÕý£¨ÈçÊÜÉË¼ÓÉîÐ§¹û£©
+/* å¯èƒ½çš„æ‰©å±•ï¼š
+1. æ·»åŠ æ²»ç–—ç›®æ ‡çš„è¿‡æ»¤æ¡ä»¶ï¼ˆå¦‚åªæ²»ç–—å‹æ–¹éšä»Žï¼‰
+2. æ·»åŠ æ²»ç–—æ•ˆæžœçš„ä¿®é¥°ï¼ˆå¦‚è¿‡é‡æ²»ç–—è½¬åŒ–ä¸ºæŠ¤ç”²ï¼‰
+3. æ·»åŠ æ²»ç–—æ•ˆæžœçš„è§¦å‘äº‹ä»¶ï¼ˆå¦‚æ²»ç–—åŽæŠ½ç‰Œï¼‰
+4. æ·»åŠ æ²»ç–—é‡çš„è®¡ç®—ä¿®æ­£ï¼ˆå¦‚å—ä¼¤åŠ æ·±æ•ˆæžœï¼‰
 */

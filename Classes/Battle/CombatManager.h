@@ -1,6 +1,6 @@
 #ifndef __COMBAT_MANAGER_H__
 #define __COMBAT_MANAGER_H__
-
+#pragma execution_character_set("utf-8")
 #include "cocos2d.h"
 
 class Card;
@@ -10,13 +10,13 @@ class CombatManager {
 public:
     static CombatManager* getInstance();
 
-    // Õ½¶·Ïà¹Ø
+    // æˆ˜æ–—ç›¸å…³
     bool canAttack(Card* attacker, Card* target);
     void performAttack(Card* attacker, Card* target);
     void dealDamage(Card* target, int amount);
     void healTarget(Card* target, int amount);
 
-    // ×´Ì¬¼ì²é
+    // çŠ¶æ€æ£€æŸ¥
     void checkDeaths();
     bool isValidTarget(Card* target);
 
@@ -27,7 +27,7 @@ private:
     void resolveEffects(Card* attacker, Card* target);
     void handleDeath(Card* card);
 
-    std::vector<Card*> _deathQueue;// ÓÃÓÚ×·×ÙËÀÍöµÄ¿¨ÅÆ
+    std::vector<Card*> _deathQueue;// ç”¨äºè¿½è¸ªæ­»äº¡çš„å¡ç‰Œ
 };
 
 #endif // __COMBAT_MANAGER_H__

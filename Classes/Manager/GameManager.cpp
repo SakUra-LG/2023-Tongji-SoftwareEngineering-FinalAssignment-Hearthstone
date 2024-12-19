@@ -9,10 +9,12 @@
 #include <queue>
 #include "cocos2d.h"
 #include"Card/MinionCard.h"
+#pragma execution_character_set("utf-8")
 GameManager* GameManager::_instance = nullptr;
 
 GameManager* GameManager::getInstance() {
-    if (!_instance) {
+    if (!_instance) 
+    {
         _instance = new GameManager();
     }
     return _instance;
@@ -244,4 +246,26 @@ void GameManager::discardCard(Card* card) {
     // 使用 GameLogger
     GameLogger::getInstance()->log(LogLevel::INFO,
         "Card discarded: " + card->getCardName());
+}
+
+void GameManager::handleCardDeath(Card* card) {
+    if (!card) return;
+    
+    // 获取卡牌所属玩家
+    Player* owner = card->getOwner();
+    if (!owner) return;
+    
+    // 从场上移除卡牌
+    owner->removeFromField(card);
+    
+    // 触发死亡相关效果
+    const auto& effects = card->getEffects();
+    for (const auto& effect : effects) {
+        if (effect->getTriggerType() == TriggerType::ON_DEATH) {
+            effect->onActivate();
+        }
+    }
+    
+    // 通知其他系统卡牌死亡
+    // TODO: 可以添加观察者模式来处理卡牌死亡事件
 }

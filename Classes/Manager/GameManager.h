@@ -1,6 +1,6 @@
 #ifndef __GAME_MANAGER_H__
 #define __GAME_MANAGER_H__
-
+#pragma execution_character_set("utf-8")
 #include "cocos2d.h"
 #include <vector>
 #include <queue>
@@ -53,6 +53,9 @@ public:
     void processGameAction(const GameAction& action);
     void checkGameState();
     bool isGameOver() const { return _gameState == GameState::GAME_OVER; }
+
+    // 处理卡牌死亡
+    void handleCardDeath(Card* card);
 
 private:
     GameManager();

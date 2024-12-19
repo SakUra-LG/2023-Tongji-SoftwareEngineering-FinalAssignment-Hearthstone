@@ -1,7 +1,7 @@
 #include "TurnSystem.h"
 #include "Manager/GameManager.h"
 #include "Effect/EffectManager.h"
-
+#pragma execution_character_set("utf-8")
 TurnSystem* TurnSystem::_instance = nullptr;
 
 TurnSystem* TurnSystem::getInstance() {
@@ -21,28 +21,28 @@ TurnSystem::TurnSystem()
 void TurnSystem::startTurn() {
     _turnCount++;
 
-    // Ôö¼Ó·¨Á¦Ë®¾§
+    // å¢åŠ æ³•åŠ›æ°´æ™¶
     if (_maxMana < 10) {
         addManaSlot();
     }
     refillMana();
 
-    // ³éÒ»ÕÅÅÆ
+    // æŠ½ä¸€å¼ ç‰Œ
     auto player = GameManager::getInstance()->getCurrentPlayer();
     GameManager::getInstance()->drawCard(player);
 
-    // ´¥·¢»ØºÏ¿ªÊ¼Ğ§¹û
+    // è§¦å‘å›åˆå¼€å§‹æ•ˆæœ
     EffectManager::getInstance()->triggerEffects(TriggerType::START_OF_TURN);
 }
 
 void TurnSystem::endTurn() {
-    // ´¥·¢»ØºÏ½áÊøĞ§¹û
+    // è§¦å‘å›åˆç»“æŸæ•ˆæœ
     EffectManager::getInstance()->triggerEffects(TriggerType::END_OF_TURN);
 
-    // ÇĞ»»Íæ¼Ò
+    // åˆ‡æ¢ç©å®¶
     _isPlayerTurn = !_isPlayerTurn;
 
-    // ¿ªÊ¼ĞÂ»ØºÏ
+    // å¼€å§‹æ–°å›åˆ
     startTurn();
 }
 
