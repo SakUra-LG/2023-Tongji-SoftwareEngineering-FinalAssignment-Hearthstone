@@ -35,25 +35,21 @@ int Deck::getCardCount(int cardId) const {
     return it != _cardCounts.end() ? it->second : 0;
 }
 
-std::vector<Card*> Deck::getCards() const {
-    std::vector<Card*> cards;
-    auto factory = CardFactory::getInstance();
-    
-    for (const auto& pair : _cardCounts) {
-        for (int i = 0; i < pair.second; ++i) {
-            auto card = factory->createCardById(pair.first);
-            if (card) {
-                cards.push_back(card);
-            }
-        }
-    }
-    return cards;
+int Deck::getTotalCards() const {
+    return _cards.size();
 }
 
-int Deck::getTotalCards() const {
-    int total = 0;
-    for (const auto& pair : _cardCounts) {
-        total += pair.second;
+void Deck::addCardInstance(Card* card) {
+    if (card) {
+        _cards.push_back(card);
     }
-    return total;
+}
+
+const std::vector<Card*>& Deck::getCards() const {
+    return _cards;
+}
+
+void Deck::clear() {
+    _cards.clear();
+    _cardCounts.clear();
 } 

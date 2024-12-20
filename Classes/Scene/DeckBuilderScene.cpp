@@ -75,7 +75,7 @@ void DeckBuilderScene::loadCards() {
             // 法力值消耗标签
             auto costLabel = Label::createWithTTF(std::to_string(cost), "fonts/arial.ttf", 80);
             if (costLabel) {
-                costLabel->setPosition(Vec2(-60, card->getContentSize().height+140));
+                costLabel->setPosition(Vec2(-100, card->getContentSize().height+180));
                 costLabel->setTextColor(Color4B::WHITE);  // 改为白色
                 costLabel->enableOutline(Color4B::BLACK, 2);  // 保持黑色描边
                 costLabel->enableShadow(Color4B::BLACK);  // 保持阴影
@@ -86,7 +86,7 @@ void DeckBuilderScene::loadCards() {
             auto nameLabel = Label::createWithTTF(name, "fonts/STKAITI.TTF", 55);
             if (nameLabel) {
                 nameLabel->setPosition(Vec2(card->getContentSize().width / 2,
-                                         card->getContentSize().height - 130));
+                                         card->getContentSize().height - 60));
                 nameLabel->setTextColor(Color4B::WHITE);
                 nameLabel->enableOutline(Color4B::BLACK, 1);
                 //nameLabel->setOverflow(Label::Overflow::SHRINK);
@@ -97,17 +97,17 @@ void DeckBuilderScene::loadCards() {
             // 如果是随从卡，添加攻击力和生命值
             if (id == 1003 || id == 1006 || id == 1008 || id == 1011 || id == 1016 ||
                 id== 2004 ||id== 1013||id== 1015||id== 2001||id==2008||(id>=2009&&id<=2011)||id==2013||id==2014) {
-                // 攻击力标签
+                //// 攻击力标签
                 auto attackLabel = Label::createWithTTF(std::to_string(attack), "fonts/arial.ttf", 70);
-                attackLabel->setPosition(Vec2(-60, -140));
+                attackLabel->setPosition(Vec2(-100, -200));
                 attackLabel->setTextColor(Color4B::WHITE);  // 改为白色
                 attackLabel->enableOutline(Color4B::BLACK, 2);
                 attackLabel->enableShadow(Color4B::BLACK);
                 card->addChild(attackLabel, 2);
 
-                // 生命值标签
+                //// 生命值标签
                 auto healthLabel = Label::createWithTTF(std::to_string(health), "fonts/arial.ttf", 72);
-                healthLabel->setPosition(Vec2(card->getContentSize().width +110, -140));
+                healthLabel->setPosition(Vec2(card->getContentSize().width +150, -200));
                 healthLabel->setTextColor(Color4B::WHITE);  // 改为白色
                 healthLabel->enableOutline(Color4B::BLACK, 2);
                 healthLabel->enableShadow(Color4B::BLACK);
@@ -117,7 +117,7 @@ void DeckBuilderScene::loadCards() {
             // 描述文本标签
             auto descLabel = Label::createWithTTF(description, "fonts/STKAITI.TTF", 30);
             if (descLabel) {
-                descLabel->setPosition(Vec2(card->getContentSize().width / 2, -30));
+                descLabel->setPosition(Vec2(card->getContentSize().width / 2, -100));
                 descLabel->setDimensions(card->getContentSize().width +120, 120);//文本框大小
                 descLabel->setTextColor(Color4B::BLACK);  // 改为黑色
                 descLabel->enableOutline(Color4B::WHITE, 1);  // 改为白色描边

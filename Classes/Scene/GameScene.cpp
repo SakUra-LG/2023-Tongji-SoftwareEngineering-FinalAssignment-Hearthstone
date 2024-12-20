@@ -35,10 +35,19 @@ bool GameScene::init() {
 }
 
 void GameScene::initGame() {
-    CCLOG("Initializing game...");
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::INFO, "Starting game initialization");
     
-    // 游戏初始化逻辑现在在 initWithDeck 中处理
-    CCLOG("Initial game setup complete");
+    // 初始化玩家
+    _currentPlayer = new Player();
+    if (_playerDeck) {
+        logger->log(LogLevel::INFO, "Setting player deck");
+        _currentPlayer->setDeck(_playerDeck->getCards());
+    }
+    
+    // 发起始手牌
+    logger->log(LogLevel::INFO, "Drawing initial cards");
+    drawInitialHand();
 }
 
 // 初始化游戏层级
@@ -70,16 +79,16 @@ void GameScene::initLayers() {
     this->addChild(_uiLayer);
 
     // 3. 创建玩家手牌区（底部区域）
-    _playerHand = Node::create();
-    _playerHand->setPosition(Vec2(0, -320));  // 相对于游戏层中心向下320像素
+    _handLayer = Node::create();
+    _handLayer->setPosition(Vec2(0, -320));
     auto playerHandArea = DrawNode::create();
     playerHandArea->drawRect(
-        Vec2(-600, -160),  // 左下角坐标
-        Vec2(600, 100),    // 右上角坐标，总大小1200x260
-        Color4F(0, 1, 0, 0.2f)  // 半透明绿色
+        Vec2(-600, -160),
+        Vec2(600, 100),
+        Color4F(0, 1, 0, 0.2f)
     );
-    _playerHand->addChild(playerHandArea);
-    _gameLayer->addChild(_playerHand);
+    _handLayer->addChild(playerHandArea);
+    _gameLayer->addChild(_handLayer);
 
     // 4. 创建玩家场地（手牌区上方）
     _playerField = Node::create();
@@ -140,7 +149,7 @@ void GameScene::addDebugLabels() {
     // 更新各区域的尺寸标签
     auto playerHandLabel = createLabel("Player Hand\n1200x260");  // 更新尺寸信息
     playerHandLabel->setPosition(Vec2::ZERO);
-    _playerHand->addChild(playerHandLabel);
+    _handLayer->addChild(playerHandLabel);
 
     auto playerFieldLabel = createLabel("Player Field\n1100x200");  // 更新尺寸信息
     playerFieldLabel->setPosition(Vec2::ZERO);
@@ -275,13 +284,19 @@ void GameScene::initUI() {
 // 4. 卡牌相关方法
 // 重新排列手牌
 void GameScene::arrangeHandCards(bool isPlayerHand) {
-    auto& cards = isPlayerHand ? _playerHandCards : _opponentHandCards;
-    auto& cardNode = isPlayerHand ? _playerHand : _opponentHand;
+    auto& sprites = isPlayerHand ? _playerHandSprites : _opponentHandCards;
+    auto& node = isPlayerHand ? _handLayer : _opponentHand;
     
-    float startX = -((cards.size() - 1) * CARD_SPACING) / 2;
-    for (size_t i = 0; i < cards.size(); ++i) {
-        Vec2 targetPos = Vec2(startX + i * CARD_SPACING, 0);
-        cards[i]->runAction(MoveTo::create(0.3f, targetPos));
+    if (sprites.empty()) {
+        return;
+    }
+    
+    float startX = -((sprites.size() - 1) * CARD_SPACING) / 2;
+    for (size_t i = 0; i < sprites.size(); ++i) {
+        if (sprites[i]) {
+            Vec2 targetPos = Vec2(startX + i * CARD_SPACING, 0);
+            sprites[i]->runAction(MoveTo::create(0.3f, targetPos));
+        }
     }
 }
 // 修改卡牌交互逻辑
@@ -316,42 +331,39 @@ void GameScene::addCardInteraction(cocos2d::Sprite* cardSprite) {
 }
 
 void GameScene::playCardToField(cocos2d::Sprite* cardSprite) {
-    CCLOG("=== Playing Card to Field ===");
+    // 找到精灵在手牌中的位置
+    auto it = std::find(_playerHandSprites.begin(), _playerHandSprites.end(), cardSprite);
+    if (it != _playerHandSprites.end()) {
+        int index = std::distance(_playerHandSprites.begin(), it);
+        
+        // 获取对应的卡牌
+        Card* card = _playerHand[index];
+        if (!card) {
+            return;
+        }
 
-    // 从手牌中移除
-    auto it = std::find(_playerHandCards.begin(), _playerHandCards.end(), cardSprite);
-    if (it != _playerHandCards.end()) {
-        _playerHandCards.erase(it);
-        CCLOG("Card removed from hand. Hand size: %d", _playerHandCards.size());
+        // 从手牌中移除
+        _playerHandSprites.erase(it);
+        _playerHand.erase(_playerHand.begin() + index);
+        
+        // 更新其他卡牌的位置
+        updateHandPositions();
+        
+        // 将卡牌添加到场地
+        _playerFieldCards.push_back(cardSprite);
+        
+        // 设置卡牌在场地上的位置
+        float fieldY = _playerField->getPositionY();
+        cardSprite->setPosition(Vec2(0, fieldY));
+        
+        // 更新场地上的卡牌位置
+        updateFieldPositions();
+        
+        // 触发卡牌效果
+        if (card) {
+            card->onPlay();
+        }
     }
-
-    // 添加到战场
-    cardSprite->retain();  // 防止节点被自动释放
-    cardSprite->removeFromParent();
-    _playerField->addChild(cardSprite);
-    _playerFieldCards.push_back(cardSprite);
-
-    // 设置本回合已行动（召唤病）
-    _hasAttacked[cardSprite] = true;
-    // 添加视觉提示（可选）
-    cardSprite->setColor(Color3B::GRAY);
-
-    cardSprite->release();
-
-    CCLOG("Card added to field. Field size: %d", _playerFieldCards.size());
-
-    // 重新排列战场上的卡牌
-    float startX = -((_playerFieldCards.size() - 1) * CARD_SPACING) / 2;
-    for (size_t i = 0; i < _playerFieldCards.size(); ++i) {
-        Vec2 newPos = Vec2(startX + i * CARD_SPACING, 0);
-        _playerFieldCards[i]->setPosition(newPos);
-        CCLOG("Field card %d position: (%f, 0)", i, newPos.x);
-    }
-
-    // 重新排列手牌
-    this->arrangeHandCards(true);  // 添加 this->
-
-    CCLOG("=== Card Play Complete ===");
 }
 
 // 添加战场卡牌的交互
@@ -603,21 +615,17 @@ void GameScene::updateUI(float dt) {
 }
 
 void GameScene::updateHandPositions() {
-    // 更新玩家手牌位置
-    for (size_t i = 0; i < _playerHandCards.size(); ++i) {
-        auto card = _playerHandCards[i];
-        if (!card->getNumberOfRunningActions()) {  // 只在没有运行动画时更新
-            float startX = -(((_playerHandCards.size() - 1) * CARD_SPACING) / 2);
-            card->setPosition(Vec2(startX + i * CARD_SPACING, 0));
-        }
-    }
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    float cardSpacing = CARD_SPACING;
+    float startX = (visibleSize.width - (_playerHandSprites.size() - 1) * cardSpacing) / 2;
+    float cardY = 150.0f;  // 手牌Y轴位置
 
-    // 更新对手手牌位置
-    for (size_t i = 0; i < _opponentHandCards.size(); ++i) {
-        auto card = _opponentHandCards[i];
-        if (!card->getNumberOfRunningActions()) {
-            float startX = -(((_opponentHandCards.size() - 1) * CARD_SPACING) / 2);
-            card->setPosition(Vec2(startX + i * CARD_SPACING, 0));
+    for (size_t i = 0; i < _playerHandSprites.size(); ++i) {
+        auto sprite = _playerHandSprites[i];
+        if (sprite) {
+            auto moveAction = MoveTo::create(CARD_MOVE_DURATION, 
+                Vec2(startX + i * cardSpacing, cardY));
+            sprite->runAction(moveAction);
         }
     }
 }
@@ -700,7 +708,7 @@ void GameScene::onEndTurnClicked(cocos2d::Ref* sender) {
 }
 
 Scene* GameScene::createWithDeck(Deck* deck) {
-    auto scene = new GameScene();
+    GameScene* scene = new (std::nothrow) GameScene();
     if (scene && scene->initWithDeck(deck)) {
         scene->autorelease();
         return scene;
@@ -710,91 +718,81 @@ Scene* GameScene::createWithDeck(Deck* deck) {
 }
 
 bool GameScene::initWithDeck(Deck* deck) {
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::INFO, "Initializing game scene with deck");
+    
     if (!Scene::init()) {
+        logger->log(LogLevel::ERR, "Failed to initialize base Scene");
         return false;
     }
 
-    auto logger = GameLogger::getInstance();
-    logger->log(LogLevel::INFO, "Initializing game scene with deck");
-
-    _playerDeck = deck;
-    if (deck) {
-        deck->retain();  // 保持对卡组的引用
-        logger->log(LogLevel::INFO, "Player deck set successfully");
-    }
+    // 设置玩家卡组
+    _playerDeck = deck;  // 直接使用传入的 Deck 指针
+    logger->log(LogLevel::INFO, "Player deck set successfully");
 
     // 初始化游戏场景
     initLayers();
+    initBackground();
     initUI();
     initListeners();
     
-    // 初始化游戏状态
-    auto gameManager = GameManager::getInstance();
-    gameManager->initGame();
+    // 抽取起始手牌
+    drawInitialHand();
     
-    // 设置玩家的卡组并洗牌
-    if (_playerDeck) {
-        auto player = gameManager->getCurrentPlayer();
-        if (player) {
-            // 将卡组复制到玩家的牌库中
-            std::vector<Card*> shuffledDeck = _playerDeck->getCards();
-            // 随机打乱卡牌顺序
-            std::random_shuffle(shuffledDeck.begin(), shuffledDeck.end());
-            player->setDeck(shuffledDeck);
-            
-            logger->log(LogLevel::INFO, "Player deck shuffled and set");
-            
-            // 抽取初始手牌
-            for (int i = 0; i < 3; ++i) {
-                drawInitialCard();
-            }
-        }
-    }
-
+    logger->log(LogLevel::INFO, "Game initialized");
     return true;
 }
 
-void GameScene::drawInitialCard() {
-    auto gameManager = GameManager::getInstance();
-    auto player = gameManager->getCurrentPlayer();
+void GameScene::drawInitialHand() {
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::DEBUG, "Drawing initial hand");
     
-    if (!player) return;
+    // 获取可见区域大小
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    auto origin = Director::getInstance()->getVisibleOrigin();
     
-    // 从牌库顶部抽一张牌
-    auto& deck = player->getDeck();
-    if (!deck.empty()) {
-        Card* card = deck.back();
-        deck.pop_back();
+    // 抽取3张起始手牌
+    for (int i = 0; i < 3; ++i) {
+        if (!_playerDeck) {
+            logger->log(LogLevel::WARNING, "Player deck is null");
+            break;
+        }
         
-        // 添加到手牌
-        player->getHand().push_back(card);
+        // 获取牌库引用并修改
+        auto& deckCards = const_cast<std::vector<Card*>&>(_playerDeck->getCards());
+        if (deckCards.empty()) {
+            logger->log(LogLevel::WARNING, "Deck is empty, cannot draw more cards");
+            break;
+        }
         
-        // 创建卡牌精灵并添加到手牌区域
-        createCardSprite(card, true);
+        // 从牌库顶部抽一张牌
+        Card* card = deckCards.back();
+        deckCards.pop_back();
         
-        // 更新手牌位置
-        updateHandPositions();
+        if (!card) {
+            logger->log(LogLevel::ERR, "Drew null card");
+            continue;
+        }
+        
+        // 设置牌位置
+        float cardSpacing = 150.0f;
+        float startX = origin.x   - cardSpacing-500;
+        float cardY = origin.y -150;
+        
+        card->setPosition(Vec2(startX + i * cardSpacing, cardY));
+        card->setScale(0.8f);
+        
+        // 添加到手牌区域
+        _playerHand.push_back(card);
+        if (card->getSprite()) {
+            _playerHandSprites.push_back(card->getSprite());
+        }
+        _handLayer->addChild(card);
+        
+        logger->log(LogLevel::DEBUG, "Added card to hand: " + card->getName());
     }
-}
-
-void GameScene::createCardSprite(Card* card, bool isPlayerCard) {
-    if (!card) return;
     
-    auto sprite = Sprite::create(card->getPortraitPath());
-    if (!sprite) return;
-    
-    sprite->setScale(CARD_SCALE);
-    
-    if (isPlayerCard) {
-        _playerHand->addChild(sprite);
-        _playerHandCards.push_back(sprite);
-    } else {
-        _opponentHand->addChild(sprite);
-        _opponentHandCards.push_back(sprite);
-    }
-    
-    // 将Card对象与Sprite关联
-    card->setSprite(sprite);
+    logger->log(LogLevel::INFO, "Initial hand drawn successfully");
 }
 
 // 在析构函数中释放卡组
@@ -802,4 +800,13 @@ GameScene::~GameScene() {
     if (_playerDeck) {
         _playerDeck->release();
     }
+}
+
+void GameScene::initBackground() {
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    auto origin = Director::getInstance()->getVisibleOrigin();
+    
+    // 创建纯色背景
+    auto background = LayerColor::create(Color4B(45, 45, 45, 255));  // 深灰色背景
+    this->addChild(background, -10);
 }

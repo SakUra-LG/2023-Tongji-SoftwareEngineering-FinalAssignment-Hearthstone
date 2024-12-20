@@ -1,5 +1,6 @@
 #include "CardFactory.h"
 #include "DeckManager.h"
+#include "Utils/GameLogger.h"
 #pragma execution_character_set("utf-8")
 DeckManager* DeckManager::_instance = nullptr;
 
@@ -45,16 +46,46 @@ Deck* DeckManager::createRainbowDKDeck() {
 }
 
 Deck* DeckManager::createDeckFromTemplate(const std::vector<Card*>& templateDeck) {
-    auto deck = Deck::create(templateDeck[0]->getId() / 1000 == 1 ? 
-        "Quest Demon Hunter" : "Rainbow DK");
+    // 检查模板是否为空
+    if (templateDeck.empty()) {
+        return nullptr;
+    }
+
+    // 判断是哪种卡组（1开头是任务瞎，2开头是彩虹DK）
+    bool isQuestDH = (templateDeck[0]->getId() / 1000 == 1);
+    auto deck = Deck::create(isQuestDH ? "Quest Demon Hunter" : "Rainbow DK");
     
     if (deck) {
-        // 直接根据模板卡组添加卡牌
-        for (const auto& card : templateDeck) {
-            if (card && card->getCount() > 0) {
-                deck->addCard(card->getId(), card->getCount());
+        auto factory = CardFactory::getInstance();
+        auto logger = GameLogger::getInstance();
+        
+        // 遍历所有卡牌模板
+        for (const auto& templateCard : templateDeck) {
+            if (!templateCard) continue;
+            
+            int cardId = templateCard->getId();
+            // 确保卡牌ID与卡组类型匹配
+            if ((isQuestDH && cardId/1000 == 1) || (!isQuestDH && cardId/1000 == 2)) {
+                // 使用CardFactory创建新的卡牌实例
+                Card* newCard = factory->createCardById(cardId);
+                if (newCard) {
+                    // 设置卡牌数量（从模板中获取）
+                    newCard->setCount(templateCard->getCount());
+                    // 添加到卡组
+                    deck->addCardInstance(newCard);
+                    
+                    logger->log(LogLevel::DEBUG, 
+                        "Added card to deck: " + newCard->getName() + 
+                        " (ID: " + std::to_string(cardId) + 
+                        ", Count: " + std::to_string(templateCard->getCount()) + ")");
+                }
             }
         }
+        
+        logger->log(LogLevel::INFO, 
+            "Created deck: " + deck->getName() + 
+            " with " + std::to_string(deck->getTotalCards()) + " cards");
     }
+    
     return deck;
 } 

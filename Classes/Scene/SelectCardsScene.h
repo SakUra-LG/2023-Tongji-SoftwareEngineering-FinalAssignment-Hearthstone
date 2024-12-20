@@ -33,6 +33,8 @@ private:
     // ����
     //void playMenuAnimation();
     //void playButtonAnimation(cocos2d::Node* button);
+
+    void displayInitialCards();
 };
 
 #endif // __SELECT_CARDS_SCENE_H__

@@ -13,15 +13,25 @@ public:
     void addCard(int cardId, int count = 1);
     void removeCard(int cardId, int count = 1);
     int getCardCount(int cardId) const;
-    std::vector<Card*> getCards() const;
-    
     const std::string& getName() const { return _name; }
+    
+    // 添加卡牌实例到卡组
+    void addCardInstance(Card* card);
+    
+    // 获取卡组中的卡牌总数
     int getTotalCards() const;
+    
+    // 获取卡组中所有卡牌
+    const std::vector<Card*>& getCards() const;
+    
+    // 清空卡组
+    void clear();
     
 private:
     bool init(const std::string& name);
     std::string _name;
     std::map<int, int> _cardCounts;  // cardId -> count
+    std::vector<Card*> _cards;
 };
 
 #endif 

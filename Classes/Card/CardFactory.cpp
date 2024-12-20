@@ -9,22 +9,20 @@
 CardFactory* CardFactory::_instance = nullptr;
 
 CardFactory::CardFactory() {
-    // 确保成员变量被正确初始化
-    _cardTemplates.clear();
-    allCards.clear();
-    deck1.clear();
-    deck2.clear();
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::DEBUG, "Creating CardFactory instance");
+    
+    // 初始化卡牌模板
+    initCardTemplates();  // 使用新的方法名
 }
 
 CardFactory* CardFactory::getInstance() {
     if (!_instance) {
-        _instance = new CardFactory();
+        _instance = new CardFactory();  // 构造函数中已经调用了 initCardTemplates
         auto logger = GameLogger::getInstance();
-        logger->log(LogLevel::INFO, "Creating new CardFactory instance");
+        logger->log(LogLevel::INFO, "CardFactory instance created and initialized");
         
-        _instance->initCardTemplates();
-        logger->log(LogLevel::INFO, "Card templates initialized");
-        
+        // 只初始化卡组
         _instance->initializeDecks();
         logger->log(LogLevel::INFO, "Decks initialized");
     }
@@ -34,15 +32,30 @@ CardFactory* CardFactory::getInstance() {
 //1开头的卡牌属于任务瞎卡组（时间原因任务没有做）,2开头的是彩虹dk
 void CardFactory::initCardTemplates() {
     auto logger = GameLogger::getInstance();
-    logger->log(LogLevel::INFO, "Starting to initialize card templates");
+    logger->log(LogLevel::DEBUG, "Starting to initialize card templates");
     
     try {
-        // 记录初始化的卡牌数量
+        CardData cardData;
         int cardCount = 0;
         
-        // 以下是任务瞎卡组涉及的卡牌
-        logger->log(LogLevel::INFO, "Initializing Quest Demon Hunter cards...");
-        
+        //// 二段跳
+        //cardData.id = 1001;
+        //cardData.name = "二段跳";
+        //cardData.type = CardType::SPELL;
+        //cardData.rarity = CardRarity::NORMAL;
+        //cardData.cost = 1;
+        //cardData.description = "使一个随从获得冲锋";
+        //cardData.portraitPath = "cards/portraits/二段跳.png";
+        //_cardTemplates[cardData.id] = cardData;
+        //cardCount++;
+        //
+        //// 添加更多卡牌...
+        //cardData = CardData();  // 重置数据
+        //cardData.id = 1002;
+        //// ... 设置其他卡牌数据
+
+
+
         {
             CardData card;
             card.id = 1001;
@@ -53,10 +66,12 @@ void CardFactory::initCardTemplates() {
             card.description = "从你的牌库中抽一张流放牌";
             card.hasBattlecry = true;
             card.framePath = "cards/frame_normal_fashu.png";
-            card.portraitPath = "cards/portraits_erduantiao.png";
+            card.portraitPath = "cards/portraits/二段跳.png";
             _cardTemplates[card.id] = card;
             cardCount++;
             logger->log(LogLevel::DEBUG, "Created card: " + card.name);
+
+            
         }
 
         {
@@ -87,7 +102,7 @@ void CardFactory::initCardTemplates() {
             card.attack = 2;
             card.health = 1;
             card.description = "突袭。流放：你的下一张流放牌法力消耗减小（1）点";
-            card.hasRush = true;                       
+            card.hasRush = true;
             card.hasOutcast = true;
             card.framePath = "cards/frame_normal_suicong.png";
             card.portraitPath = "cards/portraits_XiongMengDeWaiLaiZhe.png";
@@ -178,7 +193,7 @@ void CardFactory::initCardTemplates() {
             card.cost = 1;
             card.attack = 1;
             card.health = 1;
-            card.description = "战吼：将六张降落伞洗入你的牌库。降落伞的法力消耗为（0）点，可召唤一个1/1有冲锋的海盗";
+            card.description = "战吼：将六张降落伞洗入��的牌库。降落伞的法力消耗为（0）点，可召唤一个1/1有冲锋的海盗";
             card.hasBattlecry = true;
             card.framePath = "cards/frame_normal_suicong.png";
             card.portraitPath = "cards/portraits_FeiXingYuanPaQiSi.png";
@@ -598,25 +613,27 @@ void CardFactory::initCardTemplates() {
             logger->log(LogLevel::DEBUG, "Created card: " + card.name);
         }
 
+
+
+
+
+
+
+
+        
         logger->log(LogLevel::INFO, "Card templates initialization completed. Total cards: " + std::to_string(cardCount));
         
-        // 初始化 allCards 向量
-        logger->log(LogLevel::INFO, "Starting to create card instances...");
+        // 初始化 allCards 向量（只在这里做一次）
+        allCards.clear();
         for (const auto& pair : _cardTemplates) {
             Card* card = createCardById(pair.first);
             if (card) {
                 allCards.push_back(card);
-                logger->log(LogLevel::DEBUG, "Created card instance: " + card->getName());
-            } else {
-                logger->log(LogLevel::ERR, "Failed to create card instance for ID: " + std::to_string(pair.first));
             }
         }
-        logger->log(LogLevel::INFO, "Created " + std::to_string(allCards.size()) + " card instances");
         
     } catch (const std::exception& e) {
         logger->log(LogLevel::ERR, "Exception in initCardTemplates: " + std::string(e.what()));
-    } catch (...) {
-        logger->log(LogLevel::ERR, "Unknown exception in initCardTemplates");
     }
 }
 
@@ -625,59 +642,26 @@ Card* CardFactory::createCardById(int cardId) {
     auto logger = GameLogger::getInstance();
     logger->log(LogLevel::DEBUG, "Creating card with ID: " + std::to_string(cardId));
     
-    try {
-        // 查找卡牌模板
-        auto it = _cardTemplates.find(cardId);
-        if (it == _cardTemplates.end()) {
-            logger->log(LogLevel::ERR, "Card template not found for ID: " + std::to_string(cardId));
-            return nullptr;
-        }
-        
-        const CardData& data = it->second;
-        logger->log(LogLevel::DEBUG, "Found template for card: " + data.name);
-        
-        // 检查资源文件
-        if (!FileUtils::getInstance()->isFileExist(data.framePath)) {
-            logger->log(LogLevel::ERR, "Frame image not found: " + data.framePath);
-            return nullptr;
-        }
-        
-        if (!FileUtils::getInstance()->isFileExist(data.portraitPath)) {
-            logger->log(LogLevel::ERR, "Portrait image not found: " + data.portraitPath);
-            return nullptr;
-        }
-        
-        Card* card = nullptr;
-        switch (data.type) {
-            case CardType::MINION:
-                logger->log(LogLevel::DEBUG, "Creating minion card");
-                card = createMinionCard(data);
-                break;
-            case CardType::SPELL:
-                logger->log(LogLevel::DEBUG, "Creating spell card");
-                card = createSpellCard(data);
-                break;
-            default:
-                logger->log(LogLevel::ERR, "Unknown card type");
-                return nullptr;
-        }
-        
-        if (card) {
-            logger->log(LogLevel::INFO, "Successfully created card: " + data.name);
-            card->setPortraitPath(data.portraitPath);
-        } else {
-            logger->log(LogLevel::ERR, "Failed to create card: " + data.name);
-        }
-        
-        return card;
-        
-    } catch (const std::exception& e) {
-        logger->log(LogLevel::ERR, "Exception in createCardById: " + std::string(e.what()));
-        return nullptr;
-    } catch (...) {
-        logger->log(LogLevel::ERR, "Unknown exception in createCardById");
+    auto it = _cardTemplates.find(cardId);
+    if (it == _cardTemplates.end()) {
+        logger->log(LogLevel::ERR, "Card template not found for ID: " + std::to_string(cardId));
         return nullptr;
     }
+    
+    const CardData& data = it->second;
+    Card* card = nullptr;
+    
+    if (data.type == CardType::SPELL) {
+        card = createSpellCard(data);
+    } else if (data.type == CardType::MINION) {
+        card = createMinionCard(data);
+    }
+    
+    if (card) {
+        logger->log(LogLevel::INFO, "Successfully created card: " + data.name);
+    }
+    
+    return card;
 }
 
 MinionCard* CardFactory::createMinionCard(const CardData& data) {
@@ -722,6 +706,7 @@ MinionCard* CardFactory::createMinionCard(const CardData& data) {
         }
         frame->setAnchorPoint(Vec2(0.5f, 0.5f));
         frame->setPosition(minion->getContentSize() / 2);
+        frame->setScale(0.4f);
         minion->addChild(frame, 1);
         
         // 创建并设置立绘精灵
@@ -731,7 +716,8 @@ MinionCard* CardFactory::createMinionCard(const CardData& data) {
             return nullptr;
         }
         portrait->setAnchorPoint(Vec2(0.5f, 0.5f));
-        portrait->setPosition(minion->getContentSize() / 2);
+        portrait->setPosition(Vec2(minion->getContentSize().width / 2+5, minion->getContentSize().height / 2+65));
+        portrait->setScale(0.4f);
         minion->addChild(portrait, 0);
         
         // 添加特殊效果
@@ -813,7 +799,7 @@ SpellCard* CardFactory::createSpellCard(const CardData& data) {
 void CardFactory::initializeDecks() {
     auto logger = GameLogger::getInstance();
     try {
-        // 清空现有卡组
+        // 清空现有组
         deck1.clear();
         deck2.clear();
         
@@ -837,8 +823,10 @@ void CardFactory::initializeDecks() {
             
             // 根据ID分配到不同卡组
             if (deckNumber == 1) {
+                card->setCount(2);  // 设置每张卡的初始数量为2
                 deck1.push_back(card);
             } else if (deckNumber == 2) {
+                card->setCount(2);
                 deck2.push_back(card);
             }
         }
@@ -864,4 +852,40 @@ void CardFactory::setCardCount(int cardId, int count) {
             break;
         }
     }
+} 
+
+Card* CardFactory::createCard(int id, const std::string& name) {
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::DEBUG, "Creating card: " + name);
+    
+    // 获取卡牌模板
+    auto it = _cardTemplates.find(id);
+    if (it == _cardTemplates.end()) {
+        logger->log(LogLevel::ERR, "Card template not found for ID: " + std::to_string(id));
+        return nullptr;
+    }
+    
+    const CardData& cardData = it->second;  // 使用 CardData 而不是 CardTemplate
+    
+    // 验证名称匹配
+    if (cardData.name != name) {
+        logger->log(LogLevel::WARNING, 
+            "Card name mismatch. Template: " + cardData.name + ", Requested: " + name);
+    }
+    
+    // 创建卡牌实例
+    Card* card = nullptr;
+    if (cardData.type == CardType::SPELL) {
+        card = createSpellCard(cardData);
+    } else if (cardData.type == CardType::MINION) {
+        card = createMinionCard(cardData);
+    }
+    
+    if (!card) {
+        logger->log(LogLevel::ERR, "Failed to create card instance");
+        return nullptr;
+    }
+    
+    logger->log(LogLevel::INFO, "Successfully created card: " + cardData.name);
+    return card;
 } 

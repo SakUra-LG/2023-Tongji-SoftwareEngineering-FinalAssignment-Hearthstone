@@ -32,37 +32,14 @@ Card* Card::create(int id, const std::string& name) {
 // @param name: 卡牌名称
 // @return: 初始化成功返回true，失败返回false
 bool Card::init(int id, const std::string& name) {
-    auto logger = GameLogger::getInstance();
-    logger->log(LogLevel::DEBUG, "Starting Card base class initialization");
-    
-    if (!Node::init()) {
-        logger->log(LogLevel::ERR, "Node::init() failed");
-        return false;
-    }
-    
-    logger->log(LogLevel::DEBUG, "Setting basic properties");
+    if (!Node::init()) return false;
     
     _id = id;
     _name = name;
     
-    // 设置默认大小
-    this->setContentSize(Size(90, 120));
+    // 设置卡牌的默认大小
+    this->setContentSize(Size(80, 100));  // 调整合适的大小
     
-    logger->log(LogLevel::DEBUG, "Initializing UI components");
-    
-    try {
-        // 初始化UI组件
-        initUI();
-        logger->log(LogLevel::DEBUG, "UI initialization complete");
-    } catch (const std::exception& e) {
-        logger->log(LogLevel::ERR, "Exception in UI initialization: " + std::string(e.what()));
-        return false;
-    } catch (...) {
-        logger->log(LogLevel::ERR, "Unknown exception in UI initialization");
-        return false;
-    }
-    
-    logger->log(LogLevel::DEBUG, "Card base class initialization complete");
     return true;
 }
 
@@ -73,36 +50,64 @@ void Card::initUI() {
     
     try {
         // 创建并设置卡牌名称标签
-        _nameLabel = Label::createWithTTF(_name, "fonts/arial.ttf", 24);
+        _nameLabel = Label::createWithTTF(_name, "fonts/STKAITI.TTF", 20);
         if (_nameLabel) {
             _nameLabel->setPosition(Vec2(this->getContentSize().width / 2,
-                this->getContentSize().height - 30));
-            this->addChild(_nameLabel);
+                this->getContentSize().height - 55));
+            _nameLabel->setTextColor(Color4B::WHITE);
+            _nameLabel->enableOutline(Color4B::BLACK, 1);
+            this->addChild(_nameLabel,2);
             logger->log(LogLevel::DEBUG, "Name label created and added");
         } else {
             logger->log(LogLevel::WARNING, "Failed to create name label");
         }
 
         // 创建并设置法力值消耗标签
-        _costLabel = Label::createWithTTF(std::to_string(_cost), "fonts/arial.ttf", 32);
+        _costLabel = Label::createWithTTF(std::to_string(_cost), "fonts/arial.ttf", 30);//!!！！！！！！！！！！！！！！！！!!!!!!!!!!!
         if (_costLabel) {
-            _costLabel->setPosition(Vec2(30, this->getContentSize().height - 30));
-            this->addChild(_costLabel);
+            _costLabel->setPosition(Vec2(-23, this->getContentSize().height + 60));
+            _costLabel->setTextColor(Color4B::WHITE);  // 改为白色
+            _costLabel->enableOutline(Color4B::BLACK, 2);  // 保持黑色描边
+            _costLabel->enableShadow(Color4B::BLACK);  // 保持阴影
+            this->addChild(_costLabel,2);
             logger->log(LogLevel::DEBUG, "Cost label created and added");
         } else {
             logger->log(LogLevel::WARNING, "Failed to create cost label");
         }
 
-        // 创建并设置卡牌描述标签
-        _descriptionLabel = Label::createWithTTF(_description, "fonts/arial.ttf", 18);
+        // 创建并设置卡牌描述标签                                                                         待修改！！！！！！！
+        _descriptionLabel = Label::createWithTTF(_description, "fonts/STKAITI.TTF", 50);
         if (_descriptionLabel) {
-            _descriptionLabel->setPosition(Vec2(this->getContentSize().width / 2, 50));
-            this->addChild(_descriptionLabel);
+            _descriptionLabel->setPosition(Vec2(this->getContentSize().width / 2, +530));
+            _descriptionLabel->setDimensions(this->getContentSize().width + 120, 120);//文本框大小
+            _descriptionLabel->setTextColor(Color4B::BLACK);  // 改为黑色
+            _descriptionLabel->enableOutline(Color4B::WHITE, 1);  // 改为白色描边
+            _descriptionLabel->setAlignment(TextHAlignment::CENTER);
+            this->addChild(_descriptionLabel,2);
             logger->log(LogLevel::DEBUG, "Description label created and added");
         } else {
             logger->log(LogLevel::WARNING, "Failed to create description label");
         }
         
+        if (_id == 1003 || _id == 1006 || _id == 1008 || _id == 1011 || _id == 1016 ||
+            _id == 2004 || _id == 1013 || _id == 1015 || _id == 2001 || _id == 2008 || (_id >= 2009 && _id <= 2011) || _id == 2013 || _id == 2014) {
+            //// 攻击力标签
+            //auto attackLabel = Label::createWithTTF(std::to_string(attack), "fonts/arial.ttf", 70);
+            //attackLabel->setPosition(Vec2(-60, -140));
+            //attackLabel->setTextColor(Color4B::WHITE);  // 改为白色
+            //attackLabel->enableOutline(Color4B::BLACK, 2);
+            //attackLabel->enableShadow(Color4B::BLACK);
+            //this->addChild(attackLabel, 2);
+
+            //// 生命值标签
+            //auto healthLabel = Label::createWithTTF(std::to_string(health), "fonts/arial.ttf", 72);
+            //healthLabel->setPosition(Vec2(this->getContentSize().width + 110, -140));
+            //healthLabel->setTextColor(Color4B::WHITE);  // 改为白色
+            //healthLabel->enableOutline(Color4B::BLACK, 2);
+            //healthLabel->enableShadow(Color4B::BLACK);
+            //this->addChild(healthLabel, 2);
+        }
+
         logger->log(LogLevel::DEBUG, "Card UI initialization complete");
     } catch (const std::exception& e) {
         logger->log(LogLevel::ERR, "Exception in Card UI initialization: " + std::string(e.what()));
@@ -266,4 +271,32 @@ void Card::takeDamage(int amount) {
         // 通知游戏管理器处理卡牌死亡
         GameManager::getInstance()->handleCardDeath(this);
     }
+}
+
+bool Card::initSprite() {
+    auto logger = GameLogger::getInstance();
+    
+    // 使用卡牌名称作为图片文件名
+    std::string imagePath = "cards/portraits/" + _name + ".png";
+    logger->log(LogLevel::DEBUG, "Loading card image: " + imagePath);
+    
+    // 检查文件是否存在
+    if (!FileUtils::getInstance()->isFileExist(imagePath)) {
+        logger->log(LogLevel::ERR, "Card image not found: " + imagePath);
+        return false;
+    }
+    
+    _sprite = Sprite::create(imagePath);
+    if (!_sprite) {
+        logger->log(LogLevel::ERR, "Failed to load card image: " + imagePath);
+        return false;
+    }
+    
+    // 设置精灵属性
+    _sprite->setAnchorPoint(Vec2(0.5f, 0.5f));
+    _sprite->setPosition(this->getContentSize() / 2);
+    this->addChild(_sprite);
+    
+    logger->log(LogLevel::DEBUG, "Card sprite initialized successfully");
+    return true;
 }

@@ -6,6 +6,8 @@
 #include "Card/SpellCard.h"
 #include "Utils/GameLogger.h"
 #include <map>
+#include <vector>
+#include <string>
 
 /**
  * @struct CardData
@@ -37,6 +39,22 @@ struct CardData {
 };
 
 /**
+ * @struct CardTemplate
+ * @brief 卡牌模板结构
+ * 
+ * 存储卡牌模板的基本属性数据，用于卡牌的创建和初始化。
+ */
+struct CardTemplate {
+    int id;
+    std::string name;
+    int cost;
+    std::string description;
+    CardType type;
+    CardRarity rarity;
+    // ... 其他需要的属性
+};
+
+/**
  * @class CardFactory
  * @brief 卡牌工厂类
  * 
@@ -44,6 +62,15 @@ struct CardData {
  * 使用单例模式确保全局只有一个卡牌工厂实例。
  */
 class CardFactory {
+private:
+    CardFactory();
+    static CardFactory* _instance;
+    
+    std::map<int, CardData> _cardTemplates;  // 只保留一个模板存储
+    std::vector<Card*> allCards;
+    std::vector<Card*> deck1;
+    std::vector<Card*> deck2;
+    
 public:
     /**
      * @brief 获取卡牌工厂的单例实例
@@ -64,14 +91,16 @@ public:
     const std::vector<Card*>& getDeck2() const;  // 获取卡组2
     void setCardCount(int cardId, int count);    // 设置卡牌数量
     
-private:
-    CardFactory();
-    static CardFactory* _instance;
-    
-    std::map<int, CardData> _cardTemplates;  // 存储所有卡牌模板数据
+    /**
+     * @brief 创建卡牌
+     * @param id 卡牌ID
+     * @param name 卡牌名称
+     * @return 返回创建的卡牌指针
+     */
+    Card* createCard(int id, const std::string& name);
     
     /**
-     * @brief 初始化所有卡牌模板
+     * @brief 初始化卡牌模板
      */
     void initCardTemplates();
     
@@ -88,10 +117,6 @@ private:
      * @return 返回创建的法术卡牌指针
      */
     SpellCard* createSpellCard(const CardData& data);
-    
-    std::vector<Card*> allCards;  // 存储所有卡牌
-    std::vector<Card*> deck1;     // 卡组1
-    std::vector<Card*> deck2;     // 卡组2
 };
 
 #endif // __CARD_FACTORY_H__ 

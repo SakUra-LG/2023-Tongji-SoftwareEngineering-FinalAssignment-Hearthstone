@@ -45,6 +45,7 @@ protected:
     Label* _descriptionLabel;
     Sprite* _cardFrame;
     Sprite* _cardImage;
+    Sprite* _sprite;
     
     // 特效列表
     std::vector<std::shared_ptr<IEffect>> _effects;
@@ -118,6 +119,7 @@ public:
     void setCardDescription(const std::string& desc) { _description = desc; }
     int getCount() const { return _count; }
     void setCount(int count) { _count = count; }
+    bool initSprite();
     
     // 效果系统
     void addEffect(std::shared_ptr<IEffect> effect);
