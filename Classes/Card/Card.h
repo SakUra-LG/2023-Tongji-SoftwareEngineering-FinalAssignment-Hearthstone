@@ -38,7 +38,8 @@ protected:
     int _cost;
     std::string _description;
     int _count;  // 卡牌数量
-    
+    bool _isOnField;       //是否被选中放在场上
+
     // UI组件
     Label* _nameLabel;
     Label* _costLabel;
@@ -72,6 +73,7 @@ protected:
         , _maxHealth(0)
         , _attack(0)
         , _hasAttacked(false)
+        , _isOnField(false) 
     {
     }
     
@@ -91,6 +93,7 @@ protected:
     bool _isFrozen;
     Vec2 _originalPosition;
     Sprite* _highlightSprite;
+    
     
     // 战斗相关属性
     int _health;

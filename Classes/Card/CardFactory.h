@@ -70,6 +70,7 @@ private:
     std::vector<Card*> allCards;
     std::vector<Card*> deck1;
     std::vector<Card*> deck2;
+    std::vector<Card*> deckEnemy;  // 添加对手卡组
     
 public:
     /**
@@ -89,6 +90,7 @@ public:
     void initializeDecks();                    // 初始化卡组
     const std::vector<Card*>& getDeck1() const;  // 获取卡组1
     const std::vector<Card*>& getDeck2() const;  // 获取卡组2
+    const std::vector<Card*>& getDeckEnemy() const;  // 添加获取对手卡组的方法
     void setCardCount(int cardId, int count);    // 设置卡牌数量
     
     /**

@@ -34,12 +34,13 @@ public:
     void setCurrentPlayer(Player* player);
     Player* getCurrentPlayer() const { return _currentPlayer; }
     Player* getOpponentPlayer() const { return _opponentPlayer; }
+    void setOpponentPlayer(Player* player);
 
     // ====== 卡牌操作 ======
-    void playCard(Card* card, const cocos2d::Vec2& position);
+    //void playCard(Card* card, const cocos2d::Vec2& position);
     void drawCard(Player* player);
     void discardCard(Card* card);
-    void addCardToDeck(Player* player, Card* card);
+    //void addCardToDeck(Player* player, Card* card);
 
     // ====== 目标选择 ======
     Card* getSelectedTarget() const;

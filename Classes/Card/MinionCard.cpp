@@ -130,8 +130,7 @@ void MinionCard::initUI2()
 
 // 更新随从卡牌的UI显示
 void MinionCard::updateUI() {
-    _attackLabel->setString(std::to_string(_attack));
-    _healthLabel->setString(std::to_string(_health));
+    initUI2();
 }
 
 // 打出随从卡牌时的处理
@@ -160,16 +159,13 @@ void MinionCard::playCard() {
 
 // 处理随从受到伤害
 void MinionCard::takeDamage(int amount) {
-    if (_hasDivineShield) {
-        _hasDivineShield = false;  // 圣盾抵消伤害
-        return;
-    }
+   
     
     _health -= amount;
     if (_health < 0) _health = 0;
     
     updateUI();
-    checkDeath();
+    checkDeath(this);
 }
 
 // 处理随从受到治疗
@@ -200,7 +196,7 @@ void MinionCard::silence() {
 }
 
 // 检查是否可以攻击指定目标
-bool MinionCard::canAttackTarget(Card* target) const {
+bool MinionCard::canAttackTarget(MinionCard* target) const {
     if (!target || !_canAttack) return false;
     
     // 检查是否被冻结或其他状态影响
@@ -213,23 +209,25 @@ bool MinionCard::canAttackTarget(Card* target) const {
 }
 
 // 执行攻击目标的动作
-void MinionCard::attackTarget(Card* target) {
-    if (!canAttackTarget(target)) return;
+void MinionCard::attackTarget(MinionCard* target) {
+    //if (!canAttackTarget(target)) return;
     
     // 执行攻击
-    target->takeDamage(_attack);
-    if (target->getCardType() == CardType::MINION) {
-        this->takeDamage(target->getAttack());
-    }
+    target->takeDamage(this->getAttack());
+    this->takeDamage(target->getAttack());
     
+    checkDeath(target);
+    checkDeath(this);
+
     _canAttack = false;  // 攻击后不能再次攻击
 }
 
 // 检查随从是否死亡
-void MinionCard::checkDeath() {
-    if (_health <= 0) {
+void MinionCard::checkDeath(MinionCard* card) {
+    if (card->getHealth()) {
         onDeathrattle();
         // TODO: 处理随从死亡的逻辑
+        this->setPosition(Vec2(20000, 20000));
     }
 }
 
@@ -251,6 +249,7 @@ void MinionCard::onDeathrattle() {
             effect->onActivate();
         }
     }
+    this->setPosition(Vec2(20000, 20000));
 }
 
 // 更新随从的状态

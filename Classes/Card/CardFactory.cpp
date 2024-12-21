@@ -193,7 +193,7 @@ void CardFactory::initCardTemplates() {
             card.cost = 1;
             card.attack = 1;
             card.health = 1;
-            card.description = "战吼：将六张降落伞洗入牌库。降落伞的法力消耗为（0）点，可召唤一个1/1有冲锋的海盗";
+            card.description = "战吼：将六张降落伞洗��牌库。降落伞的法力消耗为（0）点，可召唤一个1/1有冲锋的海盗";
             card.hasBattlecry = true;
             card.framePath = "cards/frame_normal_suicong.png";
             card.portraitPath = "cards/portraits_FeiXingYuanPaQiSi.png";
@@ -538,6 +538,24 @@ void CardFactory::initCardTemplates() {
         {
             CardData card;
             card.id = 2011;
+            card.name = "食尸鬼之夜";
+            card.type = CardType::SPELL;
+            card.rarity = CardRarity::RARE;
+            card.cost = 4;
+            //card.attack = 1;
+            //card.health = 2;
+            card.description = "召唤5个1/1的食尸鬼并随即攻击敌人";
+            card.hasBattlecry = true;                       //释放法术牌简化成战吼效果
+            card.framePath = "cards/frame_normal_fashu.png";
+            card.portraitPath = "cards/portraits_ShiShiGuiZhiYe.png";
+            _cardTemplates[card.id] = card;
+            cardCount++;
+            logger->log(LogLevel::DEBUG, "Created card: " + card.name);
+        }
+
+        {
+            CardData card;
+            card.id = 2012;
             card.name = "大地之末号";
             card.type = CardType::MINION;
             card.rarity = CardRarity::RARE;
@@ -554,23 +572,7 @@ void CardFactory::initCardTemplates() {
             logger->log(LogLevel::DEBUG, "Created card: " + card.name);
         }
 
-        {
-            CardData card;
-            card.id = 2012;
-            card.name = "食尸鬼之夜";
-            card.type = CardType::SPELL;
-            card.rarity = CardRarity::RARE;
-            card.cost = 4;
-            //card.attack = 1;
-            //card.health = 2;
-            card.description = "召唤5个1/1的食尸鬼并随即攻击敌人";
-            card.hasBattlecry = true;                       //释放法术牌简化成战吼效果
-            card.framePath = "cards/frame_normal_fashu.png";
-            card.portraitPath = "cards/portraits_ShiShiGuiZhiYe.png";
-            _cardTemplates[card.id] = card;
-            cardCount++;
-            logger->log(LogLevel::DEBUG, "Created card: " + card.name);
-        }
+        
 
         {
             CardData card;
@@ -600,14 +602,70 @@ void CardFactory::initCardTemplates() {
             card.name = "矿坑老板雷斯卡";
             card.type = CardType::MINION;
             card.rarity = CardRarity::LEGENDARY;
-            card.cost = 25;
-            card.attack = 6;
-            card.health = 3;
+            card.cost = 10;
+            card.attack = 10;
+            card.health = 10;
             card.description = "突袭。在本局中每有一个随从死亡本牌法力消耗减少（1）点。亡语：随机夺取一个敌人的控制权";
             card.hasDeathrattle = true;
             card.hasRush = true;
             card.framePath = "cards/frame_normal_suicong.png";
             card.portraitPath = "cards/portraits_KuangKengLaoBanLeiSiKa.png";
+            _cardTemplates[card.id] = card;
+            cardCount++;
+            logger->log(LogLevel::DEBUG, "Created card: " + card.name);
+        }
+
+        {
+            CardData card;
+            card.id = 3001;
+            card.name = "伊丽扎-刺刃";
+            card.type = CardType::MINION;
+            card.rarity = CardRarity::LEGENDARY;
+            card.cost = 4;
+            card.attack = 4;
+            card.health = 3;
+            card.description = "亡语：在本局剩余时间内，你召唤的随从获得+1攻击力";
+            card.hasDeathrattle = true;
+            card.framePath = "cards/frame_normal_suicong.png";
+            card.portraitPath = "cards/portraits_YiLiZhaCiRen.png";
+            _cardTemplates[card.id] = card;
+            cardCount++;
+            logger->log(LogLevel::DEBUG, "Created card: " + card.name);
+        }
+
+        {
+            CardData card;
+            card.id = 3002;
+            card.name = "戈贡佐姆";
+            card.type = CardType::MINION;
+            card.rarity = CardRarity::LEGENDARY;
+            card.cost = 7;
+            card.attack = 6;
+            card.health = 2;
+            card.description = "战吼：随机召唤你牌库里的3个随从";
+            card.hasBattlecry = true;
+            card.framePath = "cards/frame_normal_suicong.png";
+            card.portraitPath = "cards/portraits_GeGongZuoMu.png";
+            _cardTemplates[card.id] = card;
+            cardCount++;
+            logger->log(LogLevel::DEBUG, "Created card: " + card.name);
+        }
+
+        {
+            CardData card;
+            card.id = 3003;
+            card.name = "彩虹裁缝";
+            card.type = CardType::MINION;
+            card.rarity = CardRarity::NORMAL;
+            card.cost = 3;
+            card.attack = 4;
+            card.health = 7;
+            card.description = "战吼：获得突袭、圣盾";
+            card.hasDeathrattle = true;
+            card.hasRush = true;
+            card.hasDivineShield = true;
+            card.framePath = "cards/frame_normal_suicong.png";
+            card.portraitPath = "cards/portraits_CaiHongCaiFeng.png";
             _cardTemplates[card.id] = card;
             cardCount++;
             logger->log(LogLevel::DEBUG, "Created card: " + card.name);
@@ -820,9 +878,10 @@ SpellCard* CardFactory::createSpellCard(const CardData& data) {
 void CardFactory::initializeDecks() {
     auto logger = GameLogger::getInstance();
     try {
-        // 清空现有组
+        // 清空现有卡组
         deck1.clear();
         deck2.clear();
+        deckEnemy.clear();  // 清空对手卡组
         
         // 先确保 allCards 已经被正确初始化
         if (allCards.empty()) {
@@ -844,27 +903,31 @@ void CardFactory::initializeDecks() {
             
             // 根据ID分配到不同卡组
             if (deckNumber == 1) {
-                card->setCount(2);  // 设置每张卡的初始数量为2
+                card->setCount(2);
                 deck1.push_back(card);
             } else if (deckNumber == 2) {
                 card->setCount(2);
                 deck2.push_back(card);
+            } else if (deckNumber == 3) {  // 对手卡组
+                card->setCount(1);  // 每张牌只需要一张
+                deckEnemy.push_back(card);
             }
         }
         
         logger->log(LogLevel::INFO, "Deck1 size: " + std::to_string(deck1.size()));
         logger->log(LogLevel::INFO, "Deck2 size: " + std::to_string(deck2.size()));
+        logger->log(LogLevel::INFO, "Enemy deck size: " + std::to_string(deckEnemy.size()));
     }
     catch (const std::exception& e) {
         logger->log(LogLevel::ERR, "Exception in initializeDecks: " + std::string(e.what()));
-    }
-    catch (...) {
-        logger->log(LogLevel::ERR, "Unknown exception in initializeDecks");
     }
 }
 
 const std::vector<Card*>& CardFactory::getDeck1() const { return deck1; }
 const std::vector<Card*>& CardFactory::getDeck2() const { return deck2; }
+const std::vector<Card*>& CardFactory::getDeckEnemy() const { 
+    return deckEnemy; 
+}
 
 void CardFactory::setCardCount(int cardId, int count) {
     for (auto& card : allCards) {

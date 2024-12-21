@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include <vector>
 #include <map>
+#include"Card/MinionCard.h"
 
 class Card;
 class Player;
@@ -11,8 +12,8 @@ class Deck;
 
 class GameScene : public cocos2d::Scene {
 public:
-    static cocos2d::Scene* createWithDeck(Deck* deck);
-    bool initWithDeck(Deck* deck);
+    static cocos2d::Scene* createWithDeck(Deck* deck, Deck* deckenemy2);
+    bool initWithDeck(Deck* deck, Deck* deckenemy2);
 
     CREATE_FUNC(GameScene);
     virtual ~GameScene();
@@ -22,6 +23,7 @@ private:
     Player* _currentPlayer = nullptr;    // 当前玩家
     Player* _opponentPlayer = nullptr;   // 对手玩家
     Deck* _playerDeck = nullptr;         // 玩家卡组
+    Deck* _enemyDeck = nullptr;
 
     // 游戏状态
     bool _isPlayerTurn = true;           // 是否是玩家回合
@@ -51,9 +53,11 @@ private:
     // 卡牌相关
     Card* _selectedCard = nullptr;
     std::vector<Card*> _playerHand;  // 存储玩家手牌的卡牌指针
+    std::vector<MinionCard*> _playerHand2;
     std::vector<cocos2d::Sprite*> _playerHandSprites;  // 存储手牌的精灵
     std::vector<Card*> _playerFieldCards;
     std::vector<Card*> _opponentFieldCards;
+    std::vector<MinionCard*> _opponentFieldCards2;
     std::map<Card*, bool> _hasAttacked;
 
     // 卡牌常量
@@ -64,16 +68,17 @@ private:
     // 添加对手手牌相关变量
     std::vector<cocos2d::Sprite*> _opponentHandSprites;  // 对手手牌精灵
     std::vector<Card*> _opponentHandCards;  // 对手手牌
+    std::vector<MinionCard*> _opponentHandCards2;
 
     // 添加场地位置常量
     static constexpr float FIELD_Y = 300.0f;  // 场地的Y坐标
     static constexpr float FIELD_CARD_SPACING = 120.0f;  // 场上卡牌间距
 
     // 方法声明
-    void dealCard(const std::string& cardName, bool isPlayerCard, int handPosition);
-    void createCardSprite(Card* card, bool isPlayerCard);
+    //void dealCard(const std::string& cardName, bool isPlayerCard, int handPosition);
+    //void createCardSprite(Card* card, bool isPlayerCard);
     void arrangeHandCards(bool isPlayerHand);
-    void drawInitialCard();
+    //void drawInitialCard();
     void updateHandPositions();
     void updateFieldPositions();
     void addDebugLabels();
@@ -82,6 +87,7 @@ private:
     void playCardToField(Card* card, const cocos2d::Vec2& position);
     bool isValidFieldPosition(const cocos2d::Vec2& position) const;
     void updateFieldCardPositions();
+    std::vector<MinionCard*> convertToMinionCards(const std::vector<Card*>& cards);
 
     // 初始化方法
     void initLayers();
@@ -94,23 +100,31 @@ private:
     void updateUI(float dt);
     void updateTurnTimer(float dt);
     void updateTurnIndicator();
-    
+    void addMana(int amount);
+    bool useMana(int amount);
+    bool hasEnoughMana(int amount);
     // 事件处理
     void onEndTurnClicked(cocos2d::Ref* sender);
     void onSettingsClicked(cocos2d::Ref* sender);
-    void onCardPlayed(Card* card);
-    void onCardDrawn(Card* card);
+    //void onCardPlayed(Card* card);
+    //void onCardDrawn(Card* card);
     void onHeroPowerClicked(cocos2d::Ref* sender);
     // 回合控制
     void startTurn();
     void endTurn();
-    void useHeroPower();
-
+    //void useHeroPower();
+    //void executeAITurn();
+    void autoEndTurn(float delay);  // delay: 延迟时间（秒）
     // 战斗相关方法
     void addBattleCardInteraction(Card* card);
     void attackCard(Card* attacker, Card* target);
 
     void GameScene::initHandInteraction();  // 初始化手牌区域交互
+    void showTemporaryMessage(const std::string& message, float duration = 1.0f);
+
+    void drawEnemyCard();  // 抽取对手卡牌
+    void playEnemyCardToField(Card* card);  // 将对手卡牌放到场上
+    void updateEnemyFieldPositions();  // 更新对手场上卡牌位置
 };
 
 #endif // __GAME_SCENE_H__

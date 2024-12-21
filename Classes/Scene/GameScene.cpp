@@ -184,41 +184,42 @@ void GameScene::initUI() {
         _uiLayer->addChild(playerHeroPortrait, 0);
 
         // 玩家生命值显示（头像下方）
-        _playerHealthLabel = Label::createWithTTF("30", "fonts/arial.ttf", 24);
-        _playerHealthLabel->setPosition(Vec2(visibleSize.width / 2, 80));
-        _uiLayer->addChild(_playerHealthLabel);
+       // _playerHealthLabel = Label::createWithTTF("30", "fonts/arial.ttf", 24);
+       // _playerHealthLabel->setPosition(Vec2(visibleSize.width / 2, 80));
+       // _uiLayer->addChild(_playerHealthLabel);
     }
     // 添加对手头像（正上方）
     auto opponentHeroPortrait = Sprite::create("heroes/opponent_portrait.png");
     if (opponentHeroPortrait) {
-        opponentHeroPortrait->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 120));  // x=1024, y=904
+        opponentHeroPortrait->setPosition(Vec2(visibleSize.width / 2 + 25, visibleSize.height - 215));  // x=1024, y=904
         opponentHeroPortrait->setScale(0.8f);
         _uiLayer->addChild(opponentHeroPortrait);
 
         // 对手生命值显示（头像上方）
-        auto opponentHealth = Label::createWithTTF("30", "fonts/arial.ttf", 24);
-        opponentHealth->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 95));
-        _uiLayer->addChild(opponentHealth);
+       // auto opponentHealth = Label::createWithTTF("30", "fonts/arial.ttf", 24);
+       // opponentHealth->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 95));
+        //_uiLayer->addChild(opponentHealth);
     }
 
     // 添加对手英雄技能（头像右侧）
     auto opponentHeroPower = Sprite::create("heroes/hero_power_disabled.png");
     if (opponentHeroPower) {
-        opponentHeroPower->setPosition(Vec2(visibleSize.width / 2 + 100, visibleSize.height - 120));
+        opponentHeroPower->setPosition(Vec2(visibleSize.width / 2 - 150, visibleSize.height - 170));
         opponentHeroPower->setScale(0.8f);
         _uiLayer->addChild(opponentHeroPower);
     }
 
+    /*
     // 玩家法力水晶显示（头像左侧）
-    _playerManaLabel = Label::createWithTTF("0/0", "fonts/arial.ttf", 24);
-    _playerManaLabel->setPosition(Vec2(visibleSize.width / 2 - 100, 120));
-    _uiLayer->addChild(_playerManaLabel);
+            _playerManaLabel = Label::createWithTTF("0/10", "fonts/arial.ttf", 24);
+            _playerManaLabel->setPosition(Vec2(visibleSize.width / 2 - 100, 120));
+            _uiLayer->addChild(_playerManaLabel);
 
-    // 对手法力水晶显示（头像左侧）
-    auto opponentMana = Label::createWithTTF("0/0", "fonts/arial.ttf", 24);
-    opponentMana->setPosition(Vec2(1280, visibleSize.height - 95));
-    _uiLayer->addChild(opponentMana);
-
+            // 对手法力水晶显示（头像左侧）
+            auto opponentMana = Label::createWithTTF("0/", "fonts/arial.ttf", 24);
+            opponentMana->setPosition(Vec2(1280, visibleSize.height - 95));
+            _uiLayer->addChild(opponentMana);
+    */
     // 初始化回合相关变量
     _isPlayerTurn = true;  // 游戏开始时是玩家回合
     _turnTimeRemaining = TURN_TIME;
@@ -247,11 +248,11 @@ void GameScene::initUI() {
 void GameScene::arrangeHandCards(bool isPlayerHand) {
     auto& sprites = isPlayerHand ? _playerHandSprites : _opponentHandSprites;
     auto& node = isPlayerHand ? _handLayer : _opponentHand;
-    
+
     if (sprites.empty()) {
         return;
     }
-    
+
     float startX = -((sprites.size() - 1) * CARD_SPACING) / 2;
     for (size_t i = 0; i < sprites.size(); ++i) {
         if (sprites[i]) {
@@ -264,21 +265,21 @@ void GameScene::arrangeHandCards(bool isPlayerHand) {
 void GameScene::addCardInteraction(Card* card) {
     auto logger = GameLogger::getInstance();
     auto listener = EventListenerTouchOneByOne::create();
-    
+
     listener->onTouchBegan = [this, card, logger](Touch* touch, Event* event) {
         if (!_isPlayerTurn) return false;
-        
+
         // 记录触摸点的世界坐标
         Vec2 worldTouchPos = touch->getLocation();
-        logger->log(LogLevel::DEBUG, "Touch position (world): x=" + 
-            std::to_string(worldTouchPos.x) + ", y=" + 
+        logger->log(LogLevel::DEBUG, "Touch position (world): x=" +
+            std::to_string(worldTouchPos.x) + ", y=" +
             std::to_string(worldTouchPos.y));
 
         // 获取卡牌在世界坐标系中的位置和边界
         Vec2 cardWorldPos = card->getParent()->convertToWorldSpace(card->getPosition());
         Size cardSize = card->getContentSize();
         float scale = card->getScale();
-        
+
         // 计算卡牌在世界坐标系中的四个角点
         Vec2 bottomLeft = Vec2(
             cardWorldPos.x - (cardSize.width * scale) / 2,
@@ -305,27 +306,27 @@ void GameScene::addCardInteraction(Card* card) {
 
         // 将触摸点转换为卡牌的本地坐标
         Vec2 localTouchPos = card->convertToNodeSpace(worldTouchPos);
-        logger->log(LogLevel::DEBUG, "Touch position (local): x=" + 
-            std::to_string(localTouchPos.x) + ", y=" + 
+        logger->log(LogLevel::DEBUG, "Touch position (local): x=" +
+            std::to_string(localTouchPos.x) + ", y=" +
             std::to_string(localTouchPos.y));
 
         // 获取卡牌的边界框
         Rect cardBounds = card->getBoundingBox();
-       /* std::string boundsInfo = "\nCard bounding box:" +
-            "\nOrigin: x=" + std::to_string(cardBounds.origin.x) + 
-            ", y=" + std::to_string(cardBounds.origin.y) +
-            "\nSize: w=" + std::to_string(cardBounds.size.width) + 
-            ", h=" + std::to_string(cardBounds.size.height);
-        logger->log(LogLevel::DEBUG, boundsInfo);*/
+        /* std::string boundsInfo = "\nCard bounding box:" +
+             "\nOrigin: x=" + std::to_string(cardBounds.origin.x) +
+             ", y=" + std::to_string(cardBounds.origin.y) +
+             "\nSize: w=" + std::to_string(cardBounds.size.width) +
+             ", h=" + std::to_string(cardBounds.size.height);
+         logger->log(LogLevel::DEBUG, boundsInfo);*/
 
-        // 检查触摸点是否在卡牌边界内
+         // 检查触摸点是否在卡牌边界内
         bool isInBounds = cardBounds.containsPoint(localTouchPos);
-        logger->log(LogLevel::DEBUG, "Touch is " + 
+        logger->log(LogLevel::DEBUG, "Touch is " +
             std::string(isInBounds ? "inside" : "outside") + " card bounds");
 
         if (isInBounds) {
             _selectedCard = card;
-            
+
             if (_playerFieldCards.size() < 7) {
                 auto visibleSize = Director::getInstance()->getVisibleSize();
                 Vec2 fieldPos = Vec2(visibleSize.width / 2, FIELD_Y);
@@ -334,65 +335,87 @@ void GameScene::addCardInteraction(Card* card) {
             return true;
         }
         return false;
-    };
-    
+        };
+
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, card);
 }
 
 bool GameScene::isValidFieldPosition(const Vec2& position) const {
     // 检查位置是否在场地范围内
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    float fieldTop = FIELD_Y + 100;  // 场地上边界
-    float fieldBottom = FIELD_Y - 100;  // 场地边界
-    
+    float fieldTop = FIELD_Y + 100;  // 场地边界上边
+    float fieldBottom = FIELD_Y - 100;  // 场地边界下边
+
     return position.y >= fieldBottom && position.y <= fieldTop;
 }
 
 void GameScene::playCardToField(Card* card, const Vec2& position) {
     auto logger = GameLogger::getInstance();
     logger->log(LogLevel::DEBUG, "Starting playCardToField for card: " + card->getName());
-    
-    // 检查是否可以放置卡牌
+
+    // 检查是否可以放卡牌
     if (!card || _playerFieldCards.size() >= 4) {
         logger->log(LogLevel::WARNING, "Cannot play card: field full or invalid card");
         return;
     }
+
+    // 获取当前玩家
+    auto gameManager = GameManager::getInstance();
+    auto currentPlayer = gameManager->getCurrentPlayer();
     
+    // 检查当前玩家是否有效
+    if (!currentPlayer) {
+        logger->log(LogLevel::ERR, "Current player is null!");
+        return;
+    }
+
+    // 检查法力值是否够用
+    if (!currentPlayer->hasEnoughMana(card->getCost())) {
+        logger->log(LogLevel::WARNING, "Not enough mana to play card!");
+        showTemporaryMessage("法力值不足！");
+        return;
+    }
+
+    // 消耗法力值
+    currentPlayer->spendMana(card->getCost());
+    logger->log(LogLevel::DEBUG, "Spent " + std::to_string(card->getCost()) + " mana");
+
     // 从手牌移除
     auto it = std::find(_playerHand.begin(), _playerHand.end(), card);
     if (it != _playerHand.end()) {
         _playerHand.erase(it);
         logger->log(LogLevel::DEBUG, "Removed card from hand vector: " + card->getName());
     }
-    
+
     // 添加到场上卡牌数组
     _playerFieldCards.push_back(card);
-    logger->log(LogLevel::DEBUG, "Added card to field array. Field size: " + 
+    logger->log(LogLevel::DEBUG, "Added card to field array. Field size: " +
         std::to_string(_playerFieldCards.size()));
 
     // 重要：检查节点状态
     Node* oldParent = card->getParent();
-    logger->log(LogLevel::DEBUG, "Card parent check - Has parent: " + 
+    logger->log(LogLevel::DEBUG, "Card parent check - Has parent: " +
         std::string(oldParent ? "yes" : "no"));
-    
+
     //auto card2 = card;
 
     if (oldParent) {
-        logger->log(LogLevel::DEBUG, "Current parent retain count: " + 
+        logger->log(LogLevel::DEBUG, "Current parent retain count: " +
             std::to_string(oldParent->getReferenceCount()));
-        
+
         // 记录在旧父节点中的位置和缩放
         Vec2 oldPos = card->getPosition();
         float oldScale = card->getScale();
-        logger->log(LogLevel::DEBUG, "Old position: x=" + std::to_string(oldPos.x) + 
+        logger->log(LogLevel::DEBUG, "Old position: x=" + std::to_string(oldPos.x) +
             ", y=" + std::to_string(oldPos.y) + ", scale=" + std::to_string(oldScale));
-        
+
         try {
             // 从旧父节点中移除
             logger->log(LogLevel::DEBUG, "Attempting to remove card from old parent");
             //oldParent->removeChild(card, true);
             logger->log(LogLevel::DEBUG, "Successfully removed card from old parent");
-        } catch (const std::exception& e) {
+        }
+        catch (const std::exception& e) {
             logger->log(LogLevel::ERR, "Exception while removing card: " + std::string(e.what()));
             return;
         }
@@ -404,11 +427,11 @@ void GameScene::playCardToField(Card* card, const Vec2& position) {
             logger->log(LogLevel::ERR, "Game layer is null!");
             return;
         }
-        
+
         logger->log(LogLevel::DEBUG, "Attempting to add card to game layer");
         //_gameLayer->addChild(card, 5);
         logger->log(LogLevel::DEBUG, "Successfully added card to game layer");
-        
+
         // 设置新的位置和缩放
         auto visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -418,37 +441,38 @@ void GameScene::playCardToField(Card* card, const Vec2& position) {
         float startX = centerX - ((_playerFieldCards.size() - 1) * cardSpacing) / 2;
         int cardIndex = _playerFieldCards.size() - 1;
         float targetX = startX + cardIndex * cardSpacing;
-        
+
         //card->setScale(0.8f);
-        card->setPosition(Vec2(targetX-800, fieldY-100));
-        logger->log(LogLevel::DEBUG, "Set new position: x=" + std::to_string(targetX) + 
+        card->setPosition(Vec2(targetX - 800, fieldY - 100));
+        logger->log(LogLevel::DEBUG, "Set new position: x=" + std::to_string(targetX) +
             ", y=" + std::to_string(fieldY));
-        
-    } catch (const std::exception& e) {
-        logger->log(LogLevel::ERR, "Exception while adding card to game layer: " + 
+
+    }
+    catch (const std::exception& e) {
+        logger->log(LogLevel::ERR, "Exception while adding card to game layer: " +
             std::string(e.what()));
         return;
     }
-    
+
     // 更新位置
     updateFieldCardPositions();
     updateHandPositions();
-    
+
     logger->log(LogLevel::DEBUG, "Completed playCardToField successfully");
 }
 
 void GameScene::updateFieldCardPositions() {
     if (_playerFieldCards.empty()) return;
-    
+
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    float centerX = visibleSize.width / 2-1000;
-    float fieldY = visibleSize.height * 0.4f-250;
+    float centerX = visibleSize.width / 2 - 1000;
+    float fieldY = visibleSize.height * 0.4f - 250;
     float cardSpacing = 150.0f;
     float startX = centerX - ((_playerFieldCards.size() - 1) * cardSpacing) / 2;
-    
+
     for (size_t i = 0; i < _playerFieldCards.size(); ++i) {
         auto card = _playerFieldCards[i];
-        if (card) 
+        if (card)
         {
             float targetX = startX + i * cardSpacing;
             card->setPosition(Vec2(targetX, fieldY));
@@ -459,18 +483,18 @@ void GameScene::updateFieldCardPositions() {
 // 添加战场卡牌的交互
 void GameScene::addBattleCardInteraction(Card* card) {
     auto listener = EventListenerTouchOneByOne::create();
-    
+
     // 保存卡牌的初始位置
     //card->setOriginalPosition(card->getPosition());
-    
+
     listener->onTouchBegan = [this](Touch* touch, Event* event) {
         if (!_isPlayerTurn) return false;  // 只在玩家回合可以操作
-        
+
         auto target = static_cast<Node*>(event->getCurrentTarget());
         Point locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
-        
+
         if (rect.containsPoint(locationInNode)) {
             _selectedCard = dynamic_cast<Card*>(target->getParent());
             if (_selectedCard && !_hasAttacked[_selectedCard]) {  // 检查是否已经攻击过
@@ -478,19 +502,19 @@ void GameScene::addBattleCardInteraction(Card* card) {
             }
         }
         return false;
-    };
-    
+        };
+
     listener->onTouchMoved = [](Touch* touch, Event* event) {
         auto target = static_cast<Node*>(event->getCurrentTarget());
         target->getParent()->setPosition(target->getParent()->getPosition() + touch->getDelta());
-    };
-    
+        };
+
     listener->onTouchEnded = [this](Touch* touch, Event* event) {
         if (!_selectedCard) return;
-        
+
         auto location = touch->getLocation();
         Card* targetCard = nullptr;
-        
+
         // 检查是否有效的攻击目标
         for (auto card : _opponentFieldCards) {
             if (card->getBoundingBox().containsPoint(location)) {
@@ -498,17 +522,17 @@ void GameScene::addBattleCardInteraction(Card* card) {
                 break;
             }
         }
-        
+
         if (targetCard) {
             attackCard(_selectedCard, targetCard);
             _hasAttacked[_selectedCard] = true;  // 标记已经攻击过
         }
-        
+
         // 无论是否攻击成功，都返回原位置
         //_selectedCard->setPosition(_selectedCard->getOriginalPosition());
         _selectedCard = nullptr;
-    };
-    
+        };
+
     // 将监听器添加到牌的精灵上
     if (card->getSprite()) {
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, card->getSprite());
@@ -528,13 +552,13 @@ void GameScene::initListeners() {
 // 修改攻击处理函数
 void GameScene::attackCard(Card* attacker, Card* target) {
     if (!attacker || !target) return;
-    
+
     CCLOG("Attacking card");
 
     auto combatMgr = CombatManager::getInstance();
     if (combatMgr->canAttack(attacker, target)) {
         combatMgr->performAttack(attacker, target);
-        
+
         // 如果目标死亡，从战场移除
         if (target->getHealth() <= 0) {
             auto it = std::find(_opponentFieldCards.begin(), _opponentFieldCards.end(), target);
@@ -552,9 +576,37 @@ void GameScene::attackCard(Card* attacker, Card* target) {
 
 // 在回合开始时重置攻击状态
 void GameScene::startTurn() {
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::DEBUG, "Starting new turn");
+    
     _turnTimeRemaining = TURN_TIME;
-    _isPlayerTurn = !_isPlayerTurn;
+    _isPlayerTurn = !_isPlayerTurn;  // 切换回合
     _endTurnButton->setEnabled(_isPlayerTurn);
+    
+    //drawEnemyCard();
+    
+    auto gameManager = GameManager::getInstance();
+    auto currentPlayer = gameManager->getCurrentPlayer();
+    
+    if (currentPlayer) {
+        auto logger = GameLogger::getInstance();
+        logger->log(LogLevel::DEBUG, "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        // 增加最大法力值（上限为10）
+        int currentMaxMana = currentPlayer->getMaxMana();
+        if (currentMaxMana < 10) {  // 只在未达到上限时增加
+            int newMaxMana = std::min(currentMaxMana + 2, 10);
+            currentPlayer->setMaxMana(newMaxMana);
+        }
+
+        // 回合开始时将法力值补满到最大值
+        currentPlayer->setMana(currentPlayer->getMaxMana());
+
+        // 记录日志
+        std::string manaInfo = "Turn started: Mana restored to " +
+            std::to_string(currentPlayer->getMana()) + "/" +
+            std::to_string(currentPlayer->getMaxMana());
+        GameLogger::getInstance()->log(LogLevel::INFO, manaInfo);
+    }
 
     if (_isPlayerTurn) {
         // 重置所有卡牌的攻击状态
@@ -572,24 +624,66 @@ void GameScene::startTurn() {
     for (auto& pair : _hasAttacked) {
         pair.second = false;
     }
+
+    logger->log(LogLevel::DEBUG, "Turn started successfully");
 }
 
+void GameScene::autoEndTurn(float delay) {
+
+
+
+    // 创建延时动作
+    auto delayAction = DelayTime::create(delay);
+
+    // 创建结束回合的回调
+    auto endTurnCallback = CallFunc::create([this]() {
+        endTurn();
+        });
+
+    // 停止之前可能存在的自动结束回合动作
+    this->stopActionByTag(999);  // 使用标签999来标识自动结束回合的动作
+
+    // 创建动作序列并执行
+    auto sequence = Sequence::create(delayAction, endTurnCallback, nullptr);
+    sequence->setTag(999);  // 设置标签以便后续可以停止该动作
+    this->runAction(sequence);
+};
 // 结束当前回合
 void GameScene::endTurn() {
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::DEBUG, "Ending current turn");
+    
+    // 结束当前回合
     _isPlayerTurn = !_isPlayerTurn;  // 切换回合
     _turnTimeRemaining = TURN_TIME;   // 重置回合时间
-
+    
+    // 开始新回合
+    
+    
+    auto gameManager = GameManager::getInstance();
+    auto currentPlayer = gameManager->getCurrentPlayer();
+    
     // 更新英雄技能状态
     if (_playerHeroPower) {
         if (_isPlayerTurn) {
-            _playerHeroPower->setEnabled(true);  // 我方回合启用英雄技能
+            if (currentPlayer) {
+                int newMaxMana = std::min(currentPlayer->getMaxMana() + 2, 10);  // 上限为10
+                currentPlayer->setMaxMana(newMaxMana);
+                currentPlayer->setMana(newMaxMana);  // 回满法力值
+            }
+            // 我方回合开始，重置为可点击的按钮
+            _playerHeroPower->setEnabled(true);
             _playerHeroPower->setNormalImage(Sprite::create("heroes/hero_power_normal.png"));
-            _playerHeroPower->setSelectedImage(Sprite::create("heroes/hero_power_selected.png"));
+            _playerHeroPower->setSelectedImage(Sprite::create("heroes/hero_power_pressed.png"));  // 使用pressed而不是selected
+            _playerHeroPower->setScale(0.7f);  // 保持原有缩放
         }
         else {
-            _playerHeroPower->setEnabled(false);  // 对方回合禁用英雄技能
+            // 对方回合开始，设置为禁用状态
+            //drawEnemyCard();
+            _playerHeroPower->setEnabled(false);
             _playerHeroPower->setNormalImage(Sprite::create("heroes/hero_power_disabled.png"));
             _playerHeroPower->setSelectedImage(Sprite::create("heroes/hero_power_disabled.png"));
+            _playerHeroPower->setScale(0.7f);  // 保持原有缩放
         }
     }
 
@@ -604,26 +698,63 @@ void GameScene::endTurn() {
     else {
         // 对方回合开始
         _endTurnButton->setEnabled(false);  // 禁用结束回合按钮
-
-        // 模拟AI行动（这里可以添加AI逻辑）
-        //this->scheduleOnce([this](float dt) {
-            //endTurn();  // AI回合结束后自动切换到玩家回合
-           // }, 3.0f);  // 3秒后结束AI回合
+        autoEndTurn(5);
+        
     }
 
     // 更新回合指示器
     updateTurnIndicator();
+
+    logger->log(LogLevel::DEBUG, "Turn ended successfully");
 }
 
 // 添加回合指示器更新方法
 void GameScene::updateTurnIndicator() {
-    if (_turnIndicatorLabel) {
-        _turnIndicatorLabel->setString(_isPlayerTurn ? "Your Turn" : "Opponent's Turn");
-        _turnIndicatorLabel->setTextColor(_isPlayerTurn ? Color4B::GREEN : Color4B::RED);
+    _turnIndicatorLabel->setString(_isPlayerTurn ? "Your Turn" : "Opponent's Turn");
+    _turnIndicatorLabel->setTextColor(_isPlayerTurn ? Color4B::GREEN : Color4B::RED);
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::DEBUG, "Starting updateTurnIndicator");
+    
+    if (!_isPlayerTurn) {
+        int sizeOfEnemyLeft;
+        sizeOfEnemyLeft = _opponentHandCards.size();
+        if (sizeOfEnemyLeft == 0)
+            return;
+        Card* card = _opponentHandCards.back();
+        _opponentHandCards.pop_back();
+        if (sizeOfEnemyLeft == 3)
+        {
+            auto visibleSize = Director::getInstance()->getVisibleSize();
+            float centerX = visibleSize.width / 2;
+            float fieldY = visibleSize.height * 0.6f;  // 在屏幕上方60%的位置
+            card->setPosition(Vec2(806.003662-50, fieldY));
+
+        }
+        else if (sizeOfEnemyLeft == 2)
+        {
+            auto visibleSize = Director::getInstance()->getVisibleSize();
+            float centerX = visibleSize.width / 2;
+            float fieldY = visibleSize.height * 0.6f;  // 在屏幕上方60%的位置
+            card->setPosition(Vec2(950.001343-45, fieldY));
+        }
+        else if (sizeOfEnemyLeft == 1)
+        {
+            auto visibleSize = Director::getInstance()->getVisibleSize();
+            float centerX = visibleSize.width / 2;
+            float fieldY = visibleSize.height * 0.6f;  // 在屏幕上方60%的位置
+            card->setPosition(Vec2(1105.002441-50, fieldY));
+        }
+        card->setScale(0.8f);
+
+        MinionCard* minion = dynamic_cast<MinionCard*>(card);
+
+        _opponentFieldCards2.push_back(minion);     //厂商三张卡从左到右对应下标0~1
+
+        this->addChild(minion, 5);
     }
 }
 
-// 修改英雄技能点击回调
+// 修改英雄技能点击回调-所有牌+1攻击力
 void GameScene::onHeroPowerClicked(Ref* sender) {
     if (!_isPlayerTurn) {
         // 如果不是玩家回合，直接返回
@@ -632,6 +763,19 @@ void GameScene::onHeroPowerClicked(Ref* sender) {
 
     auto gameManager = GameManager::getInstance();
     auto currentPlayer = gameManager->getCurrentPlayer();
+
+
+    _playerHand2[0]->setAttack(_playerHand2[0]->getAttack() + 1);
+    _playerHand2[0]->initUI2();
+    _playerHand2[1]->setAttack(_playerHand2[1]->getAttack() + 1);
+    _playerHand2[1]->initUI2();
+    _playerHand2[2]->setAttack(_playerHand2[2]->getAttack() + 1);
+    _playerHand2[2]->initUI2();
+    if (currentPlayer->hasEnoughMana(2))
+    {
+        currentPlayer->spendMana(2);
+    }
+    
 }
 
 // 更新回合计时器
@@ -656,27 +800,44 @@ void GameScene::updateTurnTimer(float dt) {
 }
 // 6. UI更新和事件处理方法
 void GameScene::updateUI(float dt) {
-    // 获取游戏管理器和当前玩家
     auto gameManager = GameManager::getInstance();
     auto currentPlayer = gameManager->getCurrentPlayer();
-    auto opponentPlayer = gameManager->getOpponentPlayer();
 
-    if (!currentPlayer || !opponentPlayer) return;
+    if (!currentPlayer) {
+        CCLOG("Current player is null in updateUI");
+        return;
+    }
 
-    // 1. 更新玩家信息
-    // 生命值
+    // 更新法力值显示
+    std::string manaText = std::to_string(currentPlayer->getMana()) + "/" +
+        std::to_string(currentPlayer->getMaxMana());
+    if (_playerManaLabel) {
+        _playerManaLabel->setString(manaText);
+        CCLOG("Updating mana display: %s", manaText.c_str());
+
+        // 根据法力值状态改变颜色
+        if (currentPlayer->getMana() == 0) {
+            _playerManaLabel->setTextColor(Color4B(150, 150, 150, 255));  // 灰色
+        }
+        else if (currentPlayer->getMana() < currentPlayer->getMaxMana()) {
+            _playerManaLabel->setTextColor(Color4B(0, 162, 232, 255));    // 蓝色
+        }
+        else {
+            _playerManaLabel->setTextColor(Color4B(0, 200, 255, 255));    // 亮蓝色
+        }
+    }
+    else {
+        CCLOG("Mana label is null");
+    }
+
+    // 更新生命值显示
     _playerHealthLabel->setString(std::to_string(currentPlayer->getHealth()));
     if (currentPlayer->getHealth() <= 10) {
         _playerHealthLabel->setTextColor(Color4B::RED);
     }
 
-    // 法力值
-    std::string manaText = std::to_string(currentPlayer->getMana()) + "/" +
-        std::to_string(currentPlayer->getMaxMana());
-    _playerManaLabel->setString(manaText);
-
-    // 2. 更新对手信息
-    // 生命值
+    // 更新对手信息
+    auto opponentPlayer = gameManager->getOpponentPlayer();
     if (_opponentHealthLabel) {
         _opponentHealthLabel->setString(std::to_string(opponentPlayer->getHealth()));
         if (opponentPlayer->getHealth() <= 10) {
@@ -684,29 +845,22 @@ void GameScene::updateUI(float dt) {
         }
     }
 
-    // 法力值
-    if (_opponentManaLabel) {
-        std::string oppManaText = std::to_string(opponentPlayer->getMana()) + "/" +
-            std::to_string(opponentPlayer->getMaxMana());
-        _opponentManaLabel->setString(oppManaText);
-    }
-
-    // 3. 更新回合状态
+    // 更新回合状态
     _endTurnButton->setEnabled(_isPlayerTurn);
     _endTurnButton->setColor(_isPlayerTurn ? Color3B::WHITE : Color3B::GRAY);
 
-    // 4. 更新英雄技能状态
+    // 更新英雄技能状态
     bool canUseHeroPower = gameManager->canUseHeroPower(currentPlayer);
     _playerHeroPower->setEnabled(canUseHeroPower && _isPlayerTurn);
     _playerHeroPower->setColor(canUseHeroPower && _isPlayerTurn ? Color3B::WHITE : Color3B::GRAY);
 
-    // 5. 更新手牌显示
+    // 更新手牌显示
     updateHandPositions();
 
-    // 6. 更新场上随从
+    // 更新场上随从
     updateFieldPositions();
 
-    // 7. 检查游戏状态
+    // 检查游戏状态
     if (gameManager->isGameOver()) {  // 使用提供的 isGameOver() 方法
         showGameOverUI();
     }
@@ -721,7 +875,7 @@ void GameScene::updateHandPositions() {
     for (size_t i = 0; i < _playerHandSprites.size(); ++i) {
         auto sprite = _playerHandSprites[i];
         if (sprite) {
-            auto moveAction = MoveTo::create(CARD_MOVE_DURATION, 
+            auto moveAction = MoveTo::create(CARD_MOVE_DURATION,
                 Vec2(startX + i * cardSpacing, cardY));
             sprite->runAction(moveAction);
         }
@@ -733,7 +887,7 @@ void GameScene::updateFieldPositions() {
     auto currentPlayer = gameManager->getCurrentPlayer();
     auto opponentPlayer = gameManager->getOpponentPlayer();
 
-    // 更新玩家场上从
+    // 更新玩家场上
     const auto& playerField = currentPlayer->getField();
     float startX = -((playerField.size() - 1) * CARD_SPACING) / 2;
     for (size_t i = 0; i < playerField.size(); ++i) {
@@ -805,9 +959,9 @@ void GameScene::onEndTurnClicked(cocos2d::Ref* sender) {
     }
 }
 
-Scene* GameScene::createWithDeck(Deck* deck) {
+Scene* GameScene::createWithDeck(Deck* deck, Deck* deckenemy2) {
     GameScene* scene = new (std::nothrow) GameScene();
-    if (scene && scene->initWithDeck(deck)) {
+    if (scene && scene->initWithDeck(deck, deckenemy2)) {
         scene->autorelease();
         return scene;
     }
@@ -815,32 +969,49 @@ Scene* GameScene::createWithDeck(Deck* deck) {
     return nullptr;
 }
 
-bool GameScene::initWithDeck(Deck* deck) {
+bool GameScene::initWithDeck(Deck* deck, Deck* deckenemy2) {
     auto logger = GameLogger::getInstance();
     logger->log(LogLevel::INFO, "Initializing game scene with deck");
-    
-    // 调用父类的初始化方法
+
     if (!Scene::init()) {
         logger->log(LogLevel::ERR, "Failed to initialize base Scene");
         return false;
     }
 
-    // 设置玩家卡组
-    _playerDeck = deck;  // 直接使用传入的 Deck 指针
-    logger->log(LogLevel::INFO, "Player deck set successfully");
+    // 确保 GameManager 和 Player 已经初始化
+    GameManager* gameManager = GameManager::getInstance();
+    if (!gameManager->getCurrentPlayer()) {
+        // 如果当前玩家为空，创建新的玩家
+        auto player = new Player();
+        // 设置初始法力值为2，最大法力值为10
+        player->setMaxMana(5);  // 设置最大法力值上限
+        player->setMana(5);      // 设置初始法力值
+        gameManager->setCurrentPlayer(player);
+        
+        // 创建对手玩家
+        auto opponent = new Player();
+        opponent->setMaxMana(5);  // 设置最大法力值上限
+        opponent->setMana(5);      // 设置初始法力值
+        gameManager->setOpponentPlayer(opponent);
+        
+        logger->log(LogLevel::DEBUG, "Created new players with initial mana (2/10)");
+    }
 
+    // 设置玩家卡组
+    _playerDeck = deck;
+    _enemyDeck = deckenemy2;
     // 初始化场景的各个组件
-    initLayers();     // 初始化游戏层级
-    initUI();         // 初始化用户界面
-    initListeners();  // 初始化事件监听器
-    
-    // 抽取起始手牌
+    initLayers();
+    initUI();
+    initListeners();
     drawInitialHand();
-    
-    // 启动更新定时器
-    this->schedule(CC_SCHEDULE_SELECTOR(GameScene::updateUI), 1.0f);  // UI更新（每秒）
-    this->scheduleUpdate();  // 游戏逻辑更新（每帧）
-    
+
+    // 立即更新一次UI确保显示正确
+    updateUI(0);
+
+    this->schedule(CC_SCHEDULE_SELECTOR(GameScene::updateUI), 1.0f);
+    this->scheduleUpdate();
+
     logger->log(LogLevel::INFO, "Game scene initialized successfully");
     return true;
 }
@@ -848,49 +1019,103 @@ bool GameScene::initWithDeck(Deck* deck) {
 void GameScene::drawInitialHand() {
     auto logger = GameLogger::getInstance();
     logger->log(LogLevel::DEBUG, "Drawing initial hand");
-    
+
     // 获取可见区域大小
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto origin = Director::getInstance()->getVisibleOrigin();
-    
+
     // 抽取3张起始手牌
     for (int i = 0; i < 3; ++i) {
         if (!_playerDeck) {
             logger->log(LogLevel::WARNING, "Player deck is null");
             break;
         }
-        
+
         auto& deckCards = const_cast<std::vector<Card*>&>(_playerDeck->getCards());
         if (deckCards.empty()) {
             logger->log(LogLevel::WARNING, "Deck is empty, cannot draw more cards");
             break;
         }
-        
+
         Card* card = deckCards.back();
         deckCards.pop_back();
-        
+
         if (!card) {
             logger->log(LogLevel::ERR, "Drew null card");
             continue;
         }
-        
+
         float cardSpacing = 150.0f;
         float startX = origin.x - cardSpacing - 500;
         float cardY = origin.y - 150;
-        
+
         card->setPosition(Vec2(startX + i * cardSpacing, cardY));
         card->setScale(0.8f);
-        
+
         _playerHand.push_back(card);
         _handLayer->addChild(card);
-        
+
         logger->log(LogLevel::DEBUG, "Added card to hand: " + card->getName());
     }
+
+    _playerHand2 = convertToMinionCards(_playerHand);
+
+    //可以成功创建！！！
+    auto& deckCards = const_cast<std::vector<Card*>&>(_enemyDeck->getCards());
+    for (int i = 0; i < 3; i++) {
+        Card* card = deckCards.back();
+        card->retain();  // 增加引用计数
+        
+        logger->log(LogLevel::DEBUG, "Drawing enemy card: " + 
+            (card ? card->getName() : "null") + 
+            " at index " + std::to_string(i) + 
+            " Address: " + std::to_string(reinterpret_cast<intptr_t>(card)) +
+            " Initial ref count: " + std::to_string(card->getReferenceCount()));
+            
+        deckCards.pop_back();
+        float cardSpacing = 150.0f;
+        float startX = origin.x - cardSpacing - 500;
+        float cardY = origin.y - 150;
+        card->setPosition(Vec2(startX + 3 * cardSpacing, cardY));
+        card->setScale(0.8f);
+
+        // 在添加到手牌前检查卡牌
+        logger->log(LogLevel::DEBUG, "Adding card to opponent hand. Card address: " + 
+            std::to_string(reinterpret_cast<intptr_t>(card)));
+            
+        _opponentHandCards.push_back(card);
+        
+        // 验证添加后的状态
+        logger->log(LogLevel::DEBUG, "After adding to hand - ref count: " + 
+            std::to_string(card->getReferenceCount()));
+    }
     
+
+    
+
+    
+
+   
     // 所有卡牌添加完成后，初始化手牌区域的交互
     initHandInteraction();
-    
+
     logger->log(LogLevel::INFO, "Initial hand drawn successfully");
+}
+
+//转换卡组类型
+std::vector<MinionCard*> GameScene::convertToMinionCards(const std::vector<Card*>& cards) {
+    std::vector<MinionCard*> minionCards;
+    auto logger = GameLogger::getInstance();
+
+    for (Card* card : cards) {
+        MinionCard* minion = dynamic_cast<MinionCard*>(card);
+        if (minion) {
+            minionCards.push_back(minion);
+            logger->log(LogLevel::DEBUG, "Successfully converted card to MinionCard");
+        }
+    }
+
+    return minionCards;
 }
 
 // 在析构函数中释放卡组
@@ -903,8 +1128,8 @@ GameScene::~GameScene() {
 void GameScene::initBackground() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto origin = Director::getInstance()->getVisibleOrigin();
-    
-    // 创建纯色背��
+
+    // 创建纯色背景
     auto background = LayerColor::create(Color4B(45, 45, 45, 255));  // 深灰色背景
     this->addChild(background, -10);
 }
@@ -912,13 +1137,13 @@ void GameScene::initBackground() {
 void GameScene::initHandInteraction() {
     auto logger = GameLogger::getInstance();
     auto listener = EventListenerTouchOneByOne::create();
-    
+
     listener->onTouchBegan = [this, logger](Touch* touch, Event* event) {
         if (!_isPlayerTurn) return false;
-        
+
         Vec2 worldTouchPos = touch->getLocation();
-        logger->log(LogLevel::DEBUG, "Touch position (world): x=" + 
-            std::to_string(worldTouchPos.x) + ", y=" + 
+        logger->log(LogLevel::DEBUG, "Touch position (world): x=" +
+            std::to_string(worldTouchPos.x) + ", y=" +
             std::to_string(worldTouchPos.y));
 
         // 遍历所有手牌检查点击
@@ -927,7 +1152,7 @@ void GameScene::initHandInteraction() {
             Vec2 cardWorldPos = card->getParent()->convertToWorldSpace(card->getPosition());
             Size cardSize = card->getContentSize();
             float scale = card->getScale();
-            
+
             // 计算卡牌碰撞箱
             Rect cardRect(
                 cardWorldPos.x - (cardSize.width * scale) / 2,
@@ -935,14 +1160,14 @@ void GameScene::initHandInteraction() {
                 cardSize.width * scale,
                 cardSize.height * scale
             );
-            
+
             // 记录卡牌信息
             std::string cardInfo = "\nChecking card: " + card->getName() +
-                "\nCard world position: x=" + std::to_string(cardWorldPos.x) + 
+                "\nCard world position: x=" + std::to_string(cardWorldPos.x) +
                 ", y=" + std::to_string(cardWorldPos.y) +
-                "\nCard rect: x=" + std::to_string(cardRect.origin.x) + 
+                "\nCard rect: x=" + std::to_string(cardRect.origin.x) +
                 ", y=" + std::to_string(cardRect.origin.y) +
-                ", w=" + std::to_string(cardRect.size.width) + 
+                ", w=" + std::to_string(cardRect.size.width) +
                 ", h=" + std::to_string(cardRect.size.height);
             logger->log(LogLevel::DEBUG, cardInfo);
 
@@ -950,7 +1175,7 @@ void GameScene::initHandInteraction() {
             if (cardRect.containsPoint(worldTouchPos)) {
                 logger->log(LogLevel::DEBUG, "Card selected: " + card->getName());
                 _selectedCard = card;
-                
+
                 if (_playerFieldCards.size() < 7) {
                     auto visibleSize = Director::getInstance()->getVisibleSize();
                     Vec2 fieldPos = Vec2(visibleSize.width / 2, FIELD_Y);
@@ -960,9 +1185,159 @@ void GameScene::initHandInteraction() {
             }
         }
         return false;
-    };
-    
+        };
+
     // 将监听器添加到手牌层
     _handLayer->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, _handLayer);
+}
+
+// 增加法力值的方法
+void GameScene::addMana(int amount) {
+    auto gameManager = GameManager::getInstance();
+    auto currentPlayer = gameManager->getCurrentPlayer();
+
+    if (currentPlayer) {
+        int newMana = std::min(currentPlayer->getMana() + amount, currentPlayer->getMaxMana());
+        currentPlayer->setMana(newMana);
+        // UI 会在下一帧自动更新
+    }
+}
+
+// 消耗法力值的方法
+bool GameScene::useMana(int amount) {
+    auto gameManager = GameManager::getInstance();
+    auto currentPlayer = gameManager->getCurrentPlayer();
+
+    if (currentPlayer && currentPlayer->getMana() >= amount) {
+        currentPlayer->setMana(currentPlayer->getMana() - amount);
+        // UI 会在下一帧自动更新
+        return true;
+    }
+    return false;
+}
+
+// 检查是否有足够的法力值
+bool GameScene::hasEnoughMana(int amount) {
+    auto gameManager = GameManager::getInstance();
+    auto currentPlayer = gameManager->getCurrentPlayer();
+
+    return currentPlayer && currentPlayer->getMana() >= amount;
+}
+
+void GameScene::showTemporaryMessage(const std::string& message, float duration) {
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    
+    // 创建提示标签
+    auto label = Label::createWithTTF(message, "fonts/STKAITI.TTF", 50);
+    label->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2-20));
+    label->setTextColor(Color4B::RED);
+    this->addChild(label, 10);  // 使用高 Z-order 确保显示在最上层
+    
+    // 创建渐变消失的动作序列
+    auto fadeOut = FadeOut::create(0.2f);  // 0.2秒渐隐
+    auto delay = DelayTime::create(duration - 0.2f);  // 持续时间减去渐隐时间
+    auto remove = RemoveSelf::create();  // 移除节点
+    
+    // 运行动作序列
+    label->runAction(Sequence::create(delay, fadeOut, remove, nullptr));
+}
+
+void GameScene::drawEnemyCard() {
+    auto logger = GameLogger::getInstance();
+    
+    //可以成功创建！！！
+    /*auto& deckCards = const_cast<std::vector<Card*>&>(_enemyDeck->getCards());
+    Card* card = deckCards.back();
+    deckCards.pop_back();
+    float cardSpacing = 150.0f;
+    float startX = origin.x - cardSpacing - 500;
+    float cardY = origin.y - 150;
+
+    card->setPosition(Vec2(startX + 3 * cardSpacing, cardY));
+    card->setScale(0.8f);
+
+    _playerHand.push_back(card);
+    _handLayer->addChild(card);*/
+
+    if (!_enemyDeck) {
+        logger->log(LogLevel::WARNING, "Enemy deck is null");
+        return;
+    }
+    
+    // 获取牌库引用并修改
+    auto& deckCards = const_cast<std::vector<Card*>&>(_enemyDeck->getCards());
+    if (deckCards.empty()) {
+        logger->log(LogLevel::WARNING, "Enemy deck is empty");
+        return;
+    }
+    
+    try {
+        // 从牌库顶部抽一张牌
+        Card* card = deckCards.back();
+        deckCards.pop_back();
+        
+        if (!card) {
+            logger->log(LogLevel::ERR, "Drew null card from enemy deck");
+            return;
+        }
+        
+        // 将卡牌添加到手牌容器
+        _opponentHandCards.push_back(card);
+        
+        // 转换为随从卡并添加到随从容器
+        MinionCard* minion = dynamic_cast<MinionCard*>(card);
+        if (minion) {
+            // 先初始化UI
+            minion->initUI2();
+            _opponentHandCards2.push_back(minion);
+            logger->log(LogLevel::DEBUG, "Added enemy minion card: " + minion->getName());
+            
+            // 直接打出到场上
+            if (_gameLayer) {
+                // 设置卡牌位置和大小
+                auto visibleSize = Director::getInstance()->getVisibleSize();
+                float centerX = visibleSize.width / 2;
+                float fieldY = visibleSize.height * 0.6f;  // 在屏幕上方60%的位置
+                
+                minion->setScale(0.8f);
+                minion->setPosition(Vec2(centerX, fieldY));
+                
+                // 添加到场上卡牌数组
+                _opponentFieldCards.push_back(minion);
+                
+                // 添加到游戏层
+                _gameLayer->addChild(minion, 5);
+                
+                // 更新场上卡牌位置
+                updateEnemyFieldPositions();
+                
+                logger->log(LogLevel::DEBUG, "Enemy card played to field: " + minion->getName());
+            } else {
+                logger->log(LogLevel::ERR, "Game layer is null");
+            }
+        } else {
+            logger->log(LogLevel::WARNING, "Card is not a MinionCard");
+        }
+    } catch (const std::exception& e) {
+        logger->log(LogLevel::ERR, "Exception in drawEnemyCard: " + std::string(e.what()));
+    }
+}
+
+void GameScene::updateEnemyFieldPositions() {
+    if (_opponentFieldCards.empty()) return;
+    
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    float centerX = visibleSize.width / 2;
+    float fieldY = visibleSize.height * 0.6f;
+    float cardSpacing = 150.0f;
+    float startX = centerX - ((_opponentFieldCards.size() - 1) * cardSpacing) / 2;
+    
+    for (size_t i = 0; i < _opponentFieldCards.size(); ++i) {
+        auto card = _opponentFieldCards[i];
+        if (card) {
+            float targetX = startX + i * cardSpacing;
+            card->setPosition(Vec2(targetX, fieldY));
+        }
+    }
 }
 

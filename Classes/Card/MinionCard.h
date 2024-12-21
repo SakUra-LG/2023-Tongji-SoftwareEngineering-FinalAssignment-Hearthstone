@@ -34,13 +34,13 @@ public:
      * @param target 目标卡牌
      * @return 如果可以攻击返回true，否则返回false
      */
-    virtual bool canAttackTarget(Card* target) const;
+    virtual bool canAttackTarget(MinionCard* target) const;
 
     /**
      * @brief 对目标发起攻击
      * @param target 攻击目标
      */
-    virtual void attackTarget(Card* target);
+    virtual void attackTarget(MinionCard* target);
 
     /**
      * @brief 受到伤害时的处理
@@ -104,7 +104,7 @@ private:
     /**
      * @brief 检查随从是否死亡
      */
-    void checkDeath();
+    void checkDeath(MinionCard* card);
 
     /**
      * @brief 更新随从状态

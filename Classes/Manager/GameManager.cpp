@@ -102,18 +102,19 @@ void GameManager::initGame() {
     // 初始化玩家
     if (_currentPlayer) {
         _currentPlayer->setHealth(30);
-        _currentPlayer->setMana(0);
-        _currentPlayer->setMaxMana(0);
+        _currentPlayer->setMana(5);     // 设置初始法力值为5
+        _currentPlayer->setMaxMana(5);   // 设置初始最大法力值为5
     }
 
     if (_opponentPlayer) {
         _opponentPlayer->setHealth(30);
-        _opponentPlayer->setMana(0);
-        _opponentPlayer->setMaxMana(0);
+        _opponentPlayer->setMana(5);     // 设置初始法力值为5
+        _opponentPlayer->setMaxMana(5);   // 设置初始最大法力值为5
     }
 
     // 记录游戏开始
-    GameLogger::getInstance()->log(LogLevel::INFO, "Game initialized");
+    GameLogger::getInstance()->log(LogLevel::INFO, 
+        "Game initialized with starting mana 5/5");
 }
 
 void GameManager::drawCard(Player* player) {
@@ -268,4 +269,12 @@ void GameManager::handleCardDeath(Card* card) {
     
     // 通知其他系统卡牌死亡
     // TODO: 可以添加观察者模式来处理卡牌死亡事件
+}
+
+void GameManager::setCurrentPlayer(Player* player) {
+    _currentPlayer = player;
+}
+
+void GameManager::setOpponentPlayer(Player* player) {
+    _opponentPlayer = player;
 }
