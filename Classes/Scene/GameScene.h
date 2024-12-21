@@ -109,6 +109,8 @@ private:
     // 战斗相关方法
     void addBattleCardInteraction(Card* card);
     void attackCard(Card* attacker, Card* target);
+
+    void GameScene::initHandInteraction();  // 初始化手牌区域交互
 };
 
 #endif // __GAME_SCENE_H__

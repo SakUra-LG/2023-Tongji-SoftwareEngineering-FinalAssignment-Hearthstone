@@ -262,18 +262,71 @@ void GameScene::arrangeHandCards(bool isPlayerHand) {
 }
 // 修改卡牌交互逻辑
 void GameScene::addCardInteraction(Card* card) {
+    auto logger = GameLogger::getInstance();
     auto listener = EventListenerTouchOneByOne::create();
     
-    listener->onTouchBegan = [this, card](Touch* touch, Event* event) {
-        if (!_isPlayerTurn) return false;  // 只在玩家回合可以操作
+    listener->onTouchBegan = [this, card, logger](Touch* touch, Event* event) {
+        if (!_isPlayerTurn) return false;
         
-        Vec2 touchPos = card->convertToNodeSpace(touch->getLocation());
-        if (card->getBoundingBox().containsPoint(touchPos)) {
+        // 记录触摸点的世界坐标
+        Vec2 worldTouchPos = touch->getLocation();
+        logger->log(LogLevel::DEBUG, "Touch position (world): x=" + 
+            std::to_string(worldTouchPos.x) + ", y=" + 
+            std::to_string(worldTouchPos.y));
+
+        // 获取卡牌在世界坐标系中的位置和边界
+        Vec2 cardWorldPos = card->getParent()->convertToWorldSpace(card->getPosition());
+        Size cardSize = card->getContentSize();
+        float scale = card->getScale();
+        
+        // 计算卡牌在世界坐标系中的四个角点
+        Vec2 bottomLeft = Vec2(
+            cardWorldPos.x - (cardSize.width * scale) / 2,
+            cardWorldPos.y - (cardSize.height * scale) / 2
+        );
+        Vec2 topRight = Vec2(
+            cardWorldPos.x + (cardSize.width * scale) / 2,
+            cardWorldPos.y + (cardSize.height * scale) / 2
+        );
+
+        //// 记录卡牌信息
+        //std::string cardInfo = "\nCard bounds info:" +
+        //    "\nCard name: " + card->getName() +
+        //    "\nCard world position: x=" + std::to_string(cardWorldPos.x) + 
+        //    ", y=" + std::to_string(cardWorldPos.y) +
+        //    "\nCard size: w=" + std::to_string(cardSize.width) + 
+        //    ", h=" + std::to_string(cardSize.height) +
+        //    "\nCard scale: " + std::to_string(scale) +
+        //    "\nBottom-left corner: x=" + std::to_string(bottomLeft.x) + 
+        //    ", y=" + std::to_string(bottomLeft.y) +
+        //    "\nTop-right corner: x=" + std::to_string(topRight.x) + 
+        //    ", y=" + std::to_string(topRight.y);
+        //logger->log(LogLevel::DEBUG, cardInfo);
+
+        // 将触摸点转换为卡牌的本地坐标
+        Vec2 localTouchPos = card->convertToNodeSpace(worldTouchPos);
+        logger->log(LogLevel::DEBUG, "Touch position (local): x=" + 
+            std::to_string(localTouchPos.x) + ", y=" + 
+            std::to_string(localTouchPos.y));
+
+        // 获取卡牌的边界框
+        Rect cardBounds = card->getBoundingBox();
+       /* std::string boundsInfo = "\nCard bounding box:" +
+            "\nOrigin: x=" + std::to_string(cardBounds.origin.x) + 
+            ", y=" + std::to_string(cardBounds.origin.y) +
+            "\nSize: w=" + std::to_string(cardBounds.size.width) + 
+            ", h=" + std::to_string(cardBounds.size.height);
+        logger->log(LogLevel::DEBUG, boundsInfo);*/
+
+        // 检查触摸点是否在卡牌边界内
+        bool isInBounds = cardBounds.containsPoint(localTouchPos);
+        logger->log(LogLevel::DEBUG, "Touch is " + 
+            std::string(isInBounds ? "inside" : "outside") + " card bounds");
+
+        if (isInBounds) {
             _selectedCard = card;
             
-            // 只检查场上卡牌数量限制
             if (_playerFieldCards.size() < 7) {
-                // 直接打出卡牌到场地中间位置
                 auto visibleSize = Director::getInstance()->getVisibleSize();
                 Vec2 fieldPos = Vec2(visibleSize.width / 2, FIELD_Y);
                 playCardToField(card, fieldPos);
@@ -283,10 +336,6 @@ void GameScene::addCardInteraction(Card* card) {
         return false;
     };
     
-    listener->onTouchEnded = [this](Touch* touch, Event* event) {
-        _selectedCard = nullptr;
-    };
-    
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, card);
 }
 
@@ -294,13 +343,18 @@ bool GameScene::isValidFieldPosition(const Vec2& position) const {
     // 检查位置是否在场地范围内
     auto visibleSize = Director::getInstance()->getVisibleSize();
     float fieldTop = FIELD_Y + 100;  // 场地上边界
-    float fieldBottom = FIELD_Y - 100;  // 场地下边界
+    float fieldBottom = FIELD_Y - 100;  // 场地边界
     
     return position.y >= fieldBottom && position.y <= fieldTop;
 }
 
 void GameScene::playCardToField(Card* card, const Vec2& position) {
-    if (!card || _playerFieldCards.size() >= 7) {  // 最多7张卡在场上
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::DEBUG, "Starting playCardToField for card: " + card->getName());
+    
+    // 检查是否可以放置卡牌
+    if (!card || _playerFieldCards.size() >= 4) {
+        logger->log(LogLevel::WARNING, "Cannot play card: field full or invalid card");
         return;
     }
     
@@ -308,43 +362,97 @@ void GameScene::playCardToField(Card* card, const Vec2& position) {
     auto it = std::find(_playerHand.begin(), _playerHand.end(), card);
     if (it != _playerHand.end()) {
         _playerHand.erase(it);
+        logger->log(LogLevel::DEBUG, "Removed card from hand vector: " + card->getName());
     }
     
-    // 添加到场地
+    // 添加到场上卡牌数组
     _playerFieldCards.push_back(card);
+    logger->log(LogLevel::DEBUG, "Added card to field array. Field size: " + 
+        std::to_string(_playerFieldCards.size()));
+
+    // 重要：检查节点状态
+    Node* oldParent = card->getParent();
+    logger->log(LogLevel::DEBUG, "Card parent check - Has parent: " + 
+        std::string(oldParent ? "yes" : "no"));
     
-    // 检查卡牌是否有父节点
-    if (card->getParent()) {
-        card->removeFromParent();
+    //auto card2 = card;
+
+    if (oldParent) {
+        logger->log(LogLevel::DEBUG, "Current parent retain count: " + 
+            std::to_string(oldParent->getReferenceCount()));
+        
+        // 记录在旧父节点中的位置和缩放
+        Vec2 oldPos = card->getPosition();
+        float oldScale = card->getScale();
+        logger->log(LogLevel::DEBUG, "Old position: x=" + std::to_string(oldPos.x) + 
+            ", y=" + std::to_string(oldPos.y) + ", scale=" + std::to_string(oldScale));
+        
+        try {
+            // 从旧父节点中移除
+            logger->log(LogLevel::DEBUG, "Attempting to remove card from old parent");
+            //oldParent->removeChild(card, true);
+            logger->log(LogLevel::DEBUG, "Successfully removed card from old parent");
+        } catch (const std::exception& e) {
+            logger->log(LogLevel::ERR, "Exception while removing card: " + std::string(e.what()));
+            return;
+        }
     }
-    
-    // 确保场地层存在
-    if (!_playerField) {
+
+    try {
+        // 检查游戏层是否有效
+        if (!_gameLayer) {
+            logger->log(LogLevel::ERR, "Game layer is null!");
+            return;
+        }
+        
+        logger->log(LogLevel::DEBUG, "Attempting to add card to game layer");
+        //_gameLayer->addChild(card, 5);
+        logger->log(LogLevel::DEBUG, "Successfully added card to game layer");
+        
+        // 设置新的位置和缩放
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+
+        float centerX = visibleSize.width / 2;
+        float fieldY = visibleSize.height * 0.4f;
+        float cardSpacing = 150.0f;
+        float startX = centerX - ((_playerFieldCards.size() - 1) * cardSpacing) / 2;
+        int cardIndex = _playerFieldCards.size() - 1;
+        float targetX = startX + cardIndex * cardSpacing;
+        
+        //card->setScale(0.8f);
+        card->setPosition(Vec2(targetX-800, fieldY-100));
+        logger->log(LogLevel::DEBUG, "Set new position: x=" + std::to_string(targetX) + 
+            ", y=" + std::to_string(fieldY));
+        
+    } catch (const std::exception& e) {
+        logger->log(LogLevel::ERR, "Exception while adding card to game layer: " + 
+            std::string(e.what()));
         return;
     }
     
-    // 移动到场地层（不使用 retain/release）
-    _playerField->addChild(card);
-    
-    // 直接设置位置和大小
-    card->setScale(0.8f);
-    card->setPosition(Vec2(position.x, FIELD_Y));
-    
-    // 立即更新位置
+    // 更新位置
     updateFieldCardPositions();
     updateHandPositions();
     
-    // 触发卡牌效果
-    card->onPlay();
+    logger->log(LogLevel::DEBUG, "Completed playCardToField successfully");
 }
 
 void GameScene::updateFieldCardPositions() {
+    if (_playerFieldCards.empty()) return;
+    
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    float startX = (visibleSize.width - (_playerFieldCards.size() - 1) * FIELD_CARD_SPACING) / 2;
+    float centerX = visibleSize.width / 2-1000;
+    float fieldY = visibleSize.height * 0.4f-250;
+    float cardSpacing = 150.0f;
+    float startX = centerX - ((_playerFieldCards.size() - 1) * cardSpacing) / 2;
     
     for (size_t i = 0; i < _playerFieldCards.size(); ++i) {
         auto card = _playerFieldCards[i];
-        card->setPosition(Vec2(startX + i * FIELD_CARD_SPACING, FIELD_Y));
+        if (card) 
+        {
+            float targetX = startX + i * cardSpacing;
+            card->setPosition(Vec2(targetX, fieldY));
+        }
     }
 }
 
@@ -752,14 +860,12 @@ void GameScene::drawInitialHand() {
             break;
         }
         
-        // 获取牌库引用并修改
         auto& deckCards = const_cast<std::vector<Card*>&>(_playerDeck->getCards());
         if (deckCards.empty()) {
             logger->log(LogLevel::WARNING, "Deck is empty, cannot draw more cards");
             break;
         }
         
-        // 从牌库顶部抽一张牌
         Card* card = deckCards.back();
         deckCards.pop_back();
         
@@ -768,10 +874,9 @@ void GameScene::drawInitialHand() {
             continue;
         }
         
-        // 直接使用 Card 对象（因为它继承自 Node）
         float cardSpacing = 150.0f;
-        float startX = origin.x - cardSpacing-500;
-        float cardY = origin.y -150;
+        float startX = origin.x - cardSpacing - 500;
+        float cardY = origin.y - 150;
         
         card->setPosition(Vec2(startX + i * cardSpacing, cardY));
         card->setScale(0.8f);
@@ -779,23 +884,11 @@ void GameScene::drawInitialHand() {
         _playerHand.push_back(card);
         _handLayer->addChild(card);
         
-        addCardInteraction(card);  // 直接传递 Card* 对象
-        
-        // 记录抽到的卡牌详细信息
-        std::string cardInfo = "Added card to hand: " + card->getName() + 
-                             "\n    Cost: " + std::to_string(card->getCost()) + 
-                             "\n    Attack: " + std::to_string(card->getAttack()) + 
-                             "\n    Health: " + std::to_string(card->getHealth()) + 
-                             "\n    Description: " + card->getDescription();
-        logger->log(LogLevel::DEBUG, cardInfo);
+        logger->log(LogLevel::DEBUG, "Added card to hand: " + card->getName());
     }
     
-    // 记录完整的起始手牌信息
-    std::string handInfo = "\nInitial hand summary:";
-    for (size_t i = 0; i < _playerHand.size(); ++i) {
-        handInfo += "\n" + std::to_string(i + 1) + ". " + _playerHand[i]->getName();
-    }
-    logger->log(LogLevel::INFO, handInfo);
+    // 所有卡牌添加完成后，初始化手牌区域的交互
+    initHandInteraction();
     
     logger->log(LogLevel::INFO, "Initial hand drawn successfully");
 }
@@ -811,8 +904,65 @@ void GameScene::initBackground() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto origin = Director::getInstance()->getVisibleOrigin();
     
-    // 创建纯色背景
+    // 创建纯色背��
     auto background = LayerColor::create(Color4B(45, 45, 45, 255));  // 深灰色背景
     this->addChild(background, -10);
+}
+
+void GameScene::initHandInteraction() {
+    auto logger = GameLogger::getInstance();
+    auto listener = EventListenerTouchOneByOne::create();
+    
+    listener->onTouchBegan = [this, logger](Touch* touch, Event* event) {
+        if (!_isPlayerTurn) return false;
+        
+        Vec2 worldTouchPos = touch->getLocation();
+        logger->log(LogLevel::DEBUG, "Touch position (world): x=" + 
+            std::to_string(worldTouchPos.x) + ", y=" + 
+            std::to_string(worldTouchPos.y));
+
+        // 遍历所有手牌检查点击
+        for (auto card : _playerHand) {
+            // 获取卡牌在世界坐标系中的位置和边界
+            Vec2 cardWorldPos = card->getParent()->convertToWorldSpace(card->getPosition());
+            Size cardSize = card->getContentSize();
+            float scale = card->getScale();
+            
+            // 计算卡牌碰撞箱
+            Rect cardRect(
+                cardWorldPos.x - (cardSize.width * scale) / 2,
+                cardWorldPos.y - (cardSize.height * scale) / 2,
+                cardSize.width * scale,
+                cardSize.height * scale
+            );
+            
+            // 记录卡牌信息
+            std::string cardInfo = "\nChecking card: " + card->getName() +
+                "\nCard world position: x=" + std::to_string(cardWorldPos.x) + 
+                ", y=" + std::to_string(cardWorldPos.y) +
+                "\nCard rect: x=" + std::to_string(cardRect.origin.x) + 
+                ", y=" + std::to_string(cardRect.origin.y) +
+                ", w=" + std::to_string(cardRect.size.width) + 
+                ", h=" + std::to_string(cardRect.size.height);
+            logger->log(LogLevel::DEBUG, cardInfo);
+
+            // 检查点击是否在卡牌范围内
+            if (cardRect.containsPoint(worldTouchPos)) {
+                logger->log(LogLevel::DEBUG, "Card selected: " + card->getName());
+                _selectedCard = card;
+                
+                if (_playerFieldCards.size() < 7) {
+                    auto visibleSize = Director::getInstance()->getVisibleSize();
+                    Vec2 fieldPos = Vec2(visibleSize.width / 2, FIELD_Y);
+                    playCardToField(card, fieldPos);
+                }
+                return true;
+            }
+        }
+        return false;
+    };
+    
+    // 将监听器添加到手牌层
+    _handLayer->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, _handLayer);
 }
 
