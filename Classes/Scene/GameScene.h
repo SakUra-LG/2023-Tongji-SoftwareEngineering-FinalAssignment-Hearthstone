@@ -17,6 +17,14 @@ public:
 
     CREATE_FUNC(GameScene);
     virtual ~GameScene();
+    void handleCardSelection(Card* card, const Vec2& touchPos);
+    void handleTargetSelection(const Vec2& touchPos);
+    void GameScene::clearSelection();
+    bool onTouchBegan(Touch* touch, Event* event);
+    void onTouchMoved(Touch* touch, Event* event);
+    void onTouchEnded(Touch* touch, Event* event);
+
+    virtual bool init() override;
 
 private:
     // 玩家相关
@@ -125,6 +133,12 @@ private:
     void drawEnemyCard();  // 抽取对手卡牌
     void playEnemyCardToField(Card* card);  // 将对手卡牌放到场上
     void updateEnemyFieldPositions();  // 更新对手场上卡牌位置
+
+    // 添加新的成员变量(和选择目标有关系
+    //Card* _selectedCard = nullptr;  // 当前选中的卡牌
+    cocos2d::Sprite* _selectionSprite = nullptr;  // 选中效果精灵
+    cocos2d::Node* _targetSprite = nullptr;  // 目标选择效果
+
 };
 
 #endif // __GAME_SCENE_H__

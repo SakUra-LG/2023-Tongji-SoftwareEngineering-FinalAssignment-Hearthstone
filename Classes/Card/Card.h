@@ -38,8 +38,8 @@ protected:
     int _cost;
     std::string _description;
     int _count;  // 卡牌数量
-    bool _isOnField;       //是否被选中放在场上
 
+    bool _isOnField;       //是否被选中放在场上
     // UI组件
     Label* _nameLabel;
     Label* _costLabel;
@@ -79,6 +79,7 @@ protected:
     
     // 初始化方法
     virtual bool init(int id, const std::string& name);
+    
     
     // UI初始化
    // virtual void initUI();
@@ -123,6 +124,8 @@ public:
     int getCount() const { return _count; }
     void setCount(int count) { _count = count; }
     bool initSprite();
+    void onField() { _isOnField = true; };
+    bool getOnField() { return _isOnField ; };
     
     // 效果系统
     void addEffect(std::shared_ptr<IEffect> effect);
