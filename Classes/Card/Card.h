@@ -79,7 +79,7 @@ protected:
     virtual bool init(int id, const std::string& name);
     
     // UI初始化
-    virtual void initUI();
+   // virtual void initUI();
     
     // 游戏状态
     Player* _owner;

@@ -193,7 +193,7 @@ void CardFactory::initCardTemplates() {
             card.cost = 1;
             card.attack = 1;
             card.health = 1;
-            card.description = "战吼：将六张降落伞洗入��的牌库。降落伞的法力消耗为（0）点，可召唤一个1/1有冲锋的海盗";
+            card.description = "战吼：将六张降落伞洗入牌库。降落伞的法力消耗为（0）点，可召唤一个1/1有冲锋的海盗";
             card.hasBattlecry = true;
             card.framePath = "cards/frame_normal_suicong.png";
             card.portraitPath = "cards/portraits_FeiXingYuanPaQiSi.png";
@@ -613,14 +613,6 @@ void CardFactory::initCardTemplates() {
             logger->log(LogLevel::DEBUG, "Created card: " + card.name);
         }
 
-
-
-
-
-
-
-
-        
         logger->log(LogLevel::INFO, "Card templates initialization completed. Total cards: " + std::to_string(cardCount));
         
         // 初始化 allCards 向量（只在这里做一次）
@@ -658,7 +650,7 @@ Card* CardFactory::createCardById(int cardId) {
     }
     
     if (card) {
-        logger->log(LogLevel::INFO, "Successfully created card: " + data.name);
+        logger->log(LogLevel::DEBUG, "Card created with name: " + card->getName());
     }
     
     return card;
@@ -677,6 +669,7 @@ MinionCard* CardFactory::createMinionCard(const CardData& data) {
 
     try {
         // 设置基本属性
+        minion->setName(data.name);
         minion->setType(CardType::MINION);
         minion->setRarity(data.rarity);
         minion->setCost(data.cost);
@@ -685,7 +678,11 @@ MinionCard* CardFactory::createMinionCard(const CardData& data) {
         minion->setMaxHealth(data.health);
         minion->setCardDescription(data.description);
         
-        logger->log(LogLevel::DEBUG, "Basic properties set for minion: " + data.name);
+        minion->initUI2();
+
+        logger->log(LogLevel::DEBUG, "Basic properties set for minion: " + minion->getName()
+            + "法力值消耗：" + std::to_string(minion->getCost())
+            + "攻击力:" + std::to_string(minion->getAttack()));
         
         // 检查资源文件是否存在
         if (!FileUtils::getInstance()->isFileExist(data.framePath)) {
@@ -720,6 +717,11 @@ MinionCard* CardFactory::createMinionCard(const CardData& data) {
         portrait->setScale(0.4f);
         minion->addChild(portrait, 0);
         
+        ////创建攻击力、卡牌描述、法力值、生命值标签label
+        //auto attackLabel = Label::createWithTTF(std::to_string(minion->getAttack()), "fonts/arial.ttf", 39);
+        //attackLabel->setPosition(Vec2( -30,  -55));
+        //minion->addChild(attackLabel, 3);
+
         // 添加特殊效果
         if (data.hasBattlecry) {
             minion->addEffect(std::make_shared<BattlecryEffect>([=]() {
@@ -758,40 +760,59 @@ SpellCard* CardFactory::createSpellCard(const CardData& data) {
     logger->log(LogLevel::DEBUG, "Creating spell card: " + data.name);
     
     try {
-        // 创建法术卡
         auto spell = SpellCard::create(data.id, data.name);
         if (!spell) {
             logger->log(LogLevel::ERR, "Failed to create SpellCard instance");
             return nullptr;
         }
         
-        logger->log(LogLevel::DEBUG, "Setting SpellCard properties");
-        
         // 设置基本属性
+        spell->setName(data.name);
         spell->setType(CardType::SPELL);
         spell->setRarity(data.rarity);
         spell->setCost(data.cost);
         spell->setCardDescription(data.description);
         
-        // 设置精灵图片
-        if (!data.portraitPath.empty()) {
-            auto sprite = Sprite::create(data.portraitPath);
-            if (sprite) {
-                spell->setSprite(sprite);
-                logger->log(LogLevel::DEBUG, "Sprite set successfully");
-            } else {
-                logger->log(LogLevel::WARNING, "Failed to create sprite: " + data.portraitPath);
-            }
+        spell->initUI2();  // 初始化UI
+        
+        // 检查资源文件是否存在
+        if (!FileUtils::getInstance()->isFileExist(data.framePath)) {
+            logger->log(LogLevel::ERR, "Frame image not found: " + data.framePath);
+            return nullptr;
         }
+        
+        if (!FileUtils::getInstance()->isFileExist(data.portraitPath)) {
+            logger->log(LogLevel::ERR, "Portrait image not found: " + data.portraitPath);
+            return nullptr;
+        }
+        
+        // 创建并设置框架精灵
+        auto frame = Sprite::create(data.framePath);
+        if (!frame) {
+            logger->log(LogLevel::ERR, "Failed to create frame sprite");
+            return nullptr;
+        }
+        frame->setAnchorPoint(Vec2(0.5f, 0.5f));
+        frame->setPosition(spell->getContentSize() / 2);
+        frame->setScale(0.4f);
+        spell->addChild(frame, 1);
+        
+        // 创建并设置立绘精灵
+        auto portrait = Sprite::create(data.portraitPath);
+        if (!portrait) {
+            logger->log(LogLevel::ERR, "Failed to create portrait sprite");
+            return nullptr;
+        }
+        portrait->setAnchorPoint(Vec2(0.5f, 0.5f));
+        portrait->setPosition(Vec2(spell->getContentSize().width / 2+5, spell->getContentSize().height / 2+65));
+        portrait->setScale(0.4f);
+        spell->addChild(portrait, 0);
         
         logger->log(LogLevel::DEBUG, "SpellCard created successfully");
         return spell;
         
     } catch (const std::exception& e) {
         logger->log(LogLevel::ERR, "Exception in createSpellCard: " + std::string(e.what()));
-        return nullptr;
-    } catch (...) {
-        logger->log(LogLevel::ERR, "Unknown exception in createSpellCard");
         return nullptr;
     }
 }

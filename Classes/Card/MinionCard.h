@@ -19,7 +19,8 @@ public:
      * @return 返回创建的随从卡牌指针，失败返回nullptr
      */
     static MinionCard* create(int id, const std::string& name);
-
+    void initUI2();
+    
     // 随从基本属性
     CC_SYNTHESIZE(int, _attack, Attack);               // 攻击力
     CC_SYNTHESIZE(int, _health, Health);               // 当前生命值

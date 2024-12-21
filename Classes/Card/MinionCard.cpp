@@ -42,25 +42,90 @@ bool MinionCard::init(int id, const std::string& name) {
     _hasDivineShield = false; // 设置初始状态无圣盾效果
 
     // 初始化UI组件
-    initUI();
+    //initUI();
 
     return true;  // 初始化成功
 }
 
 // 初始化随从卡牌的UI组件
 void MinionCard::initUI() {
-    Card::initUI();  // 调用父类的UI初始化
+    //Card::initUI();  // 调用父类的UI初始化
 
-    // 添加攻击力和生命值标签
-    _attackLabel = Label::createWithTTF("", "fonts/arial.ttf", 32);
-    _attackLabel->setPosition(Vec2(-80, -80));
-    this->addChild(_attackLabel);
-
-    _healthLabel = Label::createWithTTF("", "fonts/arial.ttf", 32);
-    _healthLabel->setPosition(Vec2(80, -80));
-    this->addChild(_healthLabel);
-
+    
     updateUI();
+}
+void MinionCard::initUI2()
+{
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::DEBUG, "Starting Card UI initialization");
+
+    try {
+        // 创建并设置卡牌名称标签
+        _nameLabel = Label::createWithTTF(_name, "fonts/STKAITI.TTF", 20);
+        if (_nameLabel) {
+            _nameLabel->setPosition(Vec2(this->getContentSize().width / 2,
+                this->getContentSize().height - 55));
+            _nameLabel->setTextColor(Color4B::WHITE);
+            _nameLabel->enableOutline(Color4B::BLACK, 1);
+            this->addChild(_nameLabel, 2);
+            logger->log(LogLevel::DEBUG, "Name label created and added");
+        }
+        else {
+            logger->log(LogLevel::WARNING, "Failed to create name label");
+        }
+
+        // 创建并设置法力值消耗标签
+        _costLabel = Label::createWithTTF(std::to_string(_cost), "fonts/arial.ttf", 30);//!!！！！！！！！！！！！！！！！！!!!!!!!!!!!
+        if (_costLabel) {
+            _costLabel->setPosition(Vec2(-23, this->getContentSize().height + 60));
+            _costLabel->setTextColor(Color4B::WHITE);  // 改为白色
+            _costLabel->enableOutline(Color4B::BLACK, 2);  // 保持黑色描边
+            _costLabel->enableShadow(Color4B::BLACK);  // 保持阴影
+            this->addChild(_costLabel, 2);
+            logger->log(LogLevel::DEBUG, "Cost label created and added");
+        }
+        else {
+            logger->log(LogLevel::WARNING, "Failed to create cost label");
+        }
+
+        // 创建并设置卡牌描述标签                                                                         待修改！！！！！！！
+        _descriptionLabel = Label::createWithTTF(_description, "fonts/STKAITI.TTF", 15);
+        if (_descriptionLabel) {
+            _descriptionLabel->setPosition(Vec2(this->getContentSize().width / 2, -50));
+            _descriptionLabel->setDimensions(this->getContentSize().width + 120, 120);//文本框大小
+            _descriptionLabel->setTextColor(Color4B::BLACK);  // 改为黑色
+            _descriptionLabel->enableOutline(Color4B::WHITE, 1);  // 改为白色描边
+            _descriptionLabel->setAlignment(TextHAlignment::CENTER);
+            this->addChild(_descriptionLabel, 2);
+            logger->log(LogLevel::DEBUG, "Description label created and added");
+        }
+        else {
+            logger->log(LogLevel::WARNING, "Failed to create description label");
+        }
+
+       ///攻击力
+            auto attackLabel = Label::createWithTTF(std::to_string(this->getAttack()), "fonts/arial.ttf", 40);
+            attackLabel->setPosition(Vec2(this->getContentSize().width / 2-60, -55));
+            attackLabel->setTextColor(Color4B::WHITE);  // 改为白色
+            attackLabel->enableOutline(Color4B::BLACK, 2);
+            attackLabel->enableShadow(Color4B::BLACK);
+            this->addChild(attackLabel, 2);
+
+            ////// 生命值标签
+            auto healthLabel = Label::createWithTTF(std::to_string(this->getHealth()), "fonts/arial.ttf", 40);
+            healthLabel->setPosition(Vec2(this->getContentSize().width /2+80, -55));
+            healthLabel->setTextColor(Color4B::WHITE);  // 改为白色
+            healthLabel->enableOutline(Color4B::BLACK, 2);
+            healthLabel->enableShadow(Color4B::BLACK);
+            this->addChild(healthLabel, 2);
+        
+
+        logger->log(LogLevel::DEBUG, "Card UI initialization complete");
+    }
+    catch (const std::exception& e) {
+        logger->log(LogLevel::ERR, "Exception in Card UI initialization: " + std::string(e.what()));
+        throw;
+    }
 }
 
 // 更新随从卡牌的UI显示

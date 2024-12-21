@@ -6,31 +6,18 @@
 #include "Manager/GameManager.h"
 #include "Animation/AnimationManager.h"
 #include "Effect/EffectManager.h"
+#include "Utils/GameLogger.h"
 
 // 创建法术卡牌的静态工厂方法
 // @param id: 卡牌ID
 // @param name: 卡牌名称
 // @return: 返回创建的法术卡牌指针，创建失败返回nullptr
 SpellCard* SpellCard::create(int id, const std::string& name) {
-    auto logger = GameLogger::getInstance();
-    logger->log(LogLevel::DEBUG, "Creating SpellCard: " + name);
-    
     SpellCard* spell = new (std::nothrow) SpellCard();
-    if (!spell) {
-        logger->log(LogLevel::ERR, "Failed to allocate SpellCard");
-        return nullptr;
-    }
-    
-    // 添加更多日志来追踪初始化过程
-    logger->log(LogLevel::DEBUG, "Starting SpellCard initialization");
-    
-    if (spell->init(id, name)) {
+    if (spell && spell->init(id, name)) {
         spell->autorelease();
-        logger->log(LogLevel::DEBUG, "SpellCard initialization successful");
         return spell;
     }
-    
-    logger->log(LogLevel::ERR, "SpellCard initialization failed");
     CC_SAFE_DELETE(spell);
     return nullptr;
 }
@@ -40,114 +27,138 @@ SpellCard* SpellCard::create(int id, const std::string& name) {
 // @param name: 卡牌名称
 // @return: 初始化成功返回true，失败返回false
 bool SpellCard::init(int id, const std::string& name) {
-    auto logger = GameLogger::getInstance();
-    logger->log(LogLevel::DEBUG, "Initializing SpellCard: " + name);
-    
-    // 调用基类初始化
     if (!Card::init(id, name)) {
-        logger->log(LogLevel::ERR, "Base Card initialization failed");
         return false;
     }
-    
-    // 设置默认大小
-    this->setContentSize(Size(90, 120));
-    
-    // 初始化法术卡特有的属性
-    _targetType = SpellTarget::NONE;
-    _needsTarget = false;
-    
-    logger->log(LogLevel::DEBUG, "SpellCard initialization complete");
+
+    // 设置法术牌的默认属性
+    _hasBattlecry = false;
+    _hasOutcast = false;
+
     return true;
 }
 
 // 初始化法术卡牌的UI元素
-void SpellCard::initUI() {
+//void SpellCard::initUI() {
+//    //Card::initUI();
+//    updateUI();
+//}
+
+void SpellCard::initUI2() {
     auto logger = GameLogger::getInstance();
     logger->log(LogLevel::DEBUG, "Starting SpellCard UI initialization");
-    
-    try {
-        // 首先初始化基础卡牌UI
-        Card::initUI();
-        logger->log(LogLevel::DEBUG, "Base Card UI initialized");
 
-        // 添加法术特有的图标
-        auto spellIcon = Sprite::create("cards/spell_icon.png");
-        if (spellIcon) {
-            spellIcon->setPosition(Vec2(0, 30));
-            this->addChild(spellIcon);
-            logger->log(LogLevel::DEBUG, "Spell icon added");
-        } else {
-            logger->log(LogLevel::WARNING, "Failed to create spell icon");
+    try {
+        // 创建并设置卡牌名称标签
+        _nameLabel = Label::createWithTTF(_name, "fonts/STKAITI.TTF", 20);
+        if (_nameLabel) {
+            _nameLabel->setPosition(Vec2(this->getContentSize().width / 2,
+                this->getContentSize().height - 55));
+            _nameLabel->setTextColor(Color4B::WHITE);
+            _nameLabel->enableOutline(Color4B::BLACK, 1);
+            this->addChild(_nameLabel, 2);
+            logger->log(LogLevel::DEBUG, "Name label created and added");
         }
-        
+
+        // 创建并设置法力值消耗标签
+        _costLabel = Label::createWithTTF(std::to_string(_cost), "fonts/arial.ttf", 30);
+        if (_costLabel) {
+            _costLabel->setPosition(Vec2(-23, this->getContentSize().height + 60));
+            _costLabel->setTextColor(Color4B::WHITE);
+            _costLabel->enableOutline(Color4B::BLACK, 2);
+            _costLabel->enableShadow(Color4B::BLACK);
+            this->addChild(_costLabel, 2);
+            logger->log(LogLevel::DEBUG, "Cost label created and added");
+        }
+
+        // 创建并设置卡牌描述标签
+        _descriptionLabel = Label::createWithTTF(_description, "fonts/STKAITI.TTF", 15);
+        if (_descriptionLabel) {
+            _descriptionLabel->setPosition(Vec2(this->getContentSize().width / 2, -50));
+            _descriptionLabel->setDimensions(this->getContentSize().width + 120, 120);
+            _descriptionLabel->setTextColor(Color4B::BLACK);
+            _descriptionLabel->enableOutline(Color4B::WHITE, 1);
+            _descriptionLabel->setAlignment(TextHAlignment::CENTER);
+            this->addChild(_descriptionLabel, 2);
+            logger->log(LogLevel::DEBUG, "Description label created and added");
+        }
+
         logger->log(LogLevel::DEBUG, "SpellCard UI initialization complete");
-    } catch (const std::exception& e) {
+    }
+    catch (const std::exception& e) {
         logger->log(LogLevel::ERR, "Exception in SpellCard UI initialization: " + std::string(e.what()));
         throw;
     }
 }
 
-// 施放法术
-// @param target: 法术目标，可以为nullptr（无目标法术）
-void SpellCard::castSpell(Card* target) {
-    // 检查目标要求
-    if (_needsTarget && !target) {
-        // 需要目标但没有提供目标，直接返回
-        return;
-    }
-
-    // 检查目标合法性
-    if (_needsTarget && !canTargetCard(target)) {
-        // 目标不合法，直接返回
-        return;
-    }
-
-    // 播放法术施放动画
-    playSpellEffect();
-
-    // 触发所有法术效果
-    for (auto& effect : _effects) {
-        effect->setOwner(this);  // 设置效果的所有者
-        effect->onActivate();    // 激活效果
-    }
-
-    // 法术施放完成的处理
-    onSpellComplete();
-}
-
-// 检查是否可以将法术指向目标
-// @param target: 要检查的目标
-// @return: 如果可以指向返回true，否则返回false
-bool SpellCard::canTargetCard(Card* target) const {
-    // 空指针检查
-    if (!target) return false;
-
-    // 根据法术目标类型判断
-    switch (_targetType) {
-    case SpellTarget::SINGLE_TARGET:
-        return true;  // 单体目标，任何有效目标都可以
-    case SpellTarget::FRIENDLY:
-        // 检查目标是否为友方随从
-        return target->getOwner() == GameManager::getInstance()->getCurrentPlayer();
-    case SpellTarget::ENEMY:
-        // 检查目标是否为敌方随从
-        return target->getOwner() == GameManager::getInstance()->getOpponentPlayer();
-    default:
-        return false;
+void SpellCard::updateUI() {
+    // 法术牌可能需要更新的UI元素
+    if (_costLabel) {
+        _costLabel->setString(std::to_string(_cost));
     }
 }
 
-// 播放法术特效
-void SpellCard::playSpellEffect() {
-    // 调用动画管理器播放法术动画
-    AnimationManager::getInstance()->playSpellAnimation(getName(), nullptr);
-}
-
-// 法术施放完成后的处理
-void SpellCard::onSpellComplete() {
-    // 将法术卡牌移到弃牌堆
-    GameManager::getInstance()->discardCard(this);
-}
+//// 施放法术
+//// @param target: 法术目标，可以为nullptr（无目标法术）
+//void SpellCard::castSpell(Card* target) {
+//    // 检查目标要求
+//    if (_needsTarget && !target) {
+//        // 需要目标但没有提供目标，直接返回
+//        return;
+//    }
+//
+//    // 检查目标合法性
+//    if (_needsTarget && !canTargetCard(target)) {
+//        // 目标不合法，直接返回
+//        return;
+//    }
+//
+//    // 播放法术施放动画
+//    playSpellEffect();
+//
+//    // 触发所有法术效果
+//    for (auto& effect : _effects) {
+//        effect->setOwner(this);  // 设置效果的所有者
+//        effect->onActivate();    // 激活效果
+//    }
+//
+//    // 法术施放完成的处理
+//    onSpellComplete();
+//}
+//
+//// 检查是否可以将法术指向目标
+//// @param target: 要检查的目标
+//// @return: 如果可以指向返回true，否则返回false
+//bool SpellCard::canTargetCard(Card* target) const {
+//    // 空指针检查
+//    if (!target) return false;
+//
+//    // 根据法术目标类型判断
+//    switch (_targetType) {
+//    case SpellTarget::SINGLE_TARGET:
+//        return true;  // 单体目标，任何有效目标都可以
+//    case SpellTarget::FRIENDLY:
+//        // 检查目标是否为友方随从
+//        return target->getOwner() == GameManager::getInstance()->getCurrentPlayer();
+//    case SpellTarget::ENEMY:
+//        // 检查目标是否为敌方随从
+//        return target->getOwner() == GameManager::getInstance()->getOpponentPlayer();
+//    default:
+//        return false;
+//    }
+//}
+//
+//// 播放法术特效
+//void SpellCard::playSpellEffect() {
+//    // 调用动画管理器播放法术动画
+//    AnimationManager::getInstance()->playSpellAnimation(getName(), nullptr);
+//}
+//
+//// 法术施放完成后的处理
+//void SpellCard::onSpellComplete() {
+//    // 将法术卡牌移到弃牌堆
+//    GameManager::getInstance()->discardCard(this);
+//}
 
 /*
 使用示例：

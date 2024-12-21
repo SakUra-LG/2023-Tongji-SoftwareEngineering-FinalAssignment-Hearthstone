@@ -11,9 +11,7 @@ class Deck;
 
 class GameScene : public cocos2d::Scene {
 public:
-    static cocos2d::Scene* createScene();
     static cocos2d::Scene* createWithDeck(Deck* deck);
-    virtual bool init() override;
     bool initWithDeck(Deck* deck);
 
     CREATE_FUNC(GameScene);
@@ -51,18 +49,25 @@ private:
     cocos2d::MenuItemImage* _playerHeroPower = nullptr;
 
     // 卡牌相关
-    cocos2d::Sprite* _selectedCard = nullptr;
+    Card* _selectedCard = nullptr;
     std::vector<Card*> _playerHand;  // 存储玩家手牌的卡牌指针
     std::vector<cocos2d::Sprite*> _playerHandSprites;  // 存储手牌的精灵
-    std::vector<cocos2d::Sprite*> _playerFieldCards;
-    std::vector<cocos2d::Sprite*> _opponentHandCards;
-    std::vector<cocos2d::Sprite*> _opponentFieldCards;
-    std::map<cocos2d::Sprite*, bool> _hasAttacked;
+    std::vector<Card*> _playerFieldCards;
+    std::vector<Card*> _opponentFieldCards;
+    std::map<Card*, bool> _hasAttacked;
 
     // 卡牌常量
     static constexpr float CARD_SPACING = 100.0f;
     static constexpr float CARD_SCALE = 0.1f;
     static constexpr float CARD_MOVE_DURATION = 0.5f;
+
+    // 添加对手手牌相关变量
+    std::vector<cocos2d::Sprite*> _opponentHandSprites;  // 对手手牌精灵
+    std::vector<Card*> _opponentHandCards;  // 对手手牌
+
+    // 添加场地位置常量
+    static constexpr float FIELD_Y = 300.0f;  // 场地的Y坐标
+    static constexpr float FIELD_CARD_SPACING = 120.0f;  // 场上卡牌间距
 
     // 方法声明
     void dealCard(const std::string& cardName, bool isPlayerCard, int handPosition);
@@ -73,16 +78,15 @@ private:
     void updateFieldPositions();
     void addDebugLabels();
     void showGameOverUI();
-    void addCardInteraction(cocos2d::Sprite* cardSprite);
-    void addBattleCardInteraction(cocos2d::Sprite* cardSprite);
-    void playCardToField(cocos2d::Sprite* cardSprite);
-    void attackCard(cocos2d::Sprite* attacker, cocos2d::Sprite* target);
+    void addCardInteraction(Card* card);
+    void playCardToField(Card* card, const cocos2d::Vec2& position);
+    bool isValidFieldPosition(const cocos2d::Vec2& position) const;
+    void updateFieldCardPositions();
 
     // 初始化方法
     void initLayers();
     void initUI();
     void initListeners();
-    void initGame();
     void initBackground();
     void drawInitialHand();
     
@@ -97,11 +101,14 @@ private:
     void onCardPlayed(Card* card);
     void onCardDrawn(Card* card);
     void onHeroPowerClicked(cocos2d::Ref* sender);
-    
     // 回合控制
     void startTurn();
     void endTurn();
     void useHeroPower();
+
+    // 战斗相关方法
+    void addBattleCardInteraction(Card* card);
+    void attackCard(Card* attacker, Card* target);
 };
 
 #endif // __GAME_SCENE_H__

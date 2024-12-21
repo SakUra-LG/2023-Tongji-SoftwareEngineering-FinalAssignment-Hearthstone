@@ -44,76 +44,76 @@ bool Card::init(int id, const std::string& name) {
 }
 
 // 初始化卡牌UI元素
-void Card::initUI() {
-    auto logger = GameLogger::getInstance();
-    logger->log(LogLevel::DEBUG, "Starting Card UI initialization");
-    
-    try {
-        // 创建并设置卡牌名称标签
-        _nameLabel = Label::createWithTTF(_name, "fonts/STKAITI.TTF", 20);
-        if (_nameLabel) {
-            _nameLabel->setPosition(Vec2(this->getContentSize().width / 2,
-                this->getContentSize().height - 55));
-            _nameLabel->setTextColor(Color4B::WHITE);
-            _nameLabel->enableOutline(Color4B::BLACK, 1);
-            this->addChild(_nameLabel,2);
-            logger->log(LogLevel::DEBUG, "Name label created and added");
-        } else {
-            logger->log(LogLevel::WARNING, "Failed to create name label");
-        }
-
-        // 创建并设置法力值消耗标签
-        _costLabel = Label::createWithTTF(std::to_string(_cost), "fonts/arial.ttf", 30);//!!！！！！！！！！！！！！！！！！!!!!!!!!!!!
-        if (_costLabel) {
-            _costLabel->setPosition(Vec2(-23, this->getContentSize().height + 60));
-            _costLabel->setTextColor(Color4B::WHITE);  // 改为白色
-            _costLabel->enableOutline(Color4B::BLACK, 2);  // 保持黑色描边
-            _costLabel->enableShadow(Color4B::BLACK);  // 保持阴影
-            this->addChild(_costLabel,2);
-            logger->log(LogLevel::DEBUG, "Cost label created and added");
-        } else {
-            logger->log(LogLevel::WARNING, "Failed to create cost label");
-        }
-
-        // 创建并设置卡牌描述标签                                                                         待修改！！！！！！！
-        _descriptionLabel = Label::createWithTTF(_description, "fonts/STKAITI.TTF", 50);
-        if (_descriptionLabel) {
-            _descriptionLabel->setPosition(Vec2(this->getContentSize().width / 2, +530));
-            _descriptionLabel->setDimensions(this->getContentSize().width + 120, 120);//文本框大小
-            _descriptionLabel->setTextColor(Color4B::BLACK);  // 改为黑色
-            _descriptionLabel->enableOutline(Color4B::WHITE, 1);  // 改为白色描边
-            _descriptionLabel->setAlignment(TextHAlignment::CENTER);
-            this->addChild(_descriptionLabel,2);
-            logger->log(LogLevel::DEBUG, "Description label created and added");
-        } else {
-            logger->log(LogLevel::WARNING, "Failed to create description label");
-        }
-        
-        if (_id == 1003 || _id == 1006 || _id == 1008 || _id == 1011 || _id == 1016 ||
-            _id == 2004 || _id == 1013 || _id == 1015 || _id == 2001 || _id == 2008 || (_id >= 2009 && _id <= 2011) || _id == 2013 || _id == 2014) {
-            //// 攻击力标签
-            //auto attackLabel = Label::createWithTTF(std::to_string(attack), "fonts/arial.ttf", 70);
-            //attackLabel->setPosition(Vec2(-60, -140));
-            //attackLabel->setTextColor(Color4B::WHITE);  // 改为白色
-            //attackLabel->enableOutline(Color4B::BLACK, 2);
-            //attackLabel->enableShadow(Color4B::BLACK);
-            //this->addChild(attackLabel, 2);
-
-            //// 生命值标签
-            //auto healthLabel = Label::createWithTTF(std::to_string(health), "fonts/arial.ttf", 72);
-            //healthLabel->setPosition(Vec2(this->getContentSize().width + 110, -140));
-            //healthLabel->setTextColor(Color4B::WHITE);  // 改为白色
-            //healthLabel->enableOutline(Color4B::BLACK, 2);
-            //healthLabel->enableShadow(Color4B::BLACK);
-            //this->addChild(healthLabel, 2);
-        }
-
-        logger->log(LogLevel::DEBUG, "Card UI initialization complete");
-    } catch (const std::exception& e) {
-        logger->log(LogLevel::ERR, "Exception in Card UI initialization: " + std::string(e.what()));
-        throw;
-    }
-}
+//void Card::initUI() {
+//    auto logger = GameLogger::getInstance();
+//    logger->log(LogLevel::DEBUG, "Starting Card UI initialization");
+//    
+//    try {
+//        // 创建并设置卡牌名称标签
+//        _nameLabel = Label::createWithTTF(_name, "fonts/STKAITI.TTF", 20);
+//        if (_nameLabel) {
+//            _nameLabel->setPosition(Vec2(this->getContentSize().width / 2,
+//                this->getContentSize().height - 55));
+//            _nameLabel->setTextColor(Color4B::WHITE);
+//            _nameLabel->enableOutline(Color4B::BLACK, 1);
+//            this->addChild(_nameLabel,2);
+//            logger->log(LogLevel::DEBUG, "Name label created and added");
+//        } else {
+//            logger->log(LogLevel::WARNING, "Failed to create name label");
+//        }
+//
+//        // 创建并设置法力值消耗标签
+//        _costLabel = Label::createWithTTF(std::to_string(_cost), "fonts/arial.ttf", 30);//!!！！！！！！！！！！！！！！！！!!!!!!!!!!!
+//        if (_costLabel) {
+//            _costLabel->setPosition(Vec2(-23, this->getContentSize().height + 60));
+//            _costLabel->setTextColor(Color4B::WHITE);  // 改为白色
+//            _costLabel->enableOutline(Color4B::BLACK, 2);  // 保持黑色描边
+//            _costLabel->enableShadow(Color4B::BLACK);  // 保持阴影
+//            this->addChild(_costLabel,2);
+//            logger->log(LogLevel::DEBUG, "Cost label created and added");
+//        } else {
+//            logger->log(LogLevel::WARNING, "Failed to create cost label");
+//        }
+//
+//        // 创建并设置卡牌描述标签                                                                         待修改！！！！！！！
+//        _descriptionLabel = Label::createWithTTF(_description, "fonts/STKAITI.TTF", 50);
+//        if (_descriptionLabel) {
+//            _descriptionLabel->setPosition(Vec2(this->getContentSize().width / 2, +530));
+//            _descriptionLabel->setDimensions(this->getContentSize().width + 120, 120);//文本框大小
+//            _descriptionLabel->setTextColor(Color4B::BLACK);  // 改为黑色
+//            _descriptionLabel->enableOutline(Color4B::WHITE, 1);  // 改为白色描边
+//            _descriptionLabel->setAlignment(TextHAlignment::CENTER);
+//            this->addChild(_descriptionLabel,2);
+//            logger->log(LogLevel::DEBUG, "Description label created and added");
+//        } else {
+//            logger->log(LogLevel::WARNING, "Failed to create description label");
+//        }
+//        
+//        if (_id == 1003 || _id == 1006 || _id == 1008 || _id == 1011 || _id == 1016 ||
+//            _id == 2004 || _id == 1013 || _id == 1015 || _id == 2001 || _id == 2008 || (_id >= 2009 && _id <= 2011) || _id == 2013 || _id == 2014) {
+//            //// 攻击力标签
+//            //auto attackLabel = Label::createWithTTF(std::to_string(attack), "fonts/arial.ttf", 70);
+//            //attackLabel->setPosition(Vec2(-60, -140));
+//            //attackLabel->setTextColor(Color4B::WHITE);  // 改为白色
+//            //attackLabel->enableOutline(Color4B::BLACK, 2);
+//            //attackLabel->enableShadow(Color4B::BLACK);
+//            //this->addChild(attackLabel, 2);
+//
+//            //// 生命值标签
+//            //auto healthLabel = Label::createWithTTF(std::to_string(health), "fonts/arial.ttf", 72);
+//            //healthLabel->setPosition(Vec2(this->getContentSize().width + 110, -140));
+//            //healthLabel->setTextColor(Color4B::WHITE);  // 改为白色
+//            //healthLabel->enableOutline(Color4B::BLACK, 2);
+//            //healthLabel->enableShadow(Color4B::BLACK);
+//            //this->addChild(healthLabel, 2);
+//        }
+//
+//        logger->log(LogLevel::DEBUG, "Card UI initialization complete");
+//    } catch (const std::exception& e) {
+//        logger->log(LogLevel::ERR, "Exception in Card UI initialization: " + std::string(e.what()));
+//        throw;
+//    }
+//}
 
 // 检查卡牌是否可以打出
 // @return: 可以打出返回true，否则返回false

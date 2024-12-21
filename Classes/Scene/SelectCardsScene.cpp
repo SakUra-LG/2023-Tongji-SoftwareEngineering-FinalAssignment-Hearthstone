@@ -139,33 +139,40 @@ void SelectCardsScene::onCards1(Ref* sender) {
 }
 
 void SelectCardsScene::onCards2(Ref* sender) {
-    // 直接从 CardFactory 获取彩虹DK卡组
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::INFO, "Starting onCards1...");
+
     auto factory = CardFactory::getInstance();
     if (!factory) {
-        CCLOG("Failed to get CardFactory instance");
+        logger->log(LogLevel::ERR, "Failed to get CardFactory instance");
         return;
     }
 
-    // 创建卡组
+    const auto& deck2 = factory->getDeck2();
+    logger->log(LogLevel::INFO, "Deck2 size: " + std::to_string(deck2.size()));
+
     auto deckManager = DeckManager::getInstance();
     if (!deckManager) {
         CCLOG("Failed to get DeckManager instance");
         return;
     }
 
-    // 直接使用 deck2 创建卡组
-    auto deck = deckManager->createDeckFromTemplate(factory->getDeck2());
+    auto deck = deckManager->createDeckFromTemplate(deck2);
     if (!deck) {
-        CCLOG("Failed to create Rainbow DK deck");
+        CCLOG("Failed to create deck from template");
         return;
     }
+    CCLOG("Successfully created deck");
 
-    // 创建游戏场景
     auto scene = GameScene::createWithDeck(deck);
-    if (scene) {
-        Director::getInstance()->replaceScene(
-            TransitionFade::create(0.5f, scene));
+    if (!scene) {
+        CCLOG("Failed to create game scene");
+        return;
     }
+    CCLOG("Successfully created game scene");
+
+    Director::getInstance()->replaceScene(
+        TransitionFade::create(0.5f, scene));
 }
 
 void SelectCardsScene::onBack(Ref* sender)
