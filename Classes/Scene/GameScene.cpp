@@ -325,7 +325,7 @@ void GameScene::addCardInteraction(Card* card) {
             std::string(isInBounds ? "inside" : "outside") + " card bounds");
 
         if (isInBounds) {
-            _selectedCard = card;
+            _selectedCard = dynamic_cast<MinionCard*>(card);
 
             if (_playerFieldCards.size() < 7) {
                 auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -503,7 +503,7 @@ void GameScene::addBattleCardInteraction(Card* card) {
         Rect rect = Rect(0, 0, s.width, s.height);
 
         if (rect.containsPoint(locationInNode)) {
-            _selectedCard = dynamic_cast<Card*>(target->getParent());
+            _selectedCard = dynamic_cast<MinionCard*>(target->getParent());
             if (_selectedCard && !_hasAttacked[_selectedCard]) {  // 检查是否已经攻击过
                 return true;
             }
@@ -727,36 +727,57 @@ void GameScene::updateTurnIndicator() {
         sizeOfEnemyLeft = _opponentHandCards.size();
         if (sizeOfEnemyLeft == 0)
             return;
+        
         Card* card = _opponentHandCards.back();
         _opponentHandCards.pop_back();
-        if (sizeOfEnemyLeft == 3)
-        {
-            auto visibleSize = Director::getInstance()->getVisibleSize();
-            float centerX = visibleSize.width / 2;
-            float fieldY = visibleSize.height * 0.6f;  // 在屏幕上方60%的位置
-            card->setPosition(Vec2(806.003662-50, fieldY));
+        
+        auto logger = GameLogger::getInstance();
+        logger->log(LogLevel::DEBUG, "放置敌方随从 --------");
+        logger->log(LogLevel::DEBUG, "剩余手牌数量: " + std::to_string(sizeOfEnemyLeft));
+        
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        float fieldY = visibleSize.height * 0.6f;  // 在屏幕上方60%的位置
+        Vec2 position;
 
+        if (sizeOfEnemyLeft == 3) {
+            position = Vec2(806.003662f-50, fieldY);
+            logger->log(LogLevel::DEBUG, "位置1: x=" + std::to_string(position.x) + ", y=" + std::to_string(position.y));
         }
-        else if (sizeOfEnemyLeft == 2)
-        {
-            auto visibleSize = Director::getInstance()->getVisibleSize();
-            float centerX = visibleSize.width / 2;
-            float fieldY = visibleSize.height * 0.6f;  // 在屏幕上方60%的位置
-            card->setPosition(Vec2(950.001343-45, fieldY));
+        else if (sizeOfEnemyLeft == 2) {
+            position = Vec2(950.001343f-45, fieldY);
+            logger->log(LogLevel::DEBUG, "位置2: x=" + std::to_string(position.x) + ", y=" + std::to_string(position.y));
         }
-        else if (sizeOfEnemyLeft == 1)
-        {
-            auto visibleSize = Director::getInstance()->getVisibleSize();
-            float centerX = visibleSize.width / 2;
-            float fieldY = visibleSize.height * 0.6f;  // 在屏幕上方60%的位置
-            card->setPosition(Vec2(1105.002441-50, fieldY));
+        else if (sizeOfEnemyLeft == 1) {
+            position = Vec2(1105.002441f-50, fieldY);
+            logger->log(LogLevel::DEBUG, "位置3: x=" + std::to_string(position.x) + ", y=" + std::to_string(position.y));
         }
+        
+        card->setPosition(position);
         card->setScale(0.8f);
 
         MinionCard* minion = dynamic_cast<MinionCard*>(card);
+        if (minion) {
+            logger->log(LogLevel::DEBUG, "放置随从: " + minion->getName());
+            logger->log(LogLevel::DEBUG, "随从属性 - 攻击力: " + std::to_string(minion->getAttack()) + 
+                ", 生命值: " + std::to_string(minion->getHealth()));
+            
+            // 计算并记录碰撞箱
+            Size cardSize = minion->getContentSize();
+            float scale = minion->getScale();
+            Rect cardRect(
+                position.x - (cardSize.width * scale) / 2,
+                position.y - (cardSize.height * scale) / 2,
+                cardSize.width * scale,
+                cardSize.height * scale
+            );
+            
+            logger->log(LogLevel::DEBUG, "随从碰撞箱 - x=" + std::to_string(cardRect.origin.x) + 
+                ", y=" + std::to_string(cardRect.origin.y) + 
+                ", width=" + std::to_string(cardRect.size.width) + 
+                ", height=" + std::to_string(cardRect.size.height));
+        }
 
-        _opponentFieldCards2.push_back(minion);     //厂商三张卡从左到右对应下标0~1
-
+        _opponentFieldCards2.push_back(minion);
         this->addChild(minion, 5);
     }
 }
@@ -1185,7 +1206,7 @@ void GameScene::initHandInteraction() {
                 ", h=" + std::to_string(cardRect.size.height);
             logger->log(LogLevel::DEBUG, cardInfo);
             
-            // 检查点击是否在卡牌范围内且卡牌在场上
+            // 检查点击是否在卡牌范围内且卡��在场上
             if (cardRect.containsPoint(worldTouchPos) && card->getOnField()) {
                 logger->log(LogLevel::DEBUG, "Card selected: " + card->getName());
                 handleCardSelection(card, worldTouchPos);
@@ -1386,7 +1407,7 @@ void GameScene::handleCardSelection(Card* card, const Vec2& touchPos) {
         _selectionSprite = nullptr;
     }
     
-    _selectedCard = card;
+    _selectedCard = dynamic_cast<MinionCard*>(card);
     
     // 创建选择效果精灵
     _selectionSprite = Sprite::create("images/selection_effect.png");
@@ -1535,13 +1556,19 @@ bool GameScene::init() {
     
     // 设置手牌触摸监听器（用于出牌）
     auto handListener = EventListenerTouchOneByOne::create();
-    handListener->setSwallowTouches(true);  // 如果处理了触摸事件，阻止事件继续传递
+    handListener->setSwallowTouches(false);  // 如果处理了触摸事件，阻止事件继续传递
     
     handListener->onTouchBegan = [this, logger](Touch* touch, Event* event) {
         Vec2 worldTouchPos = touch->getLocation();
+        logger->log(LogLevel::DEBUG, "手牌区域触摸检测开始 --------");
         
         // 遍历所有手牌检查点击
         for (auto card : _playerHand) {
+            if (!card) {
+                logger->log(LogLevel::DEBUG, "跳过空卡牌");
+                continue;
+            }
+
             // 获取卡牌在世界坐标系中的位置和边界
             Vec2 cardWorldPos = card->getParent()->convertToWorldSpace(card->getPosition());
             Size cardSize = card->getContentSize();
@@ -1555,16 +1582,31 @@ bool GameScene::init() {
             );
             
             if (cardRect.containsPoint(worldTouchPos)) {
+                logger->log(LogLevel::INFO, "选中手牌: " + card->getName());
+                logger->log(LogLevel::INFO, "卡牌信息 --------");
+                logger->log(LogLevel::INFO, "费用: " + std::to_string(card->getCost()));
+                
                 if (_playerFieldCards.size() < 7) {
+                    logger->log(LogLevel::INFO, "尝试打出卡牌到场上");
                     auto visibleSize = Director::getInstance()->getVisibleSize();
                     Vec2 fieldPos = Vec2(visibleSize.width / 2, FIELD_Y);
+                    
+                    // 记录场上随从数量
+                    logger->log(LogLevel::INFO, "当前场上随从数量: " + 
+                        std::to_string(_playerFieldCards.size()));
+                    
                     card->onField();
                     playCardToField(card, fieldPos);
+                    
+                    logger->log(LogLevel::INFO, "卡牌已成功打出到场上");
+                } else {
+                    logger->log(LogLevel::WARNING, "场上随从已满，无法打出更多随从");
                 }
                 return true;
             }
         }
-        return false;
+        
+        logger->log(LogLevel::DEBUG, "手牌区域触摸检测结束 --------");
     };
     
     // 设置场上随从触摸监听器（用于选择攻击）
@@ -1578,22 +1620,60 @@ bool GameScene::init() {
         }
 
         Vec2 worldTouchPos = touch->getLocation();
-        logger->log(LogLevel::DEBUG, "Field listener touch at: x=" + 
-            std::to_string(worldTouchPos.x) + ", y=" + std::to_string(worldTouchPos.y));
+        logger->log(LogLevel::DEBUG, "Field touch position: x=" + std::to_string(worldTouchPos.x) + 
+            ", y=" + std::to_string(worldTouchPos.y));
 
-        // 检查场上的友方随从
-        for (auto card : _playerFieldCards) {
+        // 如果已经选中了我方随从，检查是否点击敌方随从
+        if (_selectedCard) {
+            logger->log(LogLevel::DEBUG, "检查敌方随从位置 --------");
+            // 检查是否点击了敌方随从
+            for (auto enemyCard : _opponentFieldCards2) {
+                if (!enemyCard) {
+                    logger->log(LogLevel::DEBUG, "跳过空的敌方随从");
+                    continue;
+                }
+                
+                logger->log(LogLevel::DEBUG, "检查敌方随从: " + enemyCard->getName());
+                
+                // 获取敌方卡牌在世界坐标系中的位置和边界
+                Vec2 cardWorldPos = enemyCard->getParent()->convertToWorldSpace(enemyCard->getPosition());
+                Size cardSize = enemyCard->getContentSize();
+                float scale = enemyCard->getScale();
+                
+                Rect cardRect(
+                    cardWorldPos.x - (cardSize.width * scale) / 2,
+                    cardWorldPos.y - (cardSize.height * scale) / 2,
+                    cardSize.width * scale,
+                    cardSize.height * scale
+                );
+
+                logger->log(LogLevel::DEBUG, "敌方随从位置 - 世界坐标: x=" + std::to_string(cardWorldPos.x) + 
+                    ", y=" + std::to_string(cardWorldPos.y));
+                logger->log(LogLevel::DEBUG, "敌方随从碰撞箱 - x=" + std::to_string(cardRect.origin.x) + 
+                    ", y=" + std::to_string(cardRect.origin.y) + 
+                    ", width=" + std::to_string(cardRect.size.width) + 
+                    ", height=" + std::to_string(cardRect.size.height));
+
+                if (cardRect.containsPoint(worldTouchPos)) {
+                    logger->log(LogLevel::INFO, "点击命中敌方随从: " + enemyCard->getName());
+                    _selectedCard->attackTarget(enemyCard);
+
+                } else {
+                    logger->log(LogLevel::DEBUG, "未命中此敌方随从");
+                }
+            }
+        }
+
+        // 检查是否点击我方随从
+        logger->log(LogLevel::DEBUG, "检查我方随从位置 --------");
+        for (auto card : _playerHand2) {
             if (!card) {
-                logger->log(LogLevel::DEBUG, "Null card in field, skipping");
+                logger->log(LogLevel::DEBUG, "跳过空的我方随从");
                 continue;
             }
             
-            logger->log(LogLevel::DEBUG, "Checking field card - Address: " + 
-                std::to_string((intptr_t)card));
-            logger->log(LogLevel::DEBUG, "Card name: " + 
-                (card->getName().empty() ? "EMPTY" : card->getName()));
+            logger->log(LogLevel::DEBUG, "检查我方随从: " + card->getName());
             
-            // 获取卡牌在世界坐标系中的位置和边界
             Vec2 cardWorldPos = card->getParent()->convertToWorldSpace(card->getPosition());
             Size cardSize = card->getContentSize();
             float scale = card->getScale();
@@ -1605,19 +1685,21 @@ bool GameScene::init() {
                 cardSize.height * scale
             );
 
-            logger->log(LogLevel::DEBUG, "Card rect: x=" + std::to_string(cardRect.origin.x) + 
+            logger->log(LogLevel::DEBUG, "我方随从位置 - 世界坐标: x=" + std::to_string(cardWorldPos.x) + 
+                ", y=" + std::to_string(cardWorldPos.y));
+            logger->log(LogLevel::DEBUG, "我方随从碰撞箱 - x=" + std::to_string(cardRect.origin.x) + 
                 ", y=" + std::to_string(cardRect.origin.y) + 
-                ", w=" + std::to_string(cardRect.size.width) + 
-                ", h=" + std::to_string(cardRect.size.height));
-            
+                ", width=" + std::to_string(cardRect.size.width) + 
+                ", height=" + std::to_string(cardRect.size.height));
+
             if (cardRect.containsPoint(worldTouchPos)) {
-                logger->log(LogLevel::DEBUG, "Hit detected on card: " + card->getName());
+                logger->log(LogLevel::INFO, "点击命中我方随从: " + card->getName());
                 handleCardSelection(card, worldTouchPos);
                 return true;
             }
         }
         
-        logger->log(LogLevel::DEBUG, "No card hit detected");
+        logger->log(LogLevel::DEBUG, "未找到任何可选中的随从");
         return false;
     };
     
