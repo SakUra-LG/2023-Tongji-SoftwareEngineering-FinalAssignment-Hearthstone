@@ -18,7 +18,7 @@ public:
     CREATE_FUNC(GameScene);
     virtual ~GameScene();
     void handleCardSelection(Card* card, const Vec2& touchPos);
-    void handleTargetSelection(const Vec2& touchPos);
+    //void handleTargetSelection(const Vec2& touchPos);
     void GameScene::clearSelection();
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchMoved(Touch* touch, Event* event);
@@ -26,6 +26,13 @@ public:
 
     virtual bool init() override;
 
+    // 从场上移除卡牌
+    void removeCardFromField(Card* card);
+
+    std::vector<MinionCard*> _opponentFieldCards2;
+    std::vector<Card*> _opponentFieldCards;
+    std::vector<Card*> _playerHand;  // 存储玩家手牌的卡牌指针
+    std::vector<MinionCard*> _playerHand2;
 private:
     // 玩家相关
     Player* _currentPlayer = nullptr;    // 当前玩家
@@ -33,11 +40,14 @@ private:
     Deck* _playerDeck = nullptr;         // 玩家卡组
     Deck* _enemyDeck = nullptr;
 
+    bool isStart = false;           //用于判断是否开始进行胜利判断
+
     // 游戏状态
     bool _isPlayerTurn = true;           // 是否是玩家回合
     bool _isAttacking = false;           // 是否在攻击状态
     int _turnTimeRemaining = 30;         // 回合剩余时间
     const int TURN_TIME = 30;            // 回合总时间（秒）
+    int deth=0;
 
     // UI层和游戏层
     cocos2d::Node* _gameLayer = nullptr;
@@ -59,13 +69,13 @@ private:
     cocos2d::MenuItemImage* _playerHeroPower = nullptr;
 
     // 卡牌相关
-    Card* _selectedCard = nullptr;
-    std::vector<Card*> _playerHand;  // 存储玩家手牌的卡牌指针
-    std::vector<MinionCard*> _playerHand2;
+    MinionCard* _selectedCard = nullptr;
+    //std::vector<Card*> _playerHand;  // 存储玩家手牌的卡牌指针
+    //std::vector<MinionCard*> _playerHand2;
     std::vector<cocos2d::Sprite*> _playerHandSprites;  // 存储手牌的精灵
     std::vector<Card*> _playerFieldCards;
-    std::vector<Card*> _opponentFieldCards;
-    std::vector<MinionCard*> _opponentFieldCards2;
+    //std::vector<Card*> _opponentFieldCards;
+    //std::vector<MinionCard*> _opponentFieldCards2;
     std::map<Card*, bool> _hasAttacked;
 
     // 卡牌常量
@@ -96,7 +106,7 @@ private:
     bool isValidFieldPosition(const cocos2d::Vec2& position) const;
     void updateFieldCardPositions();
     std::vector<MinionCard*> convertToMinionCards(const std::vector<Card*>& cards);
-
+    void GameScene::showGameOverUI(const std::string& title, const std::string& message);
     // 初始化方法
     void initLayers();
     void initUI();
@@ -137,7 +147,7 @@ private:
     // 添加新的成员变量(和选择目标有关系
     //Card* _selectedCard = nullptr;  // 当前选中的卡牌
     cocos2d::Sprite* _selectionSprite = nullptr;  // 选中效果精灵
-    cocos2d::Node* _targetSprite = nullptr;  // 目标选择效果
+    cocos2d::Sprite* _targetSprite = nullptr;  // 目标选择效果
 
 };
 

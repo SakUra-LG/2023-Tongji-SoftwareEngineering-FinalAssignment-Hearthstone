@@ -210,24 +210,40 @@ bool MinionCard::canAttackTarget(MinionCard* target) const {
 
 // 执行攻击目标的动作
 void MinionCard::attackTarget(MinionCard* target) {
-    //if (!canAttackTarget(target)) return;
+    auto logger = GameLogger::getInstance();
+    logger->log(LogLevel::DEBUG, "开始攻击 - 攻击者: " + this->getName() + 
+        " 目标: " + target->getName());
     
     // 执行攻击
     target->takeDamage(this->getAttack());
     this->takeDamage(target->getAttack());
     
+    logger->log(LogLevel::DEBUG, "攻击后状态 - 攻击者血量: " + std::to_string(this->getHealth()) + 
+        " 目标血量: " + std::to_string(target->getHealth()));
+    
     checkDeath(target);
     checkDeath(this);
 
-    _canAttack = false;  // 攻击后不能再次攻击
+    _canAttack = false;
 }
 
 // 检查随从是否死亡
 void MinionCard::checkDeath(MinionCard* card) {
-    if (card->getHealth()) {
-        onDeathrattle();
-        // TODO: 处理随从死亡的逻辑
-        this->setPosition(Vec2(20000, 20000));
+    auto logger = GameLogger::getInstance();
+    
+    if (card->getHealth() <= 0) {
+        logger->log(LogLevel::DEBUG, "卡牌死亡检查 - Name: " + card->getName() + 
+            " Health: " + std::to_string(card->getHealth()));
+        
+        card->_isDead = true;
+        logger->log(LogLevel::DEBUG, "设置isDead变量变成true，卡牌: " + card->getName() + 
+            " isDead: " + std::to_string(card->_isDead));
+        
+        card->setPosition(Vec2(20000, 20000));
+        logger->log(LogLevel::DEBUG, "将卡牌移出屏幕: " + card->getName());
+    } else {
+        logger->log(LogLevel::DEBUG, "卡牌存活 - Name: " + card->getName() + 
+            " Health: " + std::to_string(card->getHealth()));
     }
 }
 

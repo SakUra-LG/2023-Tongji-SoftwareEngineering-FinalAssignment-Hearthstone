@@ -102,12 +102,13 @@ protected:
     int _attack;
     bool _hasAttacked;
     
+    
     std::string _portraitPath;  // 卡牌图片路径
     
 public:
     // 创建方法
     static Card* create(int id, const std::string& name);
-    
+    bool _isDead = false;
     // Getters & Setters
     int getId() const { return _id; }
     const std::string& getName() const { return _name; }

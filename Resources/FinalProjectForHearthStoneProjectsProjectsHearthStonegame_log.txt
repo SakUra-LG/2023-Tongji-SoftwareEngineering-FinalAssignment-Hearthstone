@@ -1,0 +1,884 @@
+[Sun Dec 22 18:42:43 2024] [INFO] Starting onCards1...
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating CardFactory instance
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting to initialize card templates
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 二段跳
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 伊利达雷研习
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 凶猛的外来者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 敏捷咒符
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 法力燃烧
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 火色魔印奔行者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 邪能学说
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 飞行员帕奇斯
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 幽灵视觉
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 时间咒符
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 灰烬元素
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 飞翼滑翔
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 滑翔
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 极限追逐者阿兰娜
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 复仇重击者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 怒缚蛮兵
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 奇迹推销员
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 黑暗符
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 冰霜打击
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 恐惧猎犬训练师
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 甜筒冰淇淋
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 采矿事故
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 麦芽糖浆
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 彩虹裁缝
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 戈贡佐姆
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 伊丽扎-刺刃
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 食尸鬼之夜
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 大地之末号
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 奇利亚斯豪华版3000型
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 矿坑老板雷斯卡
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 伊丽扎-刺刃
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 戈贡佐姆
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created card: 彩虹裁缝
+[Sun Dec 22 18:42:43 2024] [INFO] Card templates initialization completed. Total cards: 33
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1001
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 二段跳
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [ERROR] Portrait image not found: cards/portraits/二段跳.png
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1002
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 伊利达雷研习
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 伊利达雷研习
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1003
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 凶猛的外来者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 凶猛的外来者法力值消耗：1攻击力:2
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 凶猛的外来者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 凶猛的外来者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1004
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 敏捷咒符
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 敏捷咒符
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1005
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 法力燃烧
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 法力燃烧
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1006
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 火色魔印奔行者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 火色魔印奔行者法力值消耗：1攻击力:1
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 火色魔印奔行者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 火色魔印奔行者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1007
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 邪能学说
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 邪能学说
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1008
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 飞行员帕奇斯
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 飞行员帕奇斯法力值消耗：1攻击力:1
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 飞行员帕奇斯
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 飞行员帕奇斯
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1009
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 幽灵视觉
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 幽灵视觉
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1010
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 时间咒符
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 时间咒符
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1011
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 灰烬元素
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 灰烬元素法力值消耗：3攻击力:2
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 灰烬元素
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 灰烬元素
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1012
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 飞翼滑翔
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 飞翼滑翔
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1014
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 滑翔
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 滑翔
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1015
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 极限追逐者阿兰娜
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 极限追逐者阿兰娜法力值消耗：5攻击力:5
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 极限追逐者阿兰娜
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 极限追逐者阿兰娜
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1016
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 复仇重击者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 复仇重击者法力值消耗：7攻击力:5
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 复仇重击者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 复仇重击者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1017
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 怒缚蛮兵
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 怒缚蛮兵法力值消耗：7攻击力:6
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 怒缚蛮兵
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 怒缚蛮兵
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 2001
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 奇迹推销员
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 奇迹推销员法力值消耗：1攻击力:2
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 奇迹推销员
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 奇迹推销员
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 2002
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 黑暗符
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 黑暗符
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 2003
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 冰霜打击
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 冰霜打击
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 2004
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 恐惧猎犬训练师
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 恐惧猎犬训练师法力值消耗：2攻击力:2
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 恐惧猎犬训练师
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 恐惧猎犬训练师
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 2005
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 甜筒冰淇淋
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 甜筒冰淇淋
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 2006
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 采矿事故
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 采矿事故
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 2007
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 麦芽糖浆
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 麦芽糖浆
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 2008
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 彩虹裁缝
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 彩虹裁缝法力值消耗：3攻击力:3
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 彩虹裁缝
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 彩虹裁缝
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 2009
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 戈贡佐姆
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 戈贡佐姆法力值消耗：7攻击力:3
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 戈贡佐姆
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 戈贡佐姆
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 2010
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 伊丽扎-刺刃
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 伊丽扎-刺刃法力值消耗：4攻击力:4
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 伊丽扎-刺刃
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 伊丽扎-刺刃
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 2011
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 食尸鬼之夜
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 食尸鬼之夜
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 2012
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 大地之末号
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 大地之末号法力值消耗：4攻击力:0
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 大地之末号
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 大地之末号
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 2013
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 奇利亚斯豪华版3000型
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 奇利亚斯豪华版3000型法力值消耗：9攻击力:6
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 奇利亚斯豪华版3000型
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 奇利亚斯豪华版3000型
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 2014
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 矿坑老板雷斯卡
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 矿坑老板雷斯卡法力值消耗：10攻击力:10
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 矿坑老板雷斯卡
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 矿坑老板雷斯卡
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 3001
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 伊丽扎-刺刃
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 伊丽扎-刺刃法力值消耗：4攻击力:4
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 伊丽扎-刺刃
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 伊丽扎-刺刃
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 3002
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 戈贡佐姆
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 戈贡佐姆法力值消耗：7攻击力:6
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 戈贡佐姆
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 戈贡佐姆
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 3003
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 彩虹裁缝
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 彩虹裁缝法力值消耗：3攻击力:4
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 彩虹裁缝
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 彩虹裁缝
+[Sun Dec 22 18:42:43 2024] [INFO] CardFactory instance created and initialized
+[Sun Dec 22 18:42:43 2024] [INFO] Total cards in allCards: 32
+[Sun Dec 22 18:42:43 2024] [INFO] Deck1 size: 15
+[Sun Dec 22 18:42:43 2024] [INFO] Deck2 size: 14
+[Sun Dec 22 18:42:43 2024] [INFO] Enemy deck size: 3
+[Sun Dec 22 18:42:43 2024] [INFO] Decks initialized
+[Sun Dec 22 18:42:43 2024] [INFO] Deck1 size: 15
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1002
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 伊利达雷研习
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 伊利达雷研习
+[Sun Dec 22 18:42:43 2024] [DEBUG] Added card to deck: 伊利达雷研习 (ID: 1002, Count: 2)
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1003
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 凶猛的外来者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 凶猛的外来者法力值消耗：1攻击力:2
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 凶猛的外来者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 凶猛的外来者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Added card to deck: 凶猛的外来者 (ID: 1003, Count: 2)
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1004
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 敏捷咒符
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 敏捷咒符
+[Sun Dec 22 18:42:43 2024] [DEBUG] Added card to deck: 敏捷咒符 (ID: 1004, Count: 2)
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1005
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 法力燃烧
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 法力燃烧
+[Sun Dec 22 18:42:43 2024] [DEBUG] Added card to deck: 法力燃烧 (ID: 1005, Count: 2)
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1006
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 火色魔印奔行者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 火色魔印奔行者法力值消耗：1攻击力:1
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 火色魔印奔行者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 火色魔印奔行者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Added card to deck: 火色魔印奔行者 (ID: 1006, Count: 2)
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1007
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 邪能学说
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 邪能学说
+[Sun Dec 22 18:42:43 2024] [DEBUG] Added card to deck: 邪能学说 (ID: 1007, Count: 2)
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1008
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 飞行员帕奇斯
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 飞行员帕奇斯法力值消耗：1攻击力:1
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 飞行员帕奇斯
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 飞行员帕奇斯
+[Sun Dec 22 18:42:43 2024] [DEBUG] Added card to deck: 飞行员帕奇斯 (ID: 1008, Count: 2)
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1009
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 幽灵视觉
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 幽灵视觉
+[Sun Dec 22 18:42:43 2024] [DEBUG] Added card to deck: 幽灵视觉 (ID: 1009, Count: 2)
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1010
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 时间咒符
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 时间咒符
+[Sun Dec 22 18:42:43 2024] [DEBUG] Added card to deck: 时间咒符 (ID: 1010, Count: 2)
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1011
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 灰烬元素
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 灰烬元素法力值消耗：3攻击力:2
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 灰烬元素
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 灰烬元素
+[Sun Dec 22 18:42:43 2024] [DEBUG] Added card to deck: 灰烬元素 (ID: 1011, Count: 2)
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1012
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 飞翼滑翔
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 飞翼滑翔
+[Sun Dec 22 18:42:43 2024] [DEBUG] Added card to deck: 飞翼滑翔 (ID: 1012, Count: 2)
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1014
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating spell card: 滑翔
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting SpellCard UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] SpellCard created successfully
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 滑翔
+[Sun Dec 22 18:42:43 2024] [DEBUG] Added card to deck: 滑翔 (ID: 1014, Count: 2)
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1015
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 极限追逐者阿兰娜
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 极限追逐者阿兰娜法力值消耗：5攻击力:5
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 极限追逐者阿兰娜
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 极限追逐者阿兰娜
+[Sun Dec 22 18:42:43 2024] [DEBUG] Added card to deck: 极限追逐者阿兰娜 (ID: 1015, Count: 2)
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1016
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 复仇重击者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 复仇重击者法力值消耗：7攻击力:5
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 复仇重击者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 复仇重击者
+[Sun Dec 22 18:42:43 2024] [DEBUG] Added card to deck: 复仇重击者 (ID: 1016, Count: 2)
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 1017
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 怒缚蛮兵
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 怒缚蛮兵法力值消耗：7攻击力:6
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 怒缚蛮兵
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 怒缚蛮兵
+[Sun Dec 22 18:42:43 2024] [DEBUG] Added card to deck: 怒缚蛮兵 (ID: 1017, Count: 2)
+[Sun Dec 22 18:42:43 2024] [INFO] Created deck: Quest Demon Hunter with 15 cards
+[Sun Dec 22 18:42:43 2024] [INFO] DeckEnemy size: 3
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 3001
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 伊丽扎-刺刃
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 伊丽扎-刺刃法力值消耗：4攻击力:4
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 伊丽扎-刺刃
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 伊丽扎-刺刃
+[Sun Dec 22 18:42:43 2024] [DEBUG] Added card to deck: 伊丽扎-刺刃 (ID: 3001, Count: 1)
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 3002
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 戈贡佐姆
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 戈贡佐姆法力值消耗：7攻击力:6
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 戈贡佐姆
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 戈贡佐姆
+[Sun Dec 22 18:42:43 2024] [DEBUG] Added card to deck: 戈贡佐姆 (ID: 3002, Count: 1)
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating card with ID: 3003
+[Sun Dec 22 18:42:43 2024] [DEBUG] Creating minion card: 彩虹裁缝
+[Sun Dec 22 18:42:43 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:43 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:43 2024] [DEBUG] Basic properties set for minion: 彩虹裁缝法力值消耗：3攻击力:4
+[Sun Dec 22 18:42:43 2024] [INFO] Successfully created minion card: 彩虹裁缝
+[Sun Dec 22 18:42:43 2024] [DEBUG] Card created with name: 彩虹裁缝
+[Sun Dec 22 18:42:43 2024] [DEBUG] Added card to deck: 彩虹裁缝 (ID: 3003, Count: 1)
+[Sun Dec 22 18:42:43 2024] [INFO] Created deck: EnemyDeck with 3 cards
+[Sun Dec 22 18:42:43 2024] [INFO] Initializing game scene with deck
+[Sun Dec 22 18:42:43 2024] [DEBUG] Created new players with initial mana (2/10)
+[Sun Dec 22 18:42:44 2024] [DEBUG] Drawing initial hand
+[Sun Dec 22 18:42:44 2024] [DEBUG] Added card to hand: 
+[Sun Dec 22 18:42:44 2024] [DEBUG] Added card to hand: 
+[Sun Dec 22 18:42:44 2024] [DEBUG] Added card to hand: 
+[Sun Dec 22 18:42:44 2024] [DEBUG] Successfully converted card to MinionCard
+[Sun Dec 22 18:42:44 2024] [DEBUG] Successfully converted card to MinionCard
+[Sun Dec 22 18:42:44 2024] [DEBUG] Successfully converted card to MinionCard
+[Sun Dec 22 18:42:44 2024] [DEBUG] Drawing enemy card: 彩虹裁缝 at index 0 Address: 232318320 Initial ref count: 2
+[Sun Dec 22 18:42:44 2024] [DEBUG] Adding card to opponent hand. Card address: 232318320
+[Sun Dec 22 18:42:44 2024] [DEBUG] After adding to hand - ref count: 2
+[Sun Dec 22 18:42:44 2024] [DEBUG] Drawing enemy card: 戈贡佐姆 at index 1 Address: 232320128 Initial ref count: 2
+[Sun Dec 22 18:42:44 2024] [DEBUG] Adding card to opponent hand. Card address: 232320128
+[Sun Dec 22 18:42:44 2024] [DEBUG] After adding to hand - ref count: 2
+[Sun Dec 22 18:42:44 2024] [DEBUG] Drawing enemy card: 伊丽扎-刺刃 at index 2 Address: 232326456 Initial ref count: 2
+[Sun Dec 22 18:42:44 2024] [DEBUG] Adding card to opponent hand. Card address: 232326456
+[Sun Dec 22 18:42:44 2024] [DEBUG] After adding to hand - ref count: 2
+[Sun Dec 22 18:42:44 2024] [INFO] Initial hand drawn successfully
+[Sun Dec 22 18:42:44 2024] [INFO] Game scene initialized successfully
+[Sun Dec 22 18:42:47 2024] [DEBUG] Touch position (world): x=619.001892, y=56.999294
+[Sun Dec 22 18:42:47 2024] [DEBUG] 手牌区域触摸检测开始 --------
+[Sun Dec 22 18:42:47 2024] [INFO] 选中手牌: 
+[Sun Dec 22 18:42:47 2024] [INFO] 卡牌信息 --------
+[Sun Dec 22 18:42:47 2024] [INFO] 费用: 5
+[Sun Dec 22 18:42:47 2024] [INFO] 尝试打出卡牌到场上
+[Sun Dec 22 18:42:47 2024] [INFO] 当前场上随从数量: 0
+[Sun Dec 22 18:42:47 2024] [DEBUG] Starting playCardToField for card: 
+[Sun Dec 22 18:42:47 2024] [DEBUG] Spent 5 mana
+[Sun Dec 22 18:42:47 2024] [DEBUG] Removed card from hand vector: 
+[Sun Dec 22 18:42:47 2024] [DEBUG] Added card to field array. Field size: 1
+[Sun Dec 22 18:42:47 2024] [DEBUG] Card parent check - Has parent: yes
+[Sun Dec 22 18:42:47 2024] [DEBUG] Current parent retain count: 1
+[Sun Dec 22 18:42:47 2024] [DEBUG] Old position: x=-350.000000, y=-150.000000, scale=0.800000
+[Sun Dec 22 18:42:47 2024] [DEBUG] Attempting to remove card from old parent
+[Sun Dec 22 18:42:47 2024] [DEBUG] Successfully removed card from old parent
+[Sun Dec 22 18:42:47 2024] [DEBUG] Attempting to add card to game layer
+[Sun Dec 22 18:42:47 2024] [DEBUG] Successfully added card to game layer
+[Sun Dec 22 18:42:47 2024] [DEBUG] Set new position: x=960.000000, y=432.000000
+[Sun Dec 22 18:42:47 2024] [DEBUG] Completed playCardToField successfully
+[Sun Dec 22 18:42:47 2024] [INFO] 卡牌已成功打出到场上
+[Sun Dec 22 18:42:47 2024] [DEBUG] Field touch position: x=619.001892, y=56.999294
+[Sun Dec 22 18:42:47 2024] [DEBUG] 检查我方随从位置 --------
+[Sun Dec 22 18:42:47 2024] [DEBUG] 检查我方随从: 
+[Sun Dec 22 18:42:47 2024] [DEBUG] 我方随从位置 - 世界坐标: x=310.000000, y=70.000000
+[Sun Dec 22 18:42:47 2024] [DEBUG] 我方随从碰撞箱 - x=278.000000, y=30.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:47 2024] [DEBUG] 检查我方随从: 
+[Sun Dec 22 18:42:47 2024] [DEBUG] 我方随从位置 - 世界坐标: x=460.000000, y=70.000000
+[Sun Dec 22 18:42:47 2024] [DEBUG] 我方随从碰撞箱 - x=428.000000, y=30.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:47 2024] [DEBUG] 检查我方随从: 
+[Sun Dec 22 18:42:47 2024] [DEBUG] 我方随从位置 - 世界坐标: x=920.000000, y=402.000000
+[Sun Dec 22 18:42:47 2024] [DEBUG] 我方随从碰撞箱 - x=888.000000, y=362.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:47 2024] [DEBUG] 未找到任何可选中的随从
+[Sun Dec 22 18:42:48 2024] [DEBUG] Ending current turn
+[Sun Dec 22 18:42:48 2024] [DEBUG] Starting updateTurnIndicator
+[Sun Dec 22 18:42:48 2024] [DEBUG] 放置敌方随从 --------
+[Sun Dec 22 18:42:48 2024] [DEBUG] 剩余手牌数量: 3
+[Sun Dec 22 18:42:48 2024] [DEBUG] 位置1: x=756.003662, y=648.000000
+[Sun Dec 22 18:42:48 2024] [DEBUG] 放置随从: 伊丽扎-刺刃
+[Sun Dec 22 18:42:48 2024] [DEBUG] 随从属性 - 攻击力: 4, 生命值: 10
+[Sun Dec 22 18:42:48 2024] [DEBUG] 随从碰撞箱 - x=724.003662, y=608.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:48 2024] [DEBUG] Turn ended successfully
+[Sun Dec 22 18:42:49 2024] [DEBUG] Ending current turn
+[Sun Dec 22 18:42:49 2024] [DEBUG] Starting updateTurnIndicator
+[Sun Dec 22 18:42:49 2024] [DEBUG] Turn ended successfully
+[Sun Dec 22 18:42:51 2024] [DEBUG] Touch position (world): x=468.000427, y=60.998932
+[Sun Dec 22 18:42:51 2024] [DEBUG] 
+Checking card: 
+Card world position: x=920.000000, y=402.000000
+Card rect: x=888.000000, y=362.000000, w=64.000000, h=80.000000
+[Sun Dec 22 18:42:51 2024] [DEBUG] 手牌区域触摸检测开始 --------
+[Sun Dec 22 18:42:51 2024] [INFO] 选中手牌: 
+[Sun Dec 22 18:42:51 2024] [INFO] 卡牌信息 --------
+[Sun Dec 22 18:42:51 2024] [INFO] 费用: 7
+[Sun Dec 22 18:42:51 2024] [INFO] 尝试打出卡牌到场上
+[Sun Dec 22 18:42:51 2024] [INFO] 当前场上随从数量: 1
+[Sun Dec 22 18:42:51 2024] [DEBUG] Starting playCardToField for card: 
+[Sun Dec 22 18:42:51 2024] [DEBUG] Spent 7 mana
+[Sun Dec 22 18:42:51 2024] [DEBUG] Removed card from hand vector: 
+[Sun Dec 22 18:42:51 2024] [DEBUG] Added card to field array. Field size: 2
+[Sun Dec 22 18:42:51 2024] [DEBUG] Card parent check - Has parent: yes
+[Sun Dec 22 18:42:51 2024] [DEBUG] Current parent retain count: 1
+[Sun Dec 22 18:42:51 2024] [DEBUG] Old position: x=-500.000000, y=-150.000000, scale=0.800000
+[Sun Dec 22 18:42:51 2024] [DEBUG] Attempting to remove card from old parent
+[Sun Dec 22 18:42:51 2024] [DEBUG] Successfully removed card from old parent
+[Sun Dec 22 18:42:51 2024] [DEBUG] Attempting to add card to game layer
+[Sun Dec 22 18:42:51 2024] [DEBUG] Successfully added card to game layer
+[Sun Dec 22 18:42:51 2024] [DEBUG] Set new position: x=1035.000000, y=432.000000
+[Sun Dec 22 18:42:51 2024] [DEBUG] Completed playCardToField successfully
+[Sun Dec 22 18:42:51 2024] [INFO] 卡牌已成功打出到场上
+[Sun Dec 22 18:42:51 2024] [DEBUG] Field touch position: x=468.000427, y=60.998932
+[Sun Dec 22 18:42:51 2024] [DEBUG] 检查我方随从位置 --------
+[Sun Dec 22 18:42:51 2024] [DEBUG] 检查我方随从: 
+[Sun Dec 22 18:42:51 2024] [DEBUG] 我方随从位置 - 世界坐标: x=310.000000, y=70.000000
+[Sun Dec 22 18:42:51 2024] [DEBUG] 我方随从碰撞箱 - x=278.000000, y=30.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:51 2024] [DEBUG] 检查我方随从: 
+[Sun Dec 22 18:42:51 2024] [DEBUG] 我方随从位置 - 世界坐标: x=995.000000, y=402.000000
+[Sun Dec 22 18:42:51 2024] [DEBUG] 我方随从碰撞箱 - x=963.000000, y=362.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:51 2024] [DEBUG] 检查我方随从: 
+[Sun Dec 22 18:42:51 2024] [DEBUG] 我方随从位置 - 世界坐标: x=845.000000, y=402.000000
+[Sun Dec 22 18:42:51 2024] [DEBUG] 我方随从碰撞箱 - x=813.000000, y=362.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:51 2024] [DEBUG] 未找到任何可选中的随从
+[Sun Dec 22 18:42:52 2024] [DEBUG] Ending current turn
+[Sun Dec 22 18:42:52 2024] [DEBUG] Starting updateTurnIndicator
+[Sun Dec 22 18:42:52 2024] [DEBUG] 放置敌方随从 --------
+[Sun Dec 22 18:42:52 2024] [DEBUG] 剩余手牌数量: 2
+[Sun Dec 22 18:42:52 2024] [DEBUG] 位置2: x=905.001343, y=648.000000
+[Sun Dec 22 18:42:52 2024] [DEBUG] 放置随从: 戈贡佐姆
+[Sun Dec 22 18:42:52 2024] [DEBUG] 随从属性 - 攻击力: 6, 生命值: 2
+[Sun Dec 22 18:42:52 2024] [DEBUG] 随从碰撞箱 - x=873.001343, y=608.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:52 2024] [DEBUG] Turn ended successfully
+[Sun Dec 22 18:42:52 2024] [DEBUG] 手牌区域触摸检测开始 --------
+[Sun Dec 22 18:42:52 2024] [INFO] 选中手牌: 
+[Sun Dec 22 18:42:52 2024] [INFO] 卡牌信息 --------
+[Sun Dec 22 18:42:52 2024] [INFO] 费用: 7
+[Sun Dec 22 18:42:52 2024] [INFO] 尝试打出卡牌到场上
+[Sun Dec 22 18:42:52 2024] [INFO] 当前场上随从数量: 2
+[Sun Dec 22 18:42:52 2024] [DEBUG] Starting playCardToField for card: 
+[Sun Dec 22 18:42:52 2024] [WARNING] Not enough mana to play card!
+[Sun Dec 22 18:42:52 2024] [INFO] 卡牌已成功打出到场上
+[Sun Dec 22 18:42:52 2024] [DEBUG] Not player's turn, skipping touch
+[Sun Dec 22 18:42:53 2024] [DEBUG] Ending current turn
+[Sun Dec 22 18:42:53 2024] [DEBUG] Starting updateTurnIndicator
+[Sun Dec 22 18:42:53 2024] [DEBUG] Turn ended successfully
+[Sun Dec 22 18:42:53 2024] [DEBUG] Touch position (world): x=311.001251, y=70.998024
+[Sun Dec 22 18:42:53 2024] [DEBUG] 
+Checking card: 
+Card world position: x=845.000000, y=402.000000
+Card rect: x=813.000000, y=362.000000, w=64.000000, h=80.000000
+[Sun Dec 22 18:42:53 2024] [DEBUG] 
+Checking card: 
+Card world position: x=995.000000, y=402.000000
+Card rect: x=963.000000, y=362.000000, w=64.000000, h=80.000000
+[Sun Dec 22 18:42:53 2024] [DEBUG] 手牌区域触摸检测开始 --------
+[Sun Dec 22 18:42:53 2024] [INFO] 选中手牌: 
+[Sun Dec 22 18:42:53 2024] [INFO] 卡牌信息 --------
+[Sun Dec 22 18:42:53 2024] [INFO] 费用: 7
+[Sun Dec 22 18:42:53 2024] [INFO] 尝试打出卡牌到场上
+[Sun Dec 22 18:42:53 2024] [INFO] 当前场上随从数量: 2
+[Sun Dec 22 18:42:53 2024] [DEBUG] Starting playCardToField for card: 
+[Sun Dec 22 18:42:53 2024] [DEBUG] Spent 7 mana
+[Sun Dec 22 18:42:53 2024] [DEBUG] Removed card from hand vector: 
+[Sun Dec 22 18:42:53 2024] [DEBUG] Added card to field array. Field size: 3
+[Sun Dec 22 18:42:53 2024] [DEBUG] Card parent check - Has parent: yes
+[Sun Dec 22 18:42:53 2024] [DEBUG] Current parent retain count: 1
+[Sun Dec 22 18:42:53 2024] [DEBUG] Old position: x=-650.000000, y=-150.000000, scale=0.800000
+[Sun Dec 22 18:42:53 2024] [DEBUG] Attempting to remove card from old parent
+[Sun Dec 22 18:42:53 2024] [DEBUG] Successfully removed card from old parent
+[Sun Dec 22 18:42:53 2024] [DEBUG] Attempting to add card to game layer
+[Sun Dec 22 18:42:53 2024] [DEBUG] Successfully added card to game layer
+[Sun Dec 22 18:42:53 2024] [DEBUG] Set new position: x=1110.000000, y=432.000000
+[Sun Dec 22 18:42:53 2024] [DEBUG] Completed playCardToField successfully
+[Sun Dec 22 18:42:53 2024] [INFO] 卡牌已成功打出到场上
+[Sun Dec 22 18:42:53 2024] [DEBUG] Field touch position: x=311.001251, y=70.998024
+[Sun Dec 22 18:42:53 2024] [DEBUG] 检查我方随从位置 --------
+[Sun Dec 22 18:42:53 2024] [DEBUG] 检查我方随从: 
+[Sun Dec 22 18:42:53 2024] [DEBUG] 我方随从位置 - 世界坐标: x=1070.000000, y=402.000000
+[Sun Dec 22 18:42:53 2024] [DEBUG] 我方随从碰撞箱 - x=1038.000000, y=362.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:53 2024] [DEBUG] 检查我方随从: 
+[Sun Dec 22 18:42:53 2024] [DEBUG] 我方随从位置 - 世界坐标: x=920.000000, y=402.000000
+[Sun Dec 22 18:42:53 2024] [DEBUG] 我方随从碰撞箱 - x=888.000000, y=362.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:53 2024] [DEBUG] 检查我方随从: 
+[Sun Dec 22 18:42:53 2024] [DEBUG] 我方随从位置 - 世界坐标: x=770.000000, y=402.000000
+[Sun Dec 22 18:42:53 2024] [DEBUG] 我方随从碰撞箱 - x=738.000000, y=362.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:53 2024] [DEBUG] 未找到任何可选中的随从
+[Sun Dec 22 18:42:54 2024] [DEBUG] Ending current turn
+[Sun Dec 22 18:42:54 2024] [DEBUG] Starting updateTurnIndicator
+[Sun Dec 22 18:42:54 2024] [DEBUG] 放置敌方随从 --------
+[Sun Dec 22 18:42:54 2024] [DEBUG] 剩余手牌数量: 1
+[Sun Dec 22 18:42:54 2024] [DEBUG] 位置3: x=1055.002441, y=648.000000
+[Sun Dec 22 18:42:54 2024] [DEBUG] 放置随从: 彩虹裁缝
+[Sun Dec 22 18:42:54 2024] [DEBUG] 随从属性 - 攻击力: 4, 生命值: 7
+[Sun Dec 22 18:42:54 2024] [DEBUG] 随从碰撞箱 - x=1023.002441, y=608.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:54 2024] [DEBUG] Turn ended successfully
+[Sun Dec 22 18:42:55 2024] [DEBUG] Ending current turn
+[Sun Dec 22 18:42:55 2024] [DEBUG] Starting updateTurnIndicator
+[Sun Dec 22 18:42:55 2024] [DEBUG] Turn ended successfully
+[Sun Dec 22 18:42:55 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:55 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:55 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:55 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:55 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:55 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:55 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:55 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:55 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:55 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:55 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:55 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:55 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:55 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:55 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:55 2024] [DEBUG] Touch position (world): x=1386.001099, y=341.999329
+[Sun Dec 22 18:42:55 2024] [DEBUG] 
+Checking card: 
+Card world position: x=770.000000, y=402.000000
+Card rect: x=738.000000, y=362.000000, w=64.000000, h=80.000000
+[Sun Dec 22 18:42:55 2024] [DEBUG] 
+Checking card: 
+Card world position: x=920.000000, y=402.000000
+Card rect: x=888.000000, y=362.000000, w=64.000000, h=80.000000
+[Sun Dec 22 18:42:55 2024] [DEBUG] 
+Checking card: 
+Card world position: x=1070.000000, y=402.000000
+Card rect: x=1038.000000, y=362.000000, w=64.000000, h=80.000000
+[Sun Dec 22 18:42:55 2024] [DEBUG] 手牌区域触摸检测开始 --------
+[Sun Dec 22 18:42:55 2024] [DEBUG] 手牌区域触摸检测结束 --------
+[Sun Dec 22 18:42:55 2024] [DEBUG] Field touch position: x=1386.001099, y=341.999329
+[Sun Dec 22 18:42:55 2024] [DEBUG] 检查我方随从位置 --------
+[Sun Dec 22 18:42:55 2024] [DEBUG] 检查我方随从: 
+[Sun Dec 22 18:42:55 2024] [DEBUG] 我方随从位置 - 世界坐标: x=1070.000000, y=402.000000
+[Sun Dec 22 18:42:55 2024] [DEBUG] 我方随从碰撞箱 - x=1038.000000, y=362.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:55 2024] [DEBUG] 检查我方随从: 
+[Sun Dec 22 18:42:55 2024] [DEBUG] 我方随从位置 - 世界坐标: x=920.000000, y=402.000000
+[Sun Dec 22 18:42:55 2024] [DEBUG] 我方随从碰撞箱 - x=888.000000, y=362.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:55 2024] [DEBUG] 检查我方随从: 
+[Sun Dec 22 18:42:55 2024] [DEBUG] 我方随从位置 - 世界坐标: x=770.000000, y=402.000000
+[Sun Dec 22 18:42:55 2024] [DEBUG] 我方随从碰撞箱 - x=738.000000, y=362.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:55 2024] [DEBUG] 未找到任何可选中的随从
+[Sun Dec 22 18:42:56 2024] [DEBUG] Touch position (world): x=1081.001099, y=396.998810
+[Sun Dec 22 18:42:56 2024] [DEBUG] 
+Checking card: 
+Card world position: x=770.000000, y=402.000000
+Card rect: x=738.000000, y=362.000000, w=64.000000, h=80.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] 
+Checking card: 
+Card world position: x=920.000000, y=402.000000
+Card rect: x=888.000000, y=362.000000, w=64.000000, h=80.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] 
+Checking card: 
+Card world position: x=1070.000000, y=402.000000
+Card rect: x=1038.000000, y=362.000000, w=64.000000, h=80.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Card selected: 
+[Sun Dec 22 18:42:56 2024] [DEBUG] Handling card selection
+[Sun Dec 22 18:42:56 2024] [DEBUG] Card info - Address: 232321936
+[Sun Dec 22 18:42:56 2024] [DEBUG] Card name: EMPTY
+[Sun Dec 22 18:42:56 2024] [DEBUG] Card parent: YES - 205429144
+[Sun Dec 22 18:42:56 2024] [DEBUG] Card local position: 110.000000,182.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Card world position: 1070.000000,402.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Card on field: 1
+[Sun Dec 22 18:42:56 2024] [DEBUG] Selection effect info - Position: 1110.000000,382.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Selection effect size: 80.000000x100.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Selection effect scale: 0.800000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Selection effect added successfully
+[Sun Dec 22 18:42:56 2024] [DEBUG] 手牌区域触摸检测开始 --------
+[Sun Dec 22 18:42:56 2024] [DEBUG] 手牌区域触摸检测结束 --------
+[Sun Dec 22 18:42:56 2024] [DEBUG] Field touch position: x=1081.001099, y=396.998810
+[Sun Dec 22 18:42:56 2024] [DEBUG] 检查敌方随从位置 --------
+[Sun Dec 22 18:42:56 2024] [DEBUG] 检查敌方随从: 
+[Sun Dec 22 18:42:56 2024] [DEBUG] 敌方随从位置 - 世界坐标: x=756.003662, y=648.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] 敌方随从碰撞箱 - x=724.003662, y=608.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Selection effect info - Position: 756.003662,648.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Selection effect size: 80.000000x100.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Selection effect scale: 0.500000
+[Sun Dec 22 18:42:56 2024] [DEBUG] 未命中此敌方随从
+[Sun Dec 22 18:42:56 2024] [DEBUG] 检查敌方随从: 
+[Sun Dec 22 18:42:56 2024] [DEBUG] 敌方随从位置 - 世界坐标: x=905.001343, y=648.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] 敌方随从碰撞箱 - x=873.001343, y=608.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Selection effect info - Position: 905.001343,648.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Selection effect size: 80.000000x100.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Selection effect scale: 0.500000
+[Sun Dec 22 18:42:56 2024] [DEBUG] 未命中此敌方随从
+[Sun Dec 22 18:42:56 2024] [DEBUG] 检查敌方随从: 
+[Sun Dec 22 18:42:56 2024] [DEBUG] 敌方随从位置 - 世界坐标: x=1055.002441, y=648.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] 敌方随从碰撞箱 - x=1023.002441, y=608.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Selection effect info - Position: 1055.002441,648.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Selection effect size: 80.000000x100.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Selection effect scale: 0.500000
+[Sun Dec 22 18:42:56 2024] [DEBUG] 未命中此敌方随从
+[Sun Dec 22 18:42:56 2024] [DEBUG] 检查我方随从位置 --------
+[Sun Dec 22 18:42:56 2024] [DEBUG] 检查我方随从: 
+[Sun Dec 22 18:42:56 2024] [DEBUG] 我方随从位置 - 世界坐标: x=1070.000000, y=402.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] 我方随从碰撞箱 - x=1038.000000, y=362.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:56 2024] [INFO] 点击命中我方随从: 
+[Sun Dec 22 18:42:56 2024] [DEBUG] Handling card selection
+[Sun Dec 22 18:42:56 2024] [DEBUG] Card info - Address: 232321936
+[Sun Dec 22 18:42:56 2024] [DEBUG] Card name: EMPTY
+[Sun Dec 22 18:42:56 2024] [DEBUG] Card parent: YES - 205429144
+[Sun Dec 22 18:42:56 2024] [DEBUG] Card local position: 110.000000,182.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Card world position: 1070.000000,402.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Card on field: 1
+[Sun Dec 22 18:42:56 2024] [DEBUG] Removing old selection effect
+[Sun Dec 22 18:42:56 2024] [DEBUG] Selection effect info - Position: 1110.000000,382.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Selection effect size: 80.000000x100.000000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Selection effect scale: 0.800000
+[Sun Dec 22 18:42:56 2024] [DEBUG] Selection effect added successfully
+[Sun Dec 22 18:42:57 2024] [DEBUG] Touch position (world): x=1066.001587, y=639.999084
+[Sun Dec 22 18:42:57 2024] [DEBUG] 手牌区域触摸检测开始 --------
+[Sun Dec 22 18:42:57 2024] [DEBUG] 手牌区域触摸检测结束 --------
+[Sun Dec 22 18:42:57 2024] [DEBUG] Field touch position: x=1066.001587, y=639.999084
+[Sun Dec 22 18:42:57 2024] [DEBUG] 检查敌方随从位置 --------
+[Sun Dec 22 18:42:57 2024] [DEBUG] 检查敌方随从: 
+[Sun Dec 22 18:42:57 2024] [DEBUG] 敌方随从位置 - 世界坐标: x=756.003662, y=648.000000
+[Sun Dec 22 18:42:57 2024] [DEBUG] 敌方随从碰撞箱 - x=724.003662, y=608.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:57 2024] [DEBUG] Selection effect info - Position: 756.003662,648.000000
+[Sun Dec 22 18:42:57 2024] [DEBUG] Selection effect size: 80.000000x100.000000
+[Sun Dec 22 18:42:57 2024] [DEBUG] Selection effect scale: 0.500000
+[Sun Dec 22 18:42:57 2024] [DEBUG] 未命中此敌方随从
+[Sun Dec 22 18:42:57 2024] [DEBUG] 检查敌方随从: 
+[Sun Dec 22 18:42:57 2024] [DEBUG] 敌方随从位置 - 世界坐标: x=905.001343, y=648.000000
+[Sun Dec 22 18:42:57 2024] [DEBUG] 敌方随从碰撞箱 - x=873.001343, y=608.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:57 2024] [DEBUG] Selection effect info - Position: 905.001343,648.000000
+[Sun Dec 22 18:42:57 2024] [DEBUG] Selection effect size: 80.000000x100.000000
+[Sun Dec 22 18:42:57 2024] [DEBUG] Selection effect scale: 0.500000
+[Sun Dec 22 18:42:57 2024] [DEBUG] 未命中此敌方随从
+[Sun Dec 22 18:42:57 2024] [DEBUG] 检查敌方随从: 
+[Sun Dec 22 18:42:57 2024] [DEBUG] 敌方随从位置 - 世界坐标: x=1055.002441, y=648.000000
+[Sun Dec 22 18:42:57 2024] [DEBUG] 敌方随从碰撞箱 - x=1023.002441, y=608.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:57 2024] [DEBUG] Selection effect info - Position: 1055.002441,648.000000
+[Sun Dec 22 18:42:57 2024] [DEBUG] Selection effect size: 80.000000x100.000000
+[Sun Dec 22 18:42:57 2024] [DEBUG] Selection effect scale: 0.500000
+[Sun Dec 22 18:42:57 2024] [INFO] 点击命中敌方随从: 
+[Sun Dec 22 18:42:57 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:57 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:57 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:57 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:57 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:57 2024] [DEBUG] Starting Card UI initialization
+[Sun Dec 22 18:42:57 2024] [DEBUG] Name label created and added
+[Sun Dec 22 18:42:57 2024] [DEBUG] Cost label created and added
+[Sun Dec 22 18:42:57 2024] [DEBUG] Description label created and added
+[Sun Dec 22 18:42:57 2024] [DEBUG] Card UI initialization complete
+[Sun Dec 22 18:42:57 2024] [DEBUG] 检查我方随从位置 --------
+[Sun Dec 22 18:42:57 2024] [DEBUG] 检查我方随从: 
+[Sun Dec 22 18:42:57 2024] [DEBUG] 我方随从位置 - 世界坐标: x=20960.000000, y=20220.000000
+[Sun Dec 22 18:42:57 2024] [DEBUG] 我方随从碰撞箱 - x=20928.000000, y=20180.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:57 2024] [DEBUG] 检查我方随从: 
+[Sun Dec 22 18:42:57 2024] [DEBUG] 我方随从位置 - 世界坐标: x=920.000000, y=402.000000
+[Sun Dec 22 18:42:57 2024] [DEBUG] 我方随从碰撞箱 - x=888.000000, y=362.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:57 2024] [DEBUG] 检查我方随从: 
+[Sun Dec 22 18:42:57 2024] [DEBUG] 我方随从位置 - 世界坐标: x=770.000000, y=402.000000
+[Sun Dec 22 18:42:57 2024] [DEBUG] 我方随从碰撞箱 - x=738.000000, y=362.000000, width=64.000000, height=80.000000
+[Sun Dec 22 18:42:57 2024] [DEBUG] 未找到任何可选中的随从
