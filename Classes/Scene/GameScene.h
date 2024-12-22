@@ -59,7 +59,7 @@ private:
     cocos2d::MenuItemImage* _playerHeroPower = nullptr;
 
     // 卡牌相关
-    Card* _selectedCard = nullptr;
+    MinionCard* _selectedCard = nullptr;
     std::vector<Card*> _playerHand;  // 存储玩家手牌的卡牌指针
     std::vector<MinionCard*> _playerHand2;
     std::vector<cocos2d::Sprite*> _playerHandSprites;  // 存储手牌的精灵
