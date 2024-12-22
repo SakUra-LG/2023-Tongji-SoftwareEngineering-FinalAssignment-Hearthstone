@@ -107,6 +107,7 @@ private:
     void updateFieldCardPositions();
     std::vector<MinionCard*> convertToMinionCards(const std::vector<Card*>& cards);
     void GameScene::showGameOverUI(const std::string& title, const std::string& message);
+    void GameScene::showGameOverUI2();
     // 初始化方法
     void initLayers();
     void initUI();

@@ -8,6 +8,8 @@
 #include "Effect/EffectManager.h"      // 效果管理器
 #include "Network/NetworkManager.h"     // 网络管理器
 #include "Animation/AnimationManager.h" // 动画管理器
+#include "Manager/GameManager.h" 
+#include "Scene/GameScene.h"    
 
 // 创建随从卡牌的静态工厂方法
 // @param id: 卡牌ID
@@ -241,10 +243,32 @@ void MinionCard::checkDeath(MinionCard* card) {
         
         card->setPosition(Vec2(20000, 20000));
         logger->log(LogLevel::DEBUG, "将卡牌移出屏幕: " + card->getName());
+
+        //亡语效果
+        if (card->getDeathrattle(card))
+        {
+            // 获取当前场景
+            auto scene = dynamic_cast<GameScene*>(Director::getInstance()->getRunningScene());
+            if (scene) {
+                // 通过场景访问对手场上的卡牌
+                if (!scene->_opponentFieldCards2.empty()) {
+                    for (auto& opponentCard : scene->_opponentFieldCards2) {
+                        if (opponentCard) {
+                            opponentCard->setAttack(opponentCard->getAttack() + 2);
+                            opponentCard->setHealth(opponentCard->getHealth() + 3);
+                            opponentCard->initUI2();
+                        }
+                    }
+                }
+            }
+        }
+
     } else {
         logger->log(LogLevel::DEBUG, "卡牌存活 - Name: " + card->getName() + 
             " Health: " + std::to_string(card->getHealth()));
     }
+
+    
 }
 
 // 触发战吼效果

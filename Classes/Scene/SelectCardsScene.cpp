@@ -8,23 +8,23 @@
 #include"Card/DeckManager.h"
 #pragma execution_character_set("utf-8")
 USING_NS_CC;
-// ľ̬
+// 
 Scene* SelectCardsScene::createScene() {
     return SelectCardsScene::create();
 }
-// ʼ
+// 
 bool SelectCardsScene::init() {
     if (!Scene::init()) {
         return false;
     }
-    // ʼҪ
-    SelectCardsScene::initBackground3();// ʼ
-    SelectCardsScene::initMenu3(); // ʼ˵ť
-    SelectCardsScene::initUI3();// ʼUIԪ
+    // 
+    SelectCardsScene::initBackground3();//
+    SelectCardsScene::initMenu3(); //
+    SelectCardsScene::initUI3();// 
     return true;
 }
 
-void SelectCardsScene::initBackground3() { // ȡĻߴԭλ
+void SelectCardsScene::initBackground3() { // 
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     // ñ
@@ -130,39 +130,39 @@ void SelectCardsScene::onCards1(Ref* sender) {
 
     //添加对手卡组
     
-        //添加对手卡牌
-        auto& deckEnemy = factory->getDeckEnemy();
-        logger->log(LogLevel::INFO, "DeckEnemy size: " + std::to_string(deckEnemy.size()));
-        auto deckenemy2 = Deck::create("EnemyDeck");              //创建一个名字是EnemyDeck的对手卡组(和deck用法一致
-        if (deckenemy2) {
-            auto factory = CardFactory::getInstance();
-            auto logger = GameLogger::getInstance();
+    //添加对手卡牌
+    auto& deckEnemy = factory->getDeckEnemy();
+    logger->log(LogLevel::INFO, "DeckEnemy size: " + std::to_string(deckEnemy.size()));
+    auto deckenemy2 = Deck::create("EnemyDeck");              //创建一个名字是EnemyDeck的对手卡组(和deck用法一致
+    if (deckenemy2) {
+        auto factory = CardFactory::getInstance();
+        auto logger = GameLogger::getInstance();
 
-            // 遍历所有卡牌模板
-            for (const auto& templateCard : deckEnemy) {
-                if (!templateCard) continue;
+        // 遍历所有卡牌模板
+        for (const auto& templateCard : deckEnemy) {
+            if (!templateCard) continue;
 
-                int cardId = templateCard->getId();
-                // 确保卡牌ID与卡组类型匹配
-                Card* newCard = factory->createCardById(cardId);
-                if (newCard) {
-                    // 设置卡牌数量（从模板中获取）
-                    newCard->setCount(templateCard->getCount());
-                    // 添加到卡组
-                    deckenemy2->addCardInstance(newCard);
+            int cardId = templateCard->getId();
+            // 确保卡牌ID与卡组类型匹配
+            Card* newCard = factory->createCardById(cardId);
+            if (newCard) {
+                // 设置卡牌数量（从模板中获取）
+                newCard->setCount(templateCard->getCount());
+                // 添加到卡组
+                deckenemy2->addCardInstance(newCard);
 
-                    logger->log(LogLevel::DEBUG,
-                        "Added card to deck: " + newCard->getName() +
-                        " (ID: " + std::to_string(cardId) +
-                        ", Count: " + std::to_string(templateCard->getCount()) + ")");
-                }
-
+                logger->log(LogLevel::DEBUG,
+                    "Added card to deck: " + newCard->getName() +
+                    " (ID: " + std::to_string(cardId) +
+                    ", Count: " + std::to_string(templateCard->getCount()) + ")");
             }
 
-            logger->log(LogLevel::INFO,
-                "Created deck: " + deckenemy2->getName() +
-                " with " + std::to_string(deckenemy2->getTotalCards()) + " cards");
         }
+
+        logger->log(LogLevel::INFO,
+            "Created deck: " + deckenemy2->getName() +
+            " with " + std::to_string(deckenemy2->getTotalCards()) + " cards");
+    }
     
 
     auto scene = GameScene::createWithDeck(deck, deckenemy2);

@@ -212,13 +212,14 @@ void MenuScene::onEndTurnClicked(Ref* sender) {
     // TODO: 添加结束回合逻辑
 }
 
-void GameScene::onSettingsClicked(Ref* sender) {
-    // 处理设置按钮点击
-    AudioManager::getInstance()->playEffect(GameConstants::Sound::MAIN_MENU_THREEBUTTON_CLICK);
-    // TODO: 显示设置菜单
+//void GameScene::onSettingsClicked(Ref* sender) {
+//    // 处理设置按钮点击
+//    AudioManager::getInstance()->playEffect(GameConstants::Sound::MAIN_MENU_THREEBUTTON_CLICK);
+//    // TODO: 显示设置菜单
+//
+//    Director::getInstance()->end();
+//}
 
-    Director::getInstance()->end();
-}
 
 
 //以下为扩展内容，按时间条件选做

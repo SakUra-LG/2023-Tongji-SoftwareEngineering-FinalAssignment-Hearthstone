@@ -38,6 +38,7 @@ protected:
     int _cost;
     std::string _description;
     int _count;  // 卡牌数量
+    bool deathrattle;
 
     bool _isOnField;       //是否被选中放在场上
     // UI组件
@@ -107,6 +108,8 @@ protected:
     
 public:
     // 创建方法
+    bool getDeathrattle(Card* card) { return card->deathrattle; };
+    void serDeathrattle(Card* card, bool a) { card->deathrattle = a; };
     static Card* create(int id, const std::string& name);
     bool _isDead = false;
     // Getters & Setters

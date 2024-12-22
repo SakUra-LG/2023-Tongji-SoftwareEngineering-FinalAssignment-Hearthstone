@@ -16,9 +16,9 @@ bool DeckBuilderScene::init() {
     }
 
     // 初始化UI组件
-    initBackground();
-    initMenu();
-    initUI();
+    initBackground();               //设置背景
+    initMenu();                     //设置按钮交互
+    initUI();                       //设置标题等ui组件        
 
     // 创建卡牌容器
     _cardContainer = Node::create();

@@ -62,7 +62,7 @@ void GameScene::initLayers() {
         Vec2(550, 100),    // 右上角坐标，总大小1100x200
         Color4F(0, 0, 1, 0.2f)  // 半透明蓝色
     );
-    _playerField->addChild(playerFieldArea);
+    //_playerField->addChild(playerFieldArea);
     _gameLayer->addChild(_playerField);
 
     CCLOG("Player field initialized at y = %f", _playerField->getPositionY());
@@ -78,7 +78,7 @@ void GameScene::initLayers() {
         Vec2(600, 100),    // 右上角坐标，总大小1200x260
         Color4F(1, 0, 0, 0.2f)  // 半透明红色
     );
-    _opponentHand->addChild(opponentHandArea);
+  //  _opponentHand->addChild(opponentHandArea);
 
     // 对手场地（手牌区下方）
     auto opponentFieldArea = DrawNode::create();
@@ -87,7 +87,7 @@ void GameScene::initLayers() {
         Vec2(550, 100),    // 右上角坐标，总大小1100x200
         Color4F(1, 0.5f, 0, 0.2f)  // 半透明橙色
     );
-    _opponentField->addChild(opponentFieldArea);
+   // _opponentField->addChild(opponentFieldArea);
 
     _opponentHand->setPosition(Vec2(0, 450));   // 相对于游戏层中心向上450像素
     _opponentField->setPosition(Vec2(0, 140));  // 相对于游戏层中心向上140像素
@@ -110,19 +110,19 @@ void GameScene::addDebugLabels() {
     // 更新各区域的尺寸标签
     auto playerHandLabel = createLabel("Player Hand\n1200x260");  // 更新尺寸信息
     playerHandLabel->setPosition(Vec2::ZERO);
-    _handLayer->addChild(playerHandLabel);
+   // _handLayer->addChild(playerHandLabel);
 
     auto playerFieldLabel = createLabel("Player Field\n1100x200");  // 更新尺寸信息
     playerFieldLabel->setPosition(Vec2::ZERO);
-    _playerField->addChild(playerFieldLabel);
+   // _playerField->addChild(playerFieldLabel);
 
     auto opponentHandLabel = createLabel("Opponent Hand\n1200x260");  // 更新尺寸信息
     opponentHandLabel->setPosition(Vec2::ZERO);
-    _opponentHand->addChild(opponentHandLabel);
+   // _opponentHand->addChild(opponentHandLabel);
 
     auto opponentFieldLabel = createLabel("Opponent Field\n1100x200");  // 更新尺寸信息
     opponentFieldLabel->setPosition(Vec2::ZERO);
-    _opponentField->addChild(opponentFieldLabel);
+    //_opponentField->addChild(opponentFieldLabel);
 }
 
 // 初始化UI元素（按钮标签）
@@ -751,6 +751,7 @@ void GameScene::updateTurnIndicator() {
         if (sizeOfEnemyLeft == 3) {
             position = Vec2(806.003662f-50, fieldY);
             logger->log(LogLevel::DEBUG, "位置1: x=" + std::to_string(position.x) + ", y=" + std::to_string(position.y));
+            card->serDeathrattle(card,true);
         }
         else if (sizeOfEnemyLeft == 2) {
             position = Vec2(950.001343f-45, fieldY);
@@ -1147,12 +1148,6 @@ void GameScene::drawInitialHand() {
             std::to_string(card->getReferenceCount()));
     }
     
-
-    
-
-    
-
-   
     // 所有卡牌添加完成后，初始化手牌区域的交互
     initHandInteraction();
 
@@ -1712,6 +1707,7 @@ bool GameScene::init() {
                     logger->log(LogLevel::INFO, "点击命中敌方随从: " + enemyCard->getName());
                     this->addChild(_targetSprite, 100);
                     _selectedCard->attackTarget(enemyCard);
+                    
 
                     auto gameManager = GameManager::getInstance();
                     auto currentPlayer = gameManager->getCurrentPlayer();
@@ -1797,3 +1793,51 @@ void GameScene::removeCardFromField(Card* card) {
     updateFieldCardPositions();
 }
 
+void GameScene::onSettingsClicked(Ref* sender)
+{
+    showGameOverUI2();
+}
+
+void GameScene::showGameOverUI2() {
+    auto gameManager = GameManager::getInstance();
+    auto result = gameManager->getGameResult();  // 使用游戏结果枚举
+
+    // 创建半透明背景
+    auto dimLayer = LayerColor::create(Color4B(0, 0, 0, 128));
+    this->addChild(dimLayer, 100);
+
+    // 创建游戏结束标签
+    auto winLabel = Label::createWithTTF( "Defeat", "fonts/arial.ttf", 72 );
+    winLabel->setPosition(Director::getInstance()->getVisibleSize() / 2);
+    winLabel->setTextColor((result == GameResult::VICTORY) ? Color4B::YELLOW : Color4B::RED);
+    dimLayer->addChild(winLabel);
+
+    // 创建渐变黑屏效果
+    auto fadeToBlack = Sequence::create(
+        DelayTime::create(2.0f),  // 等待2秒让玩家看清结果
+        CallFunc::create([dimLayer]() {
+            // 开始渐变到全黑
+            dimLayer->runAction(FadeTo::create(3.0f, 255));
+            }),
+        DelayTime::create(3.0f),  // 等待渐变完成
+        CallFunc::create([]() {
+            // 退出程序
+            Director::getInstance()->end();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+            exit(0);
+#endif
+            }),
+        nullptr
+    );
+
+    // 运行动作序列
+    this->runAction(fadeToBlack);
+
+    // 禁用所有输入
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->setSwallowTouches(true);
+    listener->onTouchBegan = [](Touch* touch, Event* event) {
+        return true;  // 吞掉所有触摸事件
+        };
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
