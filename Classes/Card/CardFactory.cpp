@@ -525,7 +525,7 @@ void CardFactory::initCardTemplates() {
             card.rarity = CardRarity::LEGENDARY;
             card.cost = 4;
             card.attack = 4;
-            card.health = 3;
+            card.health = 10;
             card.description = "亡语：在本局剩余时间内，你召唤的随从获得+1攻击力";
             card.hasDeathrattle = true;
             card.framePath = "cards/frame_normal_suicong.png";
@@ -623,7 +623,7 @@ void CardFactory::initCardTemplates() {
             card.rarity = CardRarity::LEGENDARY;
             card.cost = 4;
             card.attack = 4;
-            card.health = 3;
+            card.health = 10;
             card.description = "亡语：在本局剩余时间内，你召唤的随从获得+1攻击力";
             card.hasDeathrattle = true;
             card.framePath = "cards/frame_normal_suicong.png";
